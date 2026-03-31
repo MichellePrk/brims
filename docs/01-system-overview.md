@@ -41,7 +41,7 @@ A study arm groups participants within a project, for example into control or in
 
 ### Participant
 
-A participant is a person enrolled in a project. Each participant is given a unique subject ID based on the project settings.
+A participant is a person enrolled in a project. Participant records are managed under **Subjects**. Each participant is given a unique subject ID based on the project settings.
 
 ### Event
 
@@ -66,10 +66,10 @@ A manifest groups specimens together for shipment or transfer between locations.
 ## Typical Workflow
 
 1. Configure a project and study structure
-2. Enrol participants and assign them appropriately
-3. Track scheduled visits and events
-4. Log specimens and barcode identifiers
-5. Store, retrieve, or ship specimens
+2. Enrol participants in the **Subjects** area and assign them appropriately
+3. Track subject events and update visit records
+4. Log specimens from the primary or derivative specimen logging pages
+5. Allocate specimens into storage or move them through shipment workflows
 6. Associate specimens with studies and assays
 7. Review outputs, audit history, and reports
 

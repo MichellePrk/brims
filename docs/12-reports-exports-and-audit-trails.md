@@ -23,6 +23,14 @@ Use in-system review when you need to inspect live records directly.
 
 Use exports when you need to share a filtered data set, perform offline checks, or prepare information for operational follow-up.
 
+Current export entry points in BRIMS include:
+
+- **Configure Project Details** → **Data Export** for subjects, subject events, and specimens
+- **Specimens** → **Export**
+- **Studies** → **Specimens** → **Export Specimens**
+- **Manifests** → **Export** after the manifest is no longer open
+- **Specimen Storage** → **Print** for storage allocation reports
+
 ## Data Validation Before Sharing
 
 Before sharing exported information, confirm that the output matches the question you are trying to answer.
@@ -34,6 +42,8 @@ Where possible, compare the export with the live system view before distributing
 ## Reviewing Audit History
 
 Audit history helps users understand what changed, when it changed, and which records were involved.
+
+In the current UI, the most visible audit information is the record-level timestamps and the related workflow history shown on each record.
 
 Review change history when:
 

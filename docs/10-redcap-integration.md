@@ -24,13 +24,19 @@ Use this integration to connect project activity in BRIMS with data already mana
 
 REDCap-linked projects should be created using the dedicated REDCap-linked project workflow.
 
+From the team **Projects** section, use **Create New REDCap-Linked Project** and select the REDCap project to link.
+
 Make sure the correct REDCap project is linked to the correct BRIMS project before users begin working with live data.
+
+In the team project list, linked projects are also marked with the **REDCap Linked** indicator.
 
 ## User Tokens and Access
 
 Some REDCap functions rely on a user-specific token stored on the project member record.
 
 Only enter a token for the correct project member, and update it if access changes or the token is replaced.
+
+The token field becomes available when you edit a project member in a REDCap-linked project.
 
 ## Expected Workflow
 
@@ -41,7 +47,7 @@ If something fails, check the project link, user access, and stored token detail
 ## Common Issues
 
 - Invalid or expired token
-- Incorrect REDCap project ID
+- Incorrect linked REDCap project
 - Permission mismatch
 - Missing expected data after sync
 

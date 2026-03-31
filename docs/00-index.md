@@ -60,10 +60,10 @@ Use this documentation set to work through BRIMS project setup, participant mana
 ## Common Tasks
 
 - Set up a new project
-- Enrol a participant
+- Enrol a participant in the **Subjects** area
 - Record a follow-up event
-- Log and track a specimen
-- Move a specimen into storage
+- Log primary or derivative specimens
+- Allocate specimens into **Specimen Storage**
 - Prepare a shipment manifest
 - Review assay data
 - Export and verify data
