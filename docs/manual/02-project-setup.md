@@ -51,7 +51,7 @@ Navigate to your team's **Projects** section and select **New Project**.
 
 > **Important — Subject ID format:** The prefix and digit count together define the format of every participant identifier the system will generate. For example, a prefix of `BRI` with six digits produces IDs such as `BRI000001`, `BRI000002`, and so on. Choose this format according to your study protocol and confirm it with your team before saving. This setting is difficult to change once participants have been enrolled and identifiers have been issued.
 
-> **REDCap projects:** If this project needs to be linked to REDCap, do not use the standard project form. Instead, use the **Create New REDCap-Linked Project** option available from the team Projects section. See [Chapter 9 — Searching, Reviewing, and Exporting Data](09-searching-and-reporting.md) or your administrator for guidance on REDCap setup.
+> **REDCap projects:** If this project needs to be linked to REDCap, do not use the standard project form. Instead, use the **Create New REDCap-Linked Project** option available from the team Projects section. See [Chapter 12 — REDCap Integration](12-redcap-integration.md) for full setup and troubleshooting guidance.
 
 ### What BRIMS creates automatically
 

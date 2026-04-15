@@ -51,6 +51,8 @@ Relevant chapters are:
 - [Chapter 2 — Setting Up a Project](02-project-setup.md)
 - [Chapter 8 — Studies and Assay Data](08-studies-and-assays.md)
 - [Chapter 9 — Searching, Reviewing, and Exporting Data](09-searching-and-reporting.md)
+- [Chapter 12 — REDCap Integration](12-redcap-integration.md)
+- [Chapter 13 — Administration Guide](13-administration-guide.md)
 
 ---
 
@@ -61,6 +63,10 @@ If you are new to BRIMS, read [Chapter 1 — Getting Started](01-getting-started
 After that, follow the reading path for your role above.
 
 If you are troubleshooting a specific problem, go directly to [Chapter 10 — Troubleshooting Common Problems](10-troubleshooting.md).
+
+For REDCap integration setup and troubleshooting, refer to [Chapter 12 — REDCap Integration](12-redcap-integration.md).
+
+For system administration tasks including user management and reference data configuration, refer to [Chapter 13 — Administration Guide](13-administration-guide.md).
 
 For definitions of terms used across the system and this manual, refer to [Chapter 11 — Glossary](11-glossary.md).
 

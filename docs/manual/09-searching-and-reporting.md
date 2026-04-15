@@ -99,6 +99,18 @@ When prompted to configure columns before confirming an export, review the colum
 
 ---
 
+## 9.4.1 Data Validation Before Sharing
+
+Before distributing exported data, confirm that the output matches the question you are trying to answer:
+
+- Check that the correct project, date range, status filters, and record types were used when generating the export.
+- Verify row counts and identifiers before sharing — ensure the number of records matches your expectation.
+- Where possible, compare the export result with the live system view before distributing it.
+- Confirm that the export reflects the latest updates to the records included.
+- Treat exported participant and specimen data with care. Only export the minimum information needed for the task, and share files only with people who are authorised to receive them. Do not store exported files in unsecured locations.
+
+---
+
 ## 9.5 Reviewing Audit and History Information
 
 BRIMS does not have a dedicated audit view at the record level. Record-level history is visible through:
@@ -141,4 +153,5 @@ Refer to [Chapter 6 — Managing Specimen Storage](06-storage-management.md) for
 ---
 
 *Previous chapter:* [Chapter 8 — Studies and Assay Data](08-studies-and-assays.md)  
-*Next chapter:* [Chapter 10 — Troubleshooting Common Problems](10-troubleshooting.md)
+*Next chapter:* [Chapter 10 — Troubleshooting Common Problems](10-troubleshooting.md)  
+*See also:* [Chapter 12 — REDCap Integration](12-redcap-integration.md) | [Chapter 13 — Administration Guide](13-administration-guide.md)

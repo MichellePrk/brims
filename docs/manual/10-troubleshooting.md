@@ -188,4 +188,5 @@ Providing accurate details when you escalate will help resolve the issue faster.
 ---
 
 *Previous chapter:* [Chapter 9 — Searching, Reviewing, and Exporting Data](09-searching-and-reporting.md)  
-*Next chapter:* [Chapter 11 — Glossary](11-glossary.md)
+*Next chapter:* [Chapter 11 — Glossary](11-glossary.md)  
+*See also:* [Chapter 12 — REDCap Integration](12-redcap-integration.md) | [Chapter 13 — Administration Guide](13-administration-guide.md)

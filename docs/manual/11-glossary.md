@@ -147,4 +147,5 @@ A logical representation of a storage unit in BRIMS — for example, a freezer b
 ---
 
 *Previous chapter:* [Chapter 10 — Troubleshooting Common Problems](10-troubleshooting.md)  
-*Back to start:* [Chapter 0 — Introduction](00-introduction.md)
+*Back to start:* [Chapter 0 — Introduction](00-introduction.md)  
+*See also:* [Chapter 12 — REDCap Integration](12-redcap-integration.md) | [Chapter 13 — Administration Guide](13-administration-guide.md)
