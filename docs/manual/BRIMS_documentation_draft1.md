@@ -573,7 +573,7 @@ Use this checklist to confirm that the project is ready before research and labo
 
 ## Overview
 
-This chapter is for research nurses, study coordinators, and field staff responsible for enrolling participants and keeping their records accurate throughout a study.
+This chapter is primarily for research nurses, study coordinators, and field staff responsible for enrolling participants and maintaining records throughout a study.
 
 In BRIMS, participants are recorded under **Subjects**. The term *subject* is used consistently across the system, and this manual uses *participant* and *subject* interchangeably. Each participant is assigned a unique **subject ID** that is generated automatically from the project's identifier settings.
 
@@ -596,11 +596,13 @@ If any of these are missing, work with your project manager before proceeding. E
 
 ## 3.2 How Subject Records Are Created
 
-BRIMS generates subject records automatically when a project is active. These records appear in the **Subjects** list with a status of **Generated**.
+Subject records are created manually using the **Generate Subjects** action on the Subjects list. This action is available to users with the appropriate permissions and only appears for arms that have **Manual Enrolment** enabled.
 
-A Generated subject has a subject ID already assigned, but no participant details have yet been confirmed. The record acts as a placeholder until a real participant is enrolled into it.
+To generate subjects, navigate to the **Subjects** list and select **Generate Subjects**. You will be asked to choose an arm and specify how many subject records to create (between 1 and 20 at a time). BRIMS will create the requested number of records, each with a subject ID pre-assigned using the project's configured prefix and digit format.
 
-> **Important:** Do not create a new subject record from scratch if a Generated record is available. Generated records already have a subject ID allocated. Creating duplicates will cause identifier conflicts and gaps in the numbering sequence. Always use the **Enrol** action on an existing Generated record.
+These records appear in the **Subjects** list with a status of **Generated**. A Generated subject has a subject ID already assigned, but no participant details have yet been confirmed. The record acts as a placeholder until a real participant is enrolled into it.
+
+> **Important:** Do not generate more subject records than you need. Generated records with unallocated IDs create gaps if they are never used. Generate a small batch at a time and add more as needed. Always use the **Enrol** action on an existing Generated record rather than creating a new one from scratch — doing so would cause identifier conflicts and gaps in the numbering sequence.
 
 ---
 
@@ -615,7 +617,7 @@ A Generated subject has a subject ID already assigned, but no participant detail
 5. Review the automatically generated subject ID to confirm it matches the expected project format.
 6. Save the record.
 
-![The Subjects list showing a Generated record, and the Enrol action button.]()
+![The Subject enrolment form accessed by clicking the Enrol action button.]()
 
 ### Enrolment form fields
 
@@ -652,7 +654,7 @@ Use these statuses consistently. Filtering the Subjects list by status is the mo
 
 ## 3.5 Updating a Participant Record
 
-After enrolment, participant records may need to be updated if information changes — for example, if a site reassignment is required or if a field was entered incorrectly.
+After enrolment, participant records may need to be updated if information changes — for example, if the address changes or if a field was entered incorrectly.
 
 Use the **Edit** action on an enrolled subject's record.
 
