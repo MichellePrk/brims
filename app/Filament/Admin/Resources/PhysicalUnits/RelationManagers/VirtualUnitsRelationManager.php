@@ -336,7 +336,7 @@ class VirtualUnitsRelationManager extends RelationManager
                 TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('project.name')
+                TextColumn::make('project.title')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('storageSpecimenType')

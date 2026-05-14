@@ -29,7 +29,7 @@ class Subject extends Model
     protected function fullname(): Attribute
     {
         return new Attribute(
-            get: fn (): string => $this->firstname.' '.$this->lastname,
+            get: fn(): string => $this->firstname . ' ' . $this->lastname,
         );
     }
 
@@ -90,7 +90,7 @@ class Subject extends Model
         $events = $this->subjectEvents()
             ->whereRelation('event', 'arm_id', $this->arm_id)
             ->get();
-        $events->each(fn ($subjectEvent) => $subjectEvent->update([
+        $events->each(fn($subjectEvent) => $subjectEvent->update([
             'eventDate' => $armBaselineDate->addDays($subjectEvent->event->offset),
             'minDate' => $armBaselineDate->addDays($subjectEvent->event->offset - $subjectEvent->event->offset_ante_window),
             'maxDate' => $armBaselineDate->addDays($subjectEvent->event->offset + $subjectEvent->event->offset_post_window),
@@ -107,7 +107,7 @@ class Subject extends Model
             throw new \Exception('Subject is not in Generated status');
         }
         $newevents = Event::where('arm_id', $this->arm_id)->get();
-        $newevents->each(fn ($event) => $this->events()->attach(
+        $newevents->each(fn($event) => $this->events()->attach(
             $event,
             [
                 'eventDate' => $armBaselineDate?->addDays($event->offset) ?? null,
