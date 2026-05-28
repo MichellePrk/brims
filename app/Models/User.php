@@ -23,12 +23,14 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use Laravel\Passkeys\Contracts\PasskeyUser;
+use Laravel\Passkeys\PasskeyAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasName, HasTenants
+class User extends Authenticatable implements FilamentUser, PasskeyUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasName, HasTenants
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, HasRoles, Notifiable;
+    use HasFactory, HasRoles, Notifiable, PasskeyAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -142,7 +144,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     protected function fullname(): Attribute
     {
         return new Attribute(
-            get: fn (): string => $this->firstname.' '.$this->lastname,
+            get: fn(): string => $this->firstname . ' ' . $this->lastname,
         );
     }
 
@@ -159,14 +161,14 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     protected function isTeamLeader(): Attribute
     {
         return new Attribute(
-            get: fn (): bool => $this->team && $this->id === $this->team->leader_id,
+            get: fn(): bool => $this->team && $this->id === $this->team->leader_id,
         );
     }
 
     protected function isTeamAdmin(): Attribute
     {
         return new Attribute(
-            get: fn (): bool => $this->team && $this->team_role === TeamRoles::Admin->value,
+            get: fn(): bool => $this->team && $this->team_role === TeamRoles::Admin->value,
         );
     }
 
