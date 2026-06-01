@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedMediumInteger('offset_post_window')->unsigned()->nullable();
             $table->unsignedTinyInteger('name_labels')->unsigned()->default(0);
             $table->unsignedTinyInteger('subject_event_labels')->unsigned()->default(0);
-            $table->unsignedTinyInteger('study_id_labels')->unsigned()->default(0);
+            $table->unsignedTinyInteger('project_id_labels')->unsigned()->default(0);
             $table->unsignedTinyInteger('event_order')->unsigned()->default(0);
             $table->boolean('repeatable')->default(0);
             $table->boolean('active')->default(1);

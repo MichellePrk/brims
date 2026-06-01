@@ -60,7 +60,7 @@ beforeEach(function (): void {
         'offset_post_window' => null,
         'name_labels' => 1,
         'subject_event_labels' => 1,
-        'study_id_labels' => 1,
+        'project_id_labels' => 1,
         'event_order' => 1,
         'active' => true,
     ]);
@@ -75,7 +75,7 @@ beforeEach(function (): void {
         'offset_post_window' => 14,
         'name_labels' => 2,
         'subject_event_labels' => 2,
-        'study_id_labels' => 2,
+        'project_id_labels' => 2,
         'event_order' => 2,
         'active' => true,
     ]);
@@ -124,7 +124,7 @@ describe('Event Creation and Validation', function (): void {
             'repeatable' => false,
             'name_labels' => 0,
             'subject_event_labels' => 0,
-            'study_id_labels' => 0,
+            'project_id_labels' => 0,
             'event_order' => 3,
             'active' => true,
         ]);
@@ -407,7 +407,7 @@ describe('Label Count Management', function (): void {
             'offset' => 50,
             'name_labels' => 5,
             'subject_event_labels' => 0,
-            'study_id_labels' => 0,
+            'project_id_labels' => 0,
             'active' => true,
         ]);
 
@@ -425,7 +425,7 @@ describe('Label Count Management', function (): void {
             'offset' => 75,
             'name_labels' => 0,
             'subject_event_labels' => 3,
-            'study_id_labels' => 0,
+            'project_id_labels' => 0,
             'active' => true,
         ]);
 
@@ -443,14 +443,14 @@ describe('Label Count Management', function (): void {
             'offset' => 100,
             'name_labels' => 0,
             'subject_event_labels' => 0,
-            'study_id_labels' => 4,
+            'project_id_labels' => 4,
             'active' => true,
         ]);
 
         assertDatabaseHas('events', [
             'arm_id' => $this->arm->id,
             'name' => 'Study ID Labels Event',
-            'study_id_labels' => 4,
+            'project_id_labels' => 4,
         ]);
     });
 
@@ -458,14 +458,14 @@ describe('Label Count Management', function (): void {
         $this->baselineEvent->update([
             'name_labels' => 10,
             'subject_event_labels' => 15,
-            'study_id_labels' => 20,
+            'project_id_labels' => 20,
         ]);
 
         assertDatabaseHas('events', [
             'id' => $this->baselineEvent->id,
             'name_labels' => 10,
             'subject_event_labels' => 15,
-            'study_id_labels' => 20,
+            'project_id_labels' => 20,
         ]);
     });
 });
