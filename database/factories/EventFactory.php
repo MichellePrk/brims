@@ -22,7 +22,7 @@ class EventFactory extends Factory
             'offset_post_window' => fake()->numberBetween(0, 5),
             'name_labels' => fake()->numberBetween(1, 3),
             'subject_event_labels' => fake()->numberBetween(1, 6),
-            'project_id_labels' => fake()->numberBetween(1, 3),
+            'subject_id_labels' => fake()->numberBetween(1, 3),
         ];
     }
 }

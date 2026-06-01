@@ -46,7 +46,7 @@ class LabelController extends Controller
                 'lastname',
                 'subject_event_labels',
                 'name_labels',
-                'project_id_labels',
+                'subject_id_labels',
                 'iteration',
             ])
             ->get();
@@ -66,7 +66,7 @@ class LabelController extends Controller
                 $this->fpdf->Add_BarLabel($text, $PSE);
             }
             // Generate Study ID labels
-            for ($i = 0; $i < $event->project_id_labels; $i++) {
+            for ($i = 0; $i < $event->subject_id_labels; $i++) {
                 $text = sprintf('%s', $event->subjectID);
                 $this->fpdf->Add_BarLabel($text, $event->subject_id);
             }

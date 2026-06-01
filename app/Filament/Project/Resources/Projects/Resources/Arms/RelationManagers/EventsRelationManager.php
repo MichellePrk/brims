@@ -74,7 +74,7 @@ class EventsRelationManager extends RelationManager
                     ->required()
                     ->numeric()
                     ->default(0),
-                TextInput::make('project_id_labels')
+                TextInput::make('subject_id_labels')
                     ->required()
                     ->numeric()
                     ->default(0),
@@ -119,7 +119,7 @@ class EventsRelationManager extends RelationManager
                 TextColumn::make('subject_event_labels')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('project_id_labels')
+                TextColumn::make('subject_id_labels')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('event_order')
