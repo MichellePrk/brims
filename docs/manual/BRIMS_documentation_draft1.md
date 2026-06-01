@@ -3,6 +3,7 @@
 **Bio-medical Research Information Management System**
 
 Draft 1 — 16 April 2026
+Major revision — 1 June 2026
 
 ---
 
@@ -19,15 +20,15 @@ Draft 1 — 16 April 2026
 - [Chapter 8 — Studies and Assay Data](#chapter-8-studies-and-assay-data)
 - [Chapter 9 — Searching, Reviewing, and Exporting Data](#chapter-9-searching-reviewing-and-exporting-data)
 - [Chapter 10 — Troubleshooting Common Problems](#chapter-10-troubleshooting-common-problems)
-- [Chapter 11 — Glossary](#chapter-11-glossary)
-- [Chapter 12 — REDCap Integration](#chapter-12-redcap-integration)
-- [Chapter 13 — Administration Guide](#chapter-13-administration-guide)
+- [Chapter 11 — REDCap Integration](#chapter-11-redcap-integration)
+- [Chapter 12 — Administration Guide](#chapter-12-administration-guide)
+- [Chapter 13 — Glossary](#chapter-13-glossary)
 
 ---
 
 ---
 
-## Chapter 0: Introduction
+## Chapter 0 — Introduction
 
 ---
 
@@ -78,8 +79,8 @@ Relevant chapters are:
 - Chapter 2 — Setting Up a Project
 - Chapter 8 — Studies and Assay Data
 - Chapter 9 — Searching, Reviewing, and Exporting Data
-- Chapter 12 — REDCap Integration
-- Chapter 13 — Administration Guide
+- Chapter 11 — REDCap Integration
+- Chapter 12 — Administration Guide
 
 ---
 
@@ -91,11 +92,11 @@ After that, follow the reading path for your role above.
 
 If you are troubleshooting a specific problem, go directly to Chapter 10 — Troubleshooting Common Problems.
 
-For REDCap integration setup and troubleshooting, refer to Chapter 12 — REDCap Integration.
+For REDCap integration setup and troubleshooting, refer to Chapter 11 — REDCap Integration.
 
-For system administration tasks including user management and reference data configuration, refer to Chapter 13 — Administration Guide.
+For system administration tasks including user management and reference data configuration, refer to Chapter 12 — Administration Guide.
 
-For definitions of terms used across the system and this manual, refer to Chapter 11 — Glossary.
+For definitions of terms used across the system and this manual, refer to Chapter 13 — Glossary.
 
 ### Notes on Format
 
@@ -128,7 +129,7 @@ If you find that a described step does not match what you see in the system, or 
 
 ---
 
-## Chapter 1: Getting Started
+## Chapter 1 — Getting Started
 
 ---
 
@@ -191,7 +192,7 @@ These records are connected. A subject belongs to a site and an arm; events are 
 
 ## 1.3 Navigating the System
 
-### Main Navigation
+### 1.3.1 Main Navigation
 
 The main navigation menu gives you access to the areas of BRIMS relevant to your role and project. [Note: assumes a project has been created previously and can be accessed by user]
 
@@ -208,10 +209,10 @@ Common navigation areas include:
 - **Specimen Storage** — Storage allocation and storage reports
 - **Manifests** — Shipment and transfer records
 - **Studies** — Study records, linked specimens, and assay data
-- 
+
 Not all of these areas will be visible to every user. What you see depends on your project role.
 
-### Moving Between Records
+### 1.3.2 Moving Between Records
 
 Within each section, BRIMS uses a standard pattern:
 
@@ -221,7 +222,7 @@ Within each section, BRIMS uses a standard pattern:
 
 Get familiar with this pattern early. Most workflows in BRIMS follow the same structure: open a list, find or create a record, navigate to its detail page, and take the appropriate action from there.
 
-### Working Within the Correct Project
+### 1.3.3 Working Within the Correct Project
 
 Before doing any work in BRIMS, always confirm that you are in the correct project.
 
@@ -233,7 +234,7 @@ The current project context is shown in the navigation. If you are working acros
 
 ## 1.4 Roles and Permissions
 
-### What Roles Control
+### 1.4.1 What Roles Control
 
 BRIMS uses a role-based permission system. Your role determines:
 
@@ -248,7 +249,7 @@ Roles operate at two levels:
 
 A user can have different roles in different projects. For example, a data manager may have read-only access in one project and full editing access in another.
 
-### When Actions Are Missing
+### 1.4.2 When Actions Are Missing
 
 If a button or action that you expect to see is not visible, this is usually because your current role does not include that permission.
 
@@ -293,7 +294,7 @@ These practices are emphasised throughout the relevant chapters, but establishin
 
 ---
 
-## Chapter 2: Setting Up a Project
+## Chapter 2 — Setting Up a Project
 
 ---
 
@@ -308,7 +309,7 @@ The recommended setup order is:
 1. Create the project
 2. Review the defaults BRIMS creates automatically
 3. Add sites
-4. Create study arms and event templates
+4. Create study arms and event definitions
 5. Configure specimen types and labware
 6. Review roles and add project members
 7. Create studies
@@ -323,7 +324,7 @@ Navigate to your team's **Projects** section and select **New Project**.
 
 ![The project creation form showing required fields: title, identifier, study design, project leader, storage designation, and subject ID settings.]()
 
-### Required fields
+### 2.1.1 Required fields
 
 | Field | What to enter |
 |---|---|
@@ -335,7 +336,7 @@ Navigate to your team's **Projects** section and select **New Project**.
 | **Subject ID Prefix** | Two to ten uppercase letters that will be prepended to all participant identifiers (e.g. `BRI`). |
 | **Subject ID Digits** | The number of digits in the numeric part of the participant ID (between two and eight). |
 
-### Optional fields
+### 2.1.2 Optional fields
 
 | Field | What to enter |
 |---|---|
@@ -344,9 +345,9 @@ Navigate to your team's **Projects** section and select **New Project**.
 
 > **Important — Subject ID format:** The prefix and digit count together define the format of every participant identifier the system will generate. For example, a prefix of `BRI` with six digits produces IDs such as `BRI000001`, `BRI000002`, and so on. Choose this format according to your study protocol and confirm it with your team before saving. This setting is difficult to change once participants have been enrolled and identifiers have been issued.
 
-> **REDCap projects:** If this project needs to be linked to REDCap, do not use the standard project form. Instead, use the **Create New REDCap-Linked Project** option available from the team Projects section. See Chapter 12 — REDCap Integration for full setup and troubleshooting guidance.
+> **REDCap projects:** If this project needs to be linked to REDCap, do not use the standard project form. Instead, use the **Create New REDCap-Linked Project** option available from the team Projects section. See Chapter 11 — REDCap Integration for full setup and troubleshooting guidance.
 
-### What BRIMS creates automatically
+### 2.1.3 What BRIMS creates automatically
 
 When you save a new project, BRIMS sets up the following automatically:
 
@@ -392,15 +393,15 @@ Navigate to the project view, open the **Arms** tab, and select **New Arm**.
 
 BRIMS assigns arm numbers automatically. The arm number cannot be set manually.
 
-When two or more arms exist in a project, the arm form also shows a **Switch Arms** checkbox list. Ticking an arm here means that participants currently enrolled in this arm can be moved to the selected arm using the **Switch Arm** action on a subject's record. When a switch is performed, all of the subject's pending, primed, and scheduled events from the current arm are cancelled, the subject is assigned to the new arm with a new baseline date, and a fresh set of events is generated from the new arm's event templates. If no arms are ticked, the Switch Arm option will not appear for any subject in this arm.
+When two or more arms exist in a project, the arm form also shows a **Switch Arms** checkbox list. Ticking an arm here means that participants currently enrolled in this arm can be moved to the selected arm using the **Switch Arm** action on a subject's record. When a switch is performed, all of the subject's pending, primed, and scheduled events from the current arm are cancelled, the subject is assigned to the new arm with a new baseline date, and a fresh set of events is generated from the new arm's events. If no arms are ticked, the Switch Arm option will not appear for any subject in this arm.
 
-> **Tip:** Create all arms before you start adding event templates. Once participants are enrolled, changing an arm's structure may affect the events that have already been scheduled for subjects.
+> **Tip:** Create all arms before you start adding event definitions. Once participants are enrolled, changing an arm's structure may affect the events that have already been scheduled for subjects.
 
-### Adding event templates to an arm
+### 2.3.1 Adding event definitions to an arm
 
-Events represent the visit schedule or follow-up milestones for participants in that arm. After you create an arm, open it and add the event templates that apply to subjects in that cohort.
+Events represent the visit schedule or follow-up milestones for participants in that arm. After you create an arm, open it and add the events that apply to subjects in that cohort.
 
-![An arm record with the Events section open, showing event templates with fields for name, offset, and scheduling windows.]()
+![An arm record with the Events section open, showing event definitions with fields for name, offset, and scheduling windows.]()
 
 | Field | What it does |
 |---|---|
@@ -412,8 +413,8 @@ Events represent the visit schedule or follow-up milestones for participants in 
 | **Repeatable** | If enabled, additional iterations of this event can be added after the first one is recorded. |
 | **Name Labels** | The number of full-name barcode labels to print per event. Each label shows the participant's name, the project–subject–event ID, event name, iteration, and arm name. Enter `0` if not required. |
 | **Subject Event Labels** | The number of PSE (Project–Subject–Event) barcode labels to print per event. Each label shows the subject ID, PSE ID, event name, iteration, and arm name. Enter `0` if not required. |
-| **Study ID Labels** | The number of subject ID-only barcode labels to print per event. Each label shows the subject ID alone. Enter `0` if not required. |
-| **Active** | Controls whether this event template is currently in use for new subjects. |
+| **Study ID Labels** [check field name] | The number of subject ID-only barcode labels to print per event. Each label shows the subject ID alone. Enter `0` if not required. |
+| **Active** | Controls whether this event definition is currently in use for new subjects. |
 
 > **Tip:** The offset, ante window, and post window together define the acceptable timing range for each visit. Setting these correctly helps follow-up review reports distinguish between events that were on time, those recorded within an acceptable window, and those that were genuinely missed or late. Discuss these values with your study statistician or clinical operations lead before entering them.
 
@@ -427,7 +428,7 @@ Navigate to the project configuration view and use the **Labware** and **Specime
 
 ![The Specimen Types and Labware configuration areas, showing type settings and barcode format fields.]()
 
-### Labware
+### 2.4.1 Labware
 
 Labware records define the physical container associated with a specimen type and the barcode format expected during logging. Create a labware record for each distinct container type used in the project before configuring specimen types, as specimen types must reference a labware record.
 
@@ -438,7 +439,7 @@ Labware records define the physical container associated with a specimen type an
 
 > **Tip:** Work with your laboratory team to confirm the barcode format in use before entering the regex pattern. A small formatting error here can block logging for the entire project. If you are not familiar with regular expressions, ask your data manager or system administrator to help define this field.
 
-### Specimen types
+### 2.4.2 Specimen types
 
 Specimen types define what kind of sample is being collected and how it should be handled. Each specimen type must be linked to a labware record.
 
@@ -465,7 +466,7 @@ Specimen types define what kind of sample is being collected and how it should b
 
 ## 2.5 Reviewing Roles and Adding Project Members
 
-### Reviewing roles [*still to check*]
+### 2.5.1 Reviewing roles [*still to check*]
 
 Roles define what each project member is permitted to do. BRIMS creates a default Admin role when the project is set up, but most projects need at least a few distinct roles — for example, a data manager role, a clinical staff role, and a laboratory role.
 
@@ -481,7 +482,7 @@ Permissions take effect as soon as a role is saved. Members assigned to that rol
 
 > **Tip:** Keep roles aligned with job functions rather than individual users. A role called `Laboratory Staff` is easier to manage and audit over time than multiple individually named roles. If a team member changes responsibilities, updating their role assignment is much simpler than maintaining a custom permission set.
 
-### Adding project members
+### 2.5.2 Adding project members
 
 Project members are users from your team who have been granted access to work within the project.
 
@@ -495,7 +496,7 @@ Navigate to the **Members** tab and select **Attach Member**.
 
 > **Note:** The project leader cannot be detached from the project. To reassign project leadership, edit the project record and select a different user in the **Project Leader** field.
 
-### Member substitutes
+### 2.5.3 Member substitutes
 
 A substitute is another project member who can act on behalf of a member when they are unavailable (for example, during leave or absence).
 
@@ -506,7 +507,7 @@ To assign a substitute, open the member record in the Members list and use the *
 
 > **Note:** If a member's site assignment changes and the current substitute is not assigned to the new site, the substitute assignment will be cleared automatically. Review substitute assignments whenever site configurations change.
 
-### REDCap tokens
+### 2.5.4 REDCap tokens
 
 If the project is linked to REDCap and particular members need REDCap API access, a personal token can be stored against each member's record. Open the member entry and add or update the token in the **REDCap Token** field.
 
@@ -520,14 +521,14 @@ Navigate to **Studies** in the project sidebar and select **New Study**.
 
 ![The study creation form showing title, identifier, description, and date fields.]()
 
-### Required fields
+### 2.6.1 Required fields
 
 | Field | What to enter |
 |---|---|
 | **Title** | The full name of the study. Must be unique within the project. |
 | **Identifier** | A short reference code for the study. Must be unique across BRIMS — not only within the project. |
 
-### Optional fields
+### 2.6.2 Optional fields
 
 | Field | What to enter |
 |---|---|
@@ -537,7 +538,7 @@ Navigate to **Studies** in the project sidebar and select **New Study**.
 
 > **Tip:** The study identifier will appear in exports, reports, and assay records. Choose a code that is meaningful to your team and consistent with any identifiers already used in your study protocol or ethics application.
 
-### Locking a study
+### 2.6.3 Locking a study
 
 The **Locked** toggle prevents specimens from being added to or removed from a study. Use this when the study has reached a defined data cut-off or analytical milestone to preserve the integrity of the specimen set. This action is reversible.
 
@@ -555,7 +556,7 @@ Use this checklist to confirm that the project is ready before research and labo
 - [ ] Storage designation entered
 - [ ] Default site reviewed; additional sites created as needed
 - [ ] All study arms created and named
-- [ ] Event templates added to applicable arms, with offsets and windows confirmed
+- [ ] Event definitions added to applicable arms, with offsets and windows confirmed
 - [ ] Specimen types configured for primary and derivative samples as needed
 - [ ] Labware records created with correct barcode format patterns
 - [ ] Default Admin role reviewed; additional roles created to reflect team functions
@@ -567,7 +568,7 @@ Use this checklist to confirm that the project is ready before research and labo
 
 ---
 
-## Chapter 3: Enrolling and Managing Participants
+## Chapter 3 — Enrolling and Managing Participants
 
 ---
 
@@ -586,7 +587,7 @@ Participant records are the foundation of the research workflow. A correctly enr
 Before enrolling participants, confirm that the following project setup steps have been completed:
 
 - The project has been created with subject ID prefix and digit settings confirmed
-- At least one study arm exists and has event templates assigned to it
+- At least one study arm exists and has event definitions assigned to it
 - You have been added as a project member with a role that includes enrolment permissions
 - You know which arm each participant should be assigned to
 
@@ -608,7 +609,7 @@ These records appear in the **Subjects** list with a status of **Generated**. A 
 
 ## 3.3 Enrolling a Participant
 
-### Step-by-step
+### 3.3.1 Step-by-step
 
 1. Navigate to the **Subjects** list in the project navigation.
 2. Locate a record with status **Generated**. Use the search or filter tools if the list is long.
@@ -619,7 +620,7 @@ These records appear in the **Subjects** list with a status of **Generated**. A 
 
 ![The Subject enrolment form accessed by clicking the Enrol action button.]()
 
-### Enrolment form fields
+### 3.3.2 Enrolment form fields
 
 | Field | What to enter |
 |---|---|
@@ -634,7 +635,7 @@ These records appear in the **Subjects** list with a status of **Generated**. A 
 
 > **Tip — Arm assignment:** If your project uses manual arm allocation, make sure the arm is confirmed with the study team before saving. If the wrong arm is selected, events from that arm will be scheduled for the participant. Changing the arm later (via **Switch Arm**) cancels the existing pending events and creates a new schedule from the new arm, but this cannot recover events that have already been recorded.
 
-Once enrolled, the participant's status changes to **Enrolled** and BRIMS creates all subject events defined by the arm's event templates.
+Once enrolled, the participant's status changes to **Enrolled** and BRIMS creates all subject events from the arm's event definitions.
 
 ---
 
@@ -671,7 +672,7 @@ When an arm switch occurs, BRIMS:
 1. Cancels all pending, primed, or scheduled events from the current arm
 2. Records the previous arm and baseline date for audit purposes
 3. Assigns the participant to the new arm
-4. Creates a new set of subject events based on the new arm's event templates
+4. Creates a new set of subject events based on the new arm's event definitions
 
 The arm switch date is used as the new baseline for calculating the events in the new arm.
 
@@ -738,7 +739,7 @@ This history is useful when following up on overdue events, resolving data queri
 
 ---
 
-## Chapter 4: Recording Events and Follow-up
+## Chapter 4 — Recording Events and Follow-up
 
 ---
 
@@ -754,16 +755,16 @@ Keeping event records current is essential. Overdue or unrecorded events affect 
 
 ## 4.1 Understanding Events
 
-### Arm events and subject events
+### 4.1.1 Event definitions and subject events
 
 BRIMS uses two layers of event records:
 
-- **Arm event templates** are the schedule definitions set up by the project manager within each study arm (see Chapter 2 — Setting Up a Project). They define what events happen, in what order, and within what timing windows.
-- **Subject events** are the individual scheduled records created for a specific participant when they are enrolled or when their arm changes. Each subject event is a copy of an arm event template, dated based on the participant's enrolment date and the event's offset.
+- **Event definitions** define events set up by the project manager within each study arm (see Chapter 2 — Setting Up a Project). The definitions include information about the timing windows of scheduled events and number of labels required.
+- **Subject events** are the individual events assigned to a specific participant when they are enrolled or when their arm changes. Each subject event is selected from the event definitions for the relevant arm and dated based on the participant's enrolment date.
 
 You will work almost exclusively with subject events in day-to-day follow-up.
 
-### How event dates are calculated
+### 4.1.2 How event dates are calculated
 
 When a participant is enrolled, BRIMS uses their enrolment date as the baseline and calculates a scheduled date for each event using the arm's offset settings.
 
@@ -903,7 +904,7 @@ For a broader view across all participants, use filters and search tools in the 
 
 ---
 
-## Chapter 5: Logging Specimens
+## Chapter 5 — Logging Specimens
 
 ---
 
@@ -932,7 +933,7 @@ If the participant is not yet enrolled or the event has not been created, loggin
 
 Primary specimens are samples collected directly from a participant. They are logged through a dedicated two-stage workflow accessed from **Log Primary Specimens (2-Stage)** in the project navigation.
 
-### Stage 1 — Scan the Project Subject Event Barcode
+### 5.2.1 Stage 1 — Scan the Project Subject Event Barcode
 
 The first stage identifies the participant and event that the specimens belong to.
 
@@ -944,7 +945,7 @@ BRIMS will validate the barcode and load the participant and event details. Conf
 
 > **Tip:** The PSE barcode (Project Subject Event barcode) encodes the participant and event in a single scannable code. If the barcode is not recognised at this stage, check that the barcode matches the correct project and that the subject event has been correctly scheduled. A barcode from a different project will not be accepted.
 
-### Stage 2 — Scan Specimen Barcodes and Enter Volumes
+### 5.2.2 Stage 2 — Scan Specimen Barcodes and Enter Volumes
 
 Once Stage 1 is confirmed, the form expands to show all primary specimen types configured for this project.
 
@@ -968,14 +969,14 @@ Derivative specimens are samples that have been processed or derived from a prim
 
 Derivative logging is also a multi-stage process:
 
-### Stage 1 — Select the parent specimen
+### 5.3.1 Stage 1 — Select the parent specimen
 
 You have two routes to identify the parent specimen:
 
 - **Scan the parent barcode directly:** Enter the barcode of the primary specimen this derivative was processed from.
 - **Scan a PSE barcode and select from a list:** Scan the Project Subject Event barcode and then choose the correct parent specimen from the list of eligible specimens linked to that event.
 
-### Stage 2 — Scan derivative barcodes and enter volumes
+### 5.3.2 Stage 2 — Scan derivative barcodes and enter volumes
 
 Once the parent specimen is confirmed, the form shows the derivative specimen types configured for this project. For each derivative type:
 
@@ -1019,7 +1020,7 @@ Use the search fields at the top of each column to find specimens by barcode, ty
 
 ![The Specimens list showing search fields per column and the bulk action menu.]()
 
-### Bulk actions
+### 5.5.1 Bulk actions
 
 Select specimens using the checkboxes and use the bulk action menu to apply the following actions to a group of selected records:
 
@@ -1082,7 +1083,7 @@ Derivative specimens carry an additional link to their **parent specimen**, whic
 
 ---
 
-## Chapter 6: Managing Specimen Storage
+## Chapter 6 — Managing Specimen Storage
 
 ---
 
@@ -1100,7 +1101,7 @@ All storage work is done from **Specimen Storage** in the project navigation.
 
 Before working with storage in BRIMS, it is helpful to understand how the storage structure is organised.
 
-### Supported storage types
+### 6.1.1 Supported storage types
 
 BRIMS supports three storage contexts, defined by the physical environment in which specimens are kept:
 
@@ -1112,7 +1113,7 @@ BRIMS supports three storage contexts, defined by the physical environment in wh
 
 The storage type is defined at the unit definition level by an administrator. You do not need to select storage type during allocation — BRIMS routes specimens to the correct storage context based on how their specimen type has been configured.
 
-### Storage hierarchy
+### 6.1.2 Storage hierarchy
 
 Storage locations in BRIMS follow a hierarchy:
 
@@ -1131,7 +1132,7 @@ Administrators configure unit definitions and physical units (see Chapter 2 — 
 
 The allocation workflow places all eligible **Logged** specimens of the selected type into available storage locations in a single operation.
 
-### Step-by-step
+### 6.2.1 Step-by-step
 
 1. Navigate to **Specimen Storage** and select **Allocate Specimen Storage**.
 2. The form shows all specimen types that have Logged specimens at your current site, along with the count of specimens waiting to be stored.
@@ -1168,7 +1169,7 @@ Each row represents a single allocation run and shows:
 
 ![The Specimen Storage list showing a history of allocation events with date, user, destination, and specimen count columns.]()
 
-### Printing a storage allocation report
+### 6.3.1 Printing a storage allocation report
 
 Each allocation record has a **Print** action that opens a storage allocation report in a new browser tab.
 
@@ -1222,7 +1223,7 @@ Review the storage allocation report and the individual specimen record when tra
 
 ---
 
-## Chapter 7: Preparing and Receiving Shipments
+## Chapter 7 — Preparing and Receiving Shipments
 
 ---
 
@@ -1355,7 +1356,7 @@ The manifest record can be accessed from the Manifests list at any time. Use the
 
 ---
 
-## Chapter 8: Studies and Assay Data
+## Chapter 8 — Studies and Assay Data
 
 ---
 
@@ -1413,7 +1414,7 @@ Specimens are linked to a study through the **Specimens** section at the bottom 
 
 Assays capture the analytical measurements or results associated with the study. Each assay record represents a distinct analysis type or technology platform.
 
-### Adding an assay
+### 8.3.1 Adding an assay
 
 1. With the study open, navigate to the **Assays** section.
 2. Select **New Assay**.
@@ -1433,7 +1434,7 @@ After selecting an **Assay Definition**, additional fields may appear in the for
 
 ![The assay form showing the core fields and a set of additional fields defined by the selected assay definition.]()
 
-### Assay definitions
+### 8.3.2 Assay definitions
 
 Assay definitions are system-level configurations that specify the structure of an assay record — the types of metadata fields required. They are managed by an administrator at the system level and are available to all projects.
 
@@ -1489,7 +1490,7 @@ Click on a study to open its full record, including the linked specimens and ass
 
 ---
 
-## Chapter 9: Searching, Reviewing, and Exporting Data
+## Chapter 9 — Searching, Reviewing, and Exporting Data
 
 ---
 
@@ -1536,21 +1537,21 @@ Apply a filter by selecting the relevant option. Clear filters by returning the 
 
 Use the filtering and search capabilities to support day-to-day operational review. The following patterns are particularly useful:
 
-### Review outstanding follow-up events
+### 9.3.1 Review outstanding follow-up events
 
-Navigate to a **Participant** record and view the **Events** tab. Events highlighted in red are overdue and awaiting logging. You can also scan the event list for Scheduled events that have passed their expected date.
+Navigate to a **Subject** record and view the **Subject Events** section. Events highlighted in red are overdue and awaiting logging. You can also scan the event list for Scheduled events that have passed their expected date.
 
 See Chapter 4 — Recording Events and Follow-up for more detail.
 
-### Review specimens awaiting storage
+### 9.3.2 Review specimens awaiting storage
 
 Navigate to **Specimens** and filter or sort by **Status**. Specimens with a status of **Logged** have been collected but not yet allocated to storage. Use this view to identify batches ready for the next storage allocation run.
 
-### Review incoming shipments awaiting receipt
+### 9.3.3 Review incoming shipments awaiting receipt
 
 Navigate to **Manifests** and filter by status **Shipped**. These manifests have been dispatched and are waiting to be received at the destination site.
 
-### Review specimens allocated to a study
+### 9.3.4 Review specimens allocated to a study
 
 Open a **Study** record and navigate to the **Specimens** section. This lists all specimens linked to the study, allowing you to verify that the correct specimens are included.
 
@@ -1562,7 +1563,7 @@ BRIMS provides CSV export functions for the main operational record types. Expor
 
 > **Important — data sensitivity:** Exports may include participant identifiers, contact details, and specimen data. Export only the minimum data needed for your task and share the files only with authorised recipients. Do not store exported files in unsecured locations.
 
-### Export entry points
+### 9.4.1 Export entry points
 
 | Export | How to access | What is included |
 |---|---|---|
@@ -1574,7 +1575,7 @@ BRIMS provides CSV export functions for the main operational record types. Expor
 
 > **Tip:** The project-level exports (**Export Subjects**, **Export Subject Events**, **Export Specimens**) are found in the Export actions group on the **Project** detail page (accessed by clicking on the project name in the project navigation or selecting the project from the main list). Use these when you need a complete project-level data extract.
 
-### Columns that are hidden by default
+### 9.4.2 Columns that are hidden by default
 
 Some columns in the specimen export are hidden by default but can be included when you configure the export:
 
@@ -1588,7 +1589,7 @@ When prompted to configure columns before confirming an export, review the colum
 
 ---
 
-## 9.4.1 Data Validation Before Sharing
+### 9.4.3 Data Validation Before Sharing
 
 Before distributing exported data, confirm that the output matches the question you are trying to answer:
 
@@ -1643,7 +1644,7 @@ Refer to Chapter 6 — Managing Specimen Storage for details.
 
 ---
 
-## Chapter 10: Troubleshooting Common Problems
+## Chapter 10 — Troubleshooting Common Problems
 
 ---
 
@@ -1657,19 +1658,19 @@ Before troubleshooting, gather the relevant reference information: project name,
 
 ## 10.1 Signing In and Access
 
-### I cannot sign in
+### 10.1.1 I cannot sign in
 
 - Confirm you are entering the correct email address and password.
 - Check whether your account has been created — contact your project administrator if you are new to the system.
 - If you have forgotten your password, use the password reset option on the sign-in page.
 
-### I can sign in but I cannot see a project
+### 10.1.2 I can sign in but I cannot see a project
 
 - Confirm that you have been added to the project with an appropriate role. A project must have a member record for you.
 - Check with a project manager or administrator to confirm that your membership is set up and that your role is correct.
 - If you have just been added, try signing out and back in to refresh your session.
 
-### I can see the project but I cannot access a specific page within it
+### 10.1.3 I can see the project but I cannot access a specific page within it
 
 - Some pages are restricted to specific project roles. Your current role may not include the permissions required.
 - Contact a project manager to review and adjust your role if necessary.
@@ -1678,23 +1679,23 @@ Before troubleshooting, gather the relevant reference information: project name,
 
 ## 10.2 Participants
 
-### I cannot find a participant
+### 10.2.1 I cannot find a participant
 
 - Search by subject ID using the search field in the Subjects list.
 - Check whether the participant's record has a status that might cause it to appear on a separate view (for example, subjects with Generated status have not yet been enrolled).
 - Confirm you are in the correct project — participant records exist within a specific project.
 
-### A participant is missing from the list but I know they were enrolled
+### 10.2.2 A participant is missing from the list but I know they were enrolled
 
 - Check whether they have been dropped. Use the status filter on the Subjects list and look for records with status Dropped.
 - If the record does not appear at all, the participant may have been enrolled under a different subject ID or in a different project. Check with your study coordinator.
 
-### I cannot enrol a subject
+### 10.2.3 I cannot enrol a subject
 
 - The subject must have a status of **Generated** to be enrolled. If the record shows **Enrolled** or **Dropped**, the action will not appear.
 - If you cannot see the **Enrol** action at all, you may not have permission for this action. Contact your project manager.
 
-### The wrong arm is linked to a participant
+### 10.2.4 The wrong arm is linked to a participant
 
 - Review the current arm assignment on the participant record.
 - If the arm needs to be changed, see Chapter 3 — Enrolling and Managing Participants, section 3.6 for the arm switch process. Note that switching arm will cancel any pending events on the old arm.
@@ -1703,17 +1704,17 @@ Before troubleshooting, gather the relevant reference information: project name,
 
 ## 10.3 Events
 
-### I cannot see the Log Event button
+### 10.3.1 I cannot see the Log Event button
 
 - The **Log Event** action is only shown on events that have a status of **Scheduled**. If the event is still **Pending** or **Primed**, it cannot be logged yet.
-- If you believe the event should be Scheduled, check the event date and confirm the event has been correctly set up in the project's arm and event template.
+- If you believe the event should be Scheduled, check the event date and confirm the event has been correctly set up in the project's arm event definitions.
 
-### An event date appears wrong
+### 10.3.2 An event date appears wrong
 
 - Event dates are calculated from the arm baseline date (the participant's enrolment date). If the event date looks wrong, check the enrolment date on the participant record.
-- If the event template itself has incorrect day offsets, a project manager will need to edit the arm event configuration.
+- If the event definition itself has incorrect day offsets, a project manager will need to edit the arm event definitions.
 
-### I logged an event but the status did not change
+### 10.3.3 I logged an event but the status did not change
 
 - Refresh the page and confirm the status is still showing the old value. Network timing occasionally causes a display lag.
 - If the issue persists, check whether another user may have simultaneously updated the record.
@@ -1722,23 +1723,23 @@ Before troubleshooting, gather the relevant reference information: project name,
 
 ## 10.4 Specimen Logging
 
-### A barcode is not recognised at the PSE scan stage
+### 10.4.1 A barcode is not recognised at the PSE scan stage
 
 - Check that the barcode was scanned correctly and that the physical label matches the expected format.
 - Confirm that you are in the correct project. PSE barcodes are project-specific.
 - Confirm that the subject event was created and that the event is associated with a participant in this project.
 
-### A specimen barcode fails validation
+### 10.4.2 A specimen barcode fails validation
 
 - BRIMS validates specimen barcodes against the regex pattern defined in the labware configuration for that specimen type. If the barcode does not match, it will be rejected.
 - Check the physical label for scanning errors, or contact your project manager to confirm the expected barcode format.
 
-### I cannot see the specimen I just logged
+### 10.4.3 I cannot see the specimen I just logged
 
 - Search the Specimens list by barcode. If it was logged successfully, it will appear with a status of **Logged**.
 - If it does not appear, the logging workflow may not have been fully submitted. Repeat the logging process, ensuring all required fields are completed before submitting.
 
-### A specimen has the wrong status
+### 10.4.4 A specimen has the wrong status
 
 - Review the specimen record and check all status fields and timestamps.
 - If the status needs to be corrected and there is a clear operational reason to do so, an authorised user can edit the record directly (see Chapter 5 — Logging Specimens, section 5.6).
@@ -1748,12 +1749,12 @@ Before troubleshooting, gather the relevant reference information: project name,
 
 ## 10.5 Storage
 
-### A specimen type is disabled in the Allocate Storage form
+### 10.5.1 A specimen type is disabled in the Allocate Storage form
 
 - This means there are insufficient free locations configured for that specimen type in the current project's virtual storage units.
 - Contact your laboratory manager or project administrator to arrange additional storage capacity before attempting a new allocation.
 
-### A specimen does not appear in the allocation form
+### 10.5.2 A specimen does not appear in the allocation form
 
 - The allocation page only shows specimens with a status of **Logged** at your current site that have a storage specimen type assigned. If a specimen is in a different status (e.g. already In Storage or Transferred), it will not appear.
 - Confirm the specimen status in the Specimens list.
@@ -1762,17 +1763,17 @@ Before troubleshooting, gather the relevant reference information: project name,
 
 ## 10.6 Manifests and Shipments
 
-### I cannot edit a manifest
+### 10.6.1 I cannot edit a manifest
 
 - Manifests can only be edited when their status is **Open**. Once a manifest has been shipped it becomes read-only.
 - If a manifest was shipped in error, contact your project administrator.
 
-### I cannot see the Receive Manifest button
+### 10.6.2 I cannot see the Receive Manifest button
 
 - The **Receive the Manifest** action is only visible to users whose project site assignment matches the manifest's destination site. If you are not at the destination site, you will not see this button.
 - Confirm your site assignment with your project manager.
 
-### Specimens on a manifest have the wrong prior status
+### 10.6.3 Specimens on a manifest have the wrong prior status
 
 - The prior status recorded on each specimen in a manifest reflects the status at the time the specimen was attached. It cannot be edited.
 - If there is a discrepancy, review the specimen record's history and, if necessary, contact your project administrator.
@@ -1781,11 +1782,11 @@ Before troubleshooting, gather the relevant reference information: project name,
 
 ## 10.7 Studies and Assays
 
-### I cannot add specimens or assays to a study
+### 10.7.1 I cannot add specimens or assays to a study
 
 - Check whether the study has the **Locked** toggle enabled. A locked study is read-only. Contact the study owner or project manager to unlock it if changes are needed.
 
-### An assay definition is missing from the dropdown
+### 10.7.2 An assay definition is missing from the dropdown
 
 - Assay definitions are managed at the system level by an administrator. If the definition you need does not appear, contact your system administrator.
 
@@ -1801,7 +1802,7 @@ Escalate an issue to your project administrator or system administrator when:
 - A REDCap integration issue persists after confirming the project and token settings
 - A barcode or validation error recurs after confirming the physical labels are correct
 
-### Information to include when reporting an issue
+### 10.8.1 Information to include when reporting an issue
 
 Providing accurate details when you escalate will help resolve the issue faster. Include:
 
@@ -1832,7 +1833,241 @@ Providing accurate details when you escalate will help resolve the issue faster.
 
 ---
 
-## Chapter 11: Glossary
+## Chapter 11 — REDCap Integration
+
+---
+
+## Overview
+
+This chapter is for data managers, project administrators, and system administrators who need to configure or troubleshoot REDCap-linked workflows in BRIMS.
+
+BRIMS can be linked to REDCap for projects that use REDCap alongside operational specimen and study workflows. This integration allows project activity in BRIMS to connect with participant data already managed in REDCap.
+
+Not all projects use REDCap. If you are unsure whether your project requires REDCap integration, check with your project administrator before proceeding.
+
+---
+
+## 11.1 Integration Overview
+
+When a BRIMS project is linked to a REDCap project, certain participant and workflow data can be exchanged between the two systems.
+
+REDCap-linked projects are created differently from standard BRIMS projects. They must be set up using the dedicated **Create New REDCap-Linked Project** workflow rather than the standard project creation form.
+
+> **Caution:** If a project that requires REDCap integration is created using the standard project form, it cannot be linked to REDCap after the fact. Always confirm whether REDCap integration is required before creating a new project. See Chapter 2 — Setting Up a Project for guidance on project creation.
+
+---
+
+## 11.2 Creating a REDCap-Linked Project
+
+1. Navigate to the team **Projects** section.
+2. Select **Create New REDCap-Linked Project** (not the standard **New Project** option).
+3. Select the REDCap project to link from the available options.
+4. Complete the remaining project setup fields as you would for a standard project.
+5. Save the project.
+
+Once created, the linked project will appear in the team Projects list with a **REDCap Linked** indicator. Confirm this indicator is present before users begin working with live data.
+
+> **Caution:** Make sure the correct REDCap project is linked to the correct BRIMS project before any live data entry begins. Linking the wrong REDCap project can result in data being associated with the wrong source records.
+
+---
+
+## 11.3 User Tokens and Access
+
+Some REDCap functions depend on a user-specific API token stored on the project member record. This token authorises the individual member's access to the linked REDCap project.
+
+To add or update a REDCap token for a project member:
+
+1. Open the project's member list from **Configure Project Details** → **Members**.
+2. Find the relevant member and select **Edit**.
+3. In the **REDCap Token** field, enter or update the token value.
+4. Save the member record.
+
+> **Important:** Only enter a token for the correct project member. Tokens are user-specific. If a member's REDCap access changes or a token is replaced, update the stored value promptly to avoid disrupted workflows.
+
+The REDCap Token field is only visible on member records within REDCap-linked projects.
+
+---
+
+## 11.4 Confirming the Setup
+
+After creating a REDCap-linked project and configuring member tokens, verify that the expected REDCap-connected functions are available and behaving correctly:
+
+1. Have an affected user sign in and confirm that REDCap-dependent workflow options are visible.
+2. Run a test action that relies on the REDCap link and confirm that the expected data is returned.
+3. If issues are found, refer to the troubleshooting steps in section 11.5 below.
+
+---
+
+## 11.5 Troubleshooting REDCap Integration
+
+| Symptom | First thing to check |
+|---|---|
+| REDCap-linked options do not appear | Confirm the project was created as a REDCap-linked project, not a standard project |
+| A user cannot access REDCap-dependent functions | Check that a valid token is stored on that user's project member record |
+| Data expected from REDCap is missing | Verify that the correct REDCap project is linked; check API access and permissions |
+| Sync results appear inconsistent | Confirm that the token is current and that REDCap-side permissions have not changed |
+
+### 11.5.1 Step-by-step troubleshooting
+
+When a REDCap integration issue is reported:
+
+1. Confirm that the correct **REDCap-linked project** was created (the team Projects list should show the **REDCap Linked** indicator).
+2. Check that the affected user has the correct REDCap access in the REDCap system itself.
+3. Verify that a correct, current token is stored on the user's project member record in BRIMS.
+4. Review whether the action that failed actually depends on REDCap for that specific workflow step, or whether the issue may be unrelated to the integration.
+5. If the issue cannot be resolved through the above steps, escalate to a system administrator for configuration review.
+
+---
+
+## Summary
+
+| Task | Where to go |
+|---|---|
+| Create a REDCap-linked project | Team **Projects** → **Create New REDCap-Linked Project** |
+| Verify the REDCap link is active | Team **Projects** list — check for the **REDCap Linked** indicator |
+| Add or update a member's REDCap token | **Configure Project Details** → **Members** → edit the member record |
+| Troubleshoot integration issues | See section 11.5 above |
+
+---
+
+---
+
+## Chapter 12 — Administration Guide
+
+---
+
+## Overview
+
+This chapter is for system administrators and selected project administrators who are responsible for keeping BRIMS configured, governed, and ready for project use.
+
+Administrative responsibilities in BRIMS fall into four main areas: user and access management, reference data configuration, preparing for new projects, and ongoing operational monitoring. In the current BRIMS interface, this work is split between system-level administration (the **Admin** panel) and team-level configuration (the team **Projects** and related setup areas).
+
+---
+
+## 12.1 User Management
+
+### 12.1.1 Creating and managing accounts
+
+User accounts are managed from the **Users** area in the Admin panel.
+
+When creating a new account:
+
+1. Navigate to **Admin** → **Users** → **New User**.
+2. Enter the user's name and email address.
+3. Assign the appropriate system role.
+4. Save the record. The user will receive an invitation to set their password.
+
+### 12.1.2 Reviewing and updating access
+
+Review user accounts regularly to ensure that project membership and permissions remain appropriate for each person's current responsibilities.
+
+When a user's role changes — for example, if they move to a different project or leave the organisation — update or deactivate their account promptly.
+
+| Action | Where to do it |
+|---|---|
+| Create a new user account | **Admin** → **Users** → **New User** |
+| Update a user's system role | **Admin** → **Users** → edit the user record |
+| Add a user to a project | **Configure Project Details** → **Members** → add member |
+| Change a user's project role | **Configure Project Details** → **Members** → edit the member record |
+| Deactivate an account | **Admin** → **Users** → edit the user record → disable access |
+
+> **Caution:** Deactivating an account does not remove the user's historical records or audit trail. It prevents further sign-in only. Do not delete user records unless directed by your organisation's data governance policy.
+
+---
+
+## 12.2 Role and Permission Management
+
+System roles should be kept limited to users who genuinely need wider administrative access. Project roles should be scoped to support day-to-day work without granting unnecessary permissions.
+
+- Use the project **Roles** area (within **Configure Project Details**) for project-specific permissions.
+- Use the **Admin** panel only for system-level administrative access.
+
+When assigning roles, apply the principle of least privilege: give each user the minimum access needed to perform their work.
+
+> **Tip:** The most common cause of unexpected access problems is a mismatch between a user's project role and the actions they need to perform. If you receive a report that an expected action is unavailable, check the member's project role before investigating other causes.
+
+---
+
+## 12.3 Reference Data and Configuration
+
+Reference data and configuration settings should be reviewed whenever new projects, workflows, or study requirements are introduced.
+
+Keeping shared configuration values consistent across the system ensures that data entry and reporting remain reliable.
+
+### 12.3.1 System-level reference data (Admin panel)
+
+The following configuration areas are managed at the system level:
+
+| Area | Purpose |
+|---|---|
+| **Study Designs** | Templates for study structure used across projects |
+| **Unit Definitions** | Standard units for specimen volumes and measurements |
+| **Physical Units** | Physical storage container types and dimensions |
+
+### 12.3.2 Team-level configuration
+
+The following are managed at the team level and are available to all projects within the team:
+
+| Area | Purpose |
+|---|---|
+| **Assay Definitions** | Templates for assay record structure, including custom metadata fields |
+| **Protocols** | Standard operating procedures associated with study or specimen work |
+
+When a project requires a new assay type, specimen unit, or study design, review whether a configuration update is needed before the project goes live.
+
+---
+
+## 12.4 Preparing for New Projects
+
+Before onboarding a new project, confirm that the following are in place:
+
+- [ ] Required user accounts exist and are active
+- [ ] Project members have been assigned appropriate roles
+- [ ] Arm and event definitions reflect the study design
+- [ ] Specimen types and labware configurations are correct
+- [ ] Relevant reference data (assay definitions, protocols, units) is configured
+- [ ] If the project uses REDCap: the project has been created using the **Create New REDCap-Linked Project** workflow and member tokens are configured
+
+> **Tip:** Walking through this checklist before a project begins active enrolment will prevent the most common setup errors. See Chapter 2 — Setting Up a Project for the full project configuration workflow, and Chapter 11 — REDCap Integration if the project requires a REDCap link.
+
+---
+
+## 12.5 Operational Monitoring
+
+Operational monitoring involves reviewing recurring user issues, checking that access remains appropriate, and confirming that configuration stays aligned with actual practice.
+
+When the same problem is reported more than once:
+
+1. Review whether the root cause is a permissions issue, a process gap, or outdated configuration.
+2. Check whether reference data (such as specimen types or labware barcodes) needs updating.
+3. Review whether user roles need adjustment.
+4. Update documentation or configuration as needed to prevent recurrence.
+
+Signs that a configuration review may be due:
+
+- Multiple users reporting that an action is unavailable
+- Repeated barcode validation failures not explained by scanning errors
+- Unexpected gaps in specimen or event records across a project
+
+---
+
+## Summary
+
+| Task | Where to go |
+|---|---|
+| Create a user account | **Admin** → **Users** → **New User** |
+| Deactivate a user account | **Admin** → **Users** → edit the user record |
+| Add a project member | **Configure Project Details** → **Members** |
+| Manage system reference data | **Admin** panel → relevant configuration area |
+| Manage assay definitions | Team-level **Assay Definitions** area |
+| Prepare a new project for go-live | Checklist in section 12.4 |
+| Troubleshoot a recurring operational issue | Review permissions, process, and configuration in that order |
+
+---
+
+---
+
+## Chapter 13 — Glossary
 
 ---
 
@@ -1846,7 +2081,7 @@ A single tube or container within a set of identical samples derived from the sa
 
 ### Arm
 
-A study arm is a participant grouping within a project — for example, a control group or an intervention group. Each arm has its own sequence of event templates, and participants are enrolled into a single arm. See also: **Event Template**, **Enrolment**.
+A study arm is a participant grouping within a project — for example, a control group or an intervention group. Each arm has its own sequence of event definitions, and participants are enrolled into a single arm. See also: **Event Definition**, **Enrolment**.
 
 ### Arm Baseline Date
 
@@ -1874,15 +2109,15 @@ The process of formally registering a participant into a project arm. Enrolment 
 
 ### Event
 
-A scheduled or completed activity linked to a participant — such as a study visit, follow-up contact, or specimen collection point. Events are defined as templates within an arm and are instantiated as subject-level event records. See also: **Event Template**, **Subject Event**.
+A scheduled or completed activity linked to a participant — such as a study visit, follow-up contact, or specimen collection point. Events are configured as event definitions within an arm and are instantiated as subject events when a participant is enrolled. See also: **Event Definition**, **Subject Event**.
 
 ### Event Status
 
 The current stage of a subject event in the workflow. Possible statuses are: Pending, Primed, Scheduled, Logged, Logged Late, Missed, and Cancelled.
 
-### Event Template
+### Event Definition
 
-The definition of a recurring event used within an arm, specifying its name, expected day offset from the arm baseline date, acceptable date window, and whether it is repeatable. Each enrolled participant gets a subject event record generated from each template in their arm.
+The configuration of a recurring event within an arm, specifying its name, expected day offset from the arm baseline date, acceptable date window, and whether it is repeatable. Each enrolled participant gets a subject event generated from each event definition in their arm.
 
 ### Labware
 
@@ -1919,6 +2154,10 @@ A specimen collected directly from a participant, as opposed to a derivative spe
 ### Project
 
 The top-level unit for organising research work in BRIMS. A project has its own configuration, participants, arms, events, specimen types, storage settings, and team members.
+
+### PSE
+
+Abbreviation for **Project Subject Event**. See **Project Subject Event Barcode (PSE Barcode)**.
 
 ### Project Subject Event Barcode (PSE Barcode)
 
@@ -1975,240 +2214,6 @@ The current enrolment state of a participant. Possible statuses are: Generated (
 ### Virtual Unit
 
 A logical representation of a storage unit in BRIMS — for example, a freezer box within a rack. Virtual units have available locations that can be allocated to specimens.
-
----
-
----
-
-## Chapter 12: REDCap Integration
-
----
-
-## Overview
-
-This chapter is for data managers, project administrators, and system administrators who need to configure or troubleshoot REDCap-linked workflows in BRIMS.
-
-BRIMS can be linked to REDCap for projects that use REDCap alongside operational specimen and study workflows. This integration allows project activity in BRIMS to connect with participant data already managed in REDCap.
-
-Not all projects use REDCap. If you are unsure whether your project requires REDCap integration, check with your project administrator before proceeding.
-
----
-
-## 12.1 Integration Overview
-
-When a BRIMS project is linked to a REDCap project, certain participant and workflow data can be exchanged between the two systems.
-
-REDCap-linked projects are created differently from standard BRIMS projects. They must be set up using the dedicated **Create New REDCap-Linked Project** workflow rather than the standard project creation form.
-
-> **Caution:** If a project that requires REDCap integration is created using the standard project form, it cannot be linked to REDCap after the fact. Always confirm whether REDCap integration is required before creating a new project. See Chapter 2 — Setting Up a Project for guidance on project creation.
-
----
-
-## 12.2 Creating a REDCap-Linked Project
-
-1. Navigate to the team **Projects** section.
-2. Select **Create New REDCap-Linked Project** (not the standard **New Project** option).
-3. Select the REDCap project to link from the available options.
-4. Complete the remaining project setup fields as you would for a standard project.
-5. Save the project.
-
-Once created, the linked project will appear in the team Projects list with a **REDCap Linked** indicator. Confirm this indicator is present before users begin working with live data.
-
-> **Caution:** Make sure the correct REDCap project is linked to the correct BRIMS project before any live data entry begins. Linking the wrong REDCap project can result in data being associated with the wrong source records.
-
----
-
-## 12.3 User Tokens and Access
-
-Some REDCap functions depend on a user-specific API token stored on the project member record. This token authorises the individual member's access to the linked REDCap project.
-
-To add or update a REDCap token for a project member:
-
-1. Open the project's member list from **Configure Project Details** → **Members**.
-2. Find the relevant member and select **Edit**.
-3. In the **REDCap Token** field, enter or update the token value.
-4. Save the member record.
-
-> **Important:** Only enter a token for the correct project member. Tokens are user-specific. If a member's REDCap access changes or a token is replaced, update the stored value promptly to avoid disrupted workflows.
-
-The REDCap Token field is only visible on member records within REDCap-linked projects.
-
----
-
-## 12.4 Confirming the Setup
-
-After creating a REDCap-linked project and configuring member tokens, verify that the expected REDCap-connected functions are available and behaving correctly:
-
-1. Have an affected user sign in and confirm that REDCap-dependent workflow options are visible.
-2. Run a test action that relies on the REDCap link and confirm that the expected data is returned.
-3. If issues are found, refer to the troubleshooting steps in section 12.5 below.
-
----
-
-## 12.5 Troubleshooting REDCap Integration
-
-| Symptom | First thing to check |
-|---|---|
-| REDCap-linked options do not appear | Confirm the project was created as a REDCap-linked project, not a standard project |
-| A user cannot access REDCap-dependent functions | Check that a valid token is stored on that user's project member record |
-| Data expected from REDCap is missing | Verify that the correct REDCap project is linked; check API access and permissions |
-| Sync results appear inconsistent | Confirm that the token is current and that REDCap-side permissions have not changed |
-
-### Step-by-step troubleshooting
-
-When a REDCap integration issue is reported:
-
-1. Confirm that the correct **REDCap-linked project** was created (the team Projects list should show the **REDCap Linked** indicator).
-2. Check that the affected user has the correct REDCap access in the REDCap system itself.
-3. Verify that a correct, current token is stored on the user's project member record in BRIMS.
-4. Review whether the action that failed actually depends on REDCap for that specific workflow step, or whether the issue may be unrelated to the integration.
-5. If the issue cannot be resolved through the above steps, escalate to a system administrator for configuration review.
-
----
-
-## Summary
-
-| Task | Where to go |
-|---|---|
-| Create a REDCap-linked project | Team **Projects** → **Create New REDCap-Linked Project** |
-| Verify the REDCap link is active | Team **Projects** list — check for the **REDCap Linked** indicator |
-| Add or update a member's REDCap token | **Configure Project Details** → **Members** → edit the member record |
-| Troubleshoot integration issues | See section 12.5 above |
-
----
-
----
-
-## Chapter 13: Administration Guide
-
----
-
-## Overview
-
-This chapter is for system administrators and selected project administrators who are responsible for keeping BRIMS configured, governed, and ready for project use.
-
-Administrative responsibilities in BRIMS fall into four main areas: user and access management, reference data configuration, preparing for new projects, and ongoing operational monitoring. In the current BRIMS interface, this work is split between system-level administration (the **Admin** panel) and team-level configuration (the team **Projects** and related setup areas).
-
----
-
-## 13.1 User Management
-
-### Creating and managing accounts
-
-User accounts are managed from the **Users** area in the Admin panel.
-
-When creating a new account:
-
-1. Navigate to **Admin** → **Users** → **New User**.
-2. Enter the user's name and email address.
-3. Assign the appropriate system role.
-4. Save the record. The user will receive an invitation to set their password.
-
-### Reviewing and updating access
-
-Review user accounts regularly to ensure that project membership and permissions remain appropriate for each person's current responsibilities.
-
-When a user's role changes — for example, if they move to a different project or leave the organisation — update or deactivate their account promptly.
-
-| Action | Where to do it |
-|---|---|
-| Create a new user account | **Admin** → **Users** → **New User** |
-| Update a user's system role | **Admin** → **Users** → edit the user record |
-| Add a user to a project | **Configure Project Details** → **Members** → add member |
-| Change a user's project role | **Configure Project Details** → **Members** → edit the member record |
-| Deactivate an account | **Admin** → **Users** → edit the user record → disable access |
-
-> **Caution:** Deactivating an account does not remove the user's historical records or audit trail. It prevents further sign-in only. Do not delete user records unless directed by your organisation's data governance policy.
-
----
-
-## 13.2 Role and Permission Management
-
-System roles should be kept limited to users who genuinely need wider administrative access. Project roles should be scoped to support day-to-day work without granting unnecessary permissions.
-
-- Use the project **Roles** area (within **Configure Project Details**) for project-specific permissions.
-- Use the **Admin** panel only for system-level administrative access.
-
-When assigning roles, apply the principle of least privilege: give each user the minimum access needed to perform their work.
-
-> **Tip:** The most common cause of unexpected access problems is a mismatch between a user's project role and the actions they need to perform. If you receive a report that an expected action is unavailable, check the member's project role before investigating other causes.
-
----
-
-## 13.3 Reference Data and Configuration
-
-Reference data and configuration settings should be reviewed whenever new projects, workflows, or study requirements are introduced.
-
-Keeping shared configuration values consistent across the system ensures that data entry and reporting remain reliable.
-
-### System-level reference data (Admin panel)
-
-The following configuration areas are managed at the system level:
-
-| Area | Purpose |
-|---|---|
-| **Study Designs** | Templates for study structure used across projects |
-| **Unit Definitions** | Standard units for specimen volumes and measurements |
-| **Physical Units** | Physical storage container types and dimensions |
-
-### Team-level configuration
-
-The following are managed at the team level and are available to all projects within the team:
-
-| Area | Purpose |
-|---|---|
-| **Assay Definitions** | Templates for assay record structure, including custom metadata fields |
-| **Protocols** | Standard operating procedures associated with study or specimen work |
-
-When a project requires a new assay type, specimen unit, or study design, review whether a configuration update is needed before the project goes live.
-
----
-
-## 13.4 Preparing for New Projects
-
-Before onboarding a new project, confirm that the following are in place:
-
-- [ ] Required user accounts exist and are active
-- [ ] Project members have been assigned appropriate roles
-- [ ] Arm and event templates reflect the study design
-- [ ] Specimen types and labware configurations are correct
-- [ ] Relevant reference data (assay definitions, protocols, units) is configured
-- [ ] If the project uses REDCap: the project has been created using the **Create New REDCap-Linked Project** workflow and member tokens are configured
-
-> **Tip:** Walking through this checklist before a project begins active enrolment will prevent the most common setup errors. See Chapter 2 — Setting Up a Project for the full project configuration workflow, and Chapter 12 — REDCap Integration if the project requires a REDCap link.
-
----
-
-## 13.5 Operational Monitoring
-
-Operational monitoring involves reviewing recurring user issues, checking that access remains appropriate, and confirming that configuration stays aligned with actual practice.
-
-When the same problem is reported more than once:
-
-1. Review whether the root cause is a permissions issue, a process gap, or outdated configuration.
-2. Check whether reference data (such as specimen types or labware barcodes) needs updating.
-3. Review whether user roles need adjustment.
-4. Update documentation or configuration as needed to prevent recurrence.
-
-Signs that a configuration review may be due:
-
-- Multiple users reporting that an action is unavailable
-- Repeated barcode validation failures not explained by scanning errors
-- Unexpected gaps in specimen or event records across a project
-
----
-
-## Summary
-
-| Task | Where to go |
-|---|---|
-| Create a user account | **Admin** → **Users** → **New User** |
-| Deactivate a user account | **Admin** → **Users** → edit the user record |
-| Add a project member | **Configure Project Details** → **Members** |
-| Manage system reference data | **Admin** panel → relevant configuration area |
-| Manage assay definitions | Team-level **Assay Definitions** area |
-| Prepare a new project for go-live | Checklist in section 13.4 |
-| Troubleshoot a recurring operational issue | Review permissions, process, and configuration in that order |
 
 ---
 
