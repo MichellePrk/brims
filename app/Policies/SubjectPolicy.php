@@ -35,7 +35,7 @@ class SubjectPolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'ViewAny:Subject');
+        return evaluate_permission($authUser, 'View:Subject');
     }
 
     public function view(AuthUser $authUser, Subject|string $subject): bool
@@ -49,16 +49,16 @@ class SubjectPolicy
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Subject');
+        return evaluate_permission($authUser, 'Manage:Subject');
     }
 
     public function update(AuthUser $authUser, Subject|string $subject): bool
     {
         if (is_string($subject)) {
-            return evaluate_permission($authUser, 'Update:Subject');
+            return evaluate_permission($authUser, 'Manage:Subject');
         }
 
-        return $this->evaluateModelPermission($authUser, 'Update:Subject', $subject);
+        return $this->evaluateModelPermission($authUser, 'Manage:Subject', $subject);
     }
 
     public function delete(AuthUser $authUser, Subject|string $subject): bool
@@ -72,6 +72,6 @@ class SubjectPolicy
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Subject');
+        return evaluate_permission($authUser, 'Delete:Subject');
     }
 }

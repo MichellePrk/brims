@@ -14,8 +14,7 @@ class AssayPolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return true;
-        // return $authUser->can('ViewAny:Assay');
+        return evaluate_permission($authUser, 'View:Assay');
     }
 
     public function view(AuthUser $authUser, Assay $assay): bool
@@ -25,12 +24,12 @@ class AssayPolicy
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Assay');
+        return evaluate_permission($authUser, 'Manage:Assay');
     }
 
     public function update(AuthUser $authUser, Assay $assay): bool
     {
-        return evaluate_permission($authUser, 'Update:Assay');
+        return evaluate_permission($authUser, 'Manage:Assay');
     }
 
     public function delete(AuthUser $authUser, Assay $assay): bool
@@ -40,6 +39,6 @@ class AssayPolicy
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Assay');
+        return evaluate_permission($authUser, 'Delete:Assay');
     }
 }

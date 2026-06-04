@@ -14,32 +14,32 @@ class LabwarePolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'ViewAny:Labware');
+        return evaluate_permission($authUser, 'View:Project');
     }
 
     public function view(AuthUser $authUser, Labware $labware): bool
     {
-        return evaluate_permission($authUser, 'View:Labware');
+        return evaluate_permission($authUser, 'View:Project');
     }
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Labware');
+        return evaluate_permission($authUser, 'Manage:Project');
     }
 
     public function update(AuthUser $authUser, Labware $labware): bool
     {
 
-        return evaluate_permission($authUser, 'Update:Labware');
+        return evaluate_permission($authUser, 'Manage:Project');
     }
 
     public function delete(AuthUser $authUser, Labware $labware): bool
     {
-        return evaluate_permission($authUser, 'Delete:Labware');
+        return evaluate_permission($authUser, 'Delete:Project');
     }
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Labware');
+        return evaluate_permission($authUser, 'Delete:Project');
     }
 }

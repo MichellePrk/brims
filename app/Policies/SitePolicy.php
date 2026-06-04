@@ -15,31 +15,31 @@ class SitePolicy
     public function viewAny(AuthUser $authUser): bool
     {
 
-        return evaluate_permission($authUser, 'ViewAny:Site');
+        return evaluate_permission($authUser, 'View:Project');
     }
 
     public function view(AuthUser $authUser, Site $site): bool
     {
-        return evaluate_permission($authUser, 'View:Site');
+        return evaluate_permission($authUser, 'View:Project');
     }
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Site');
+        return evaluate_permission($authUser, 'Manage:Project');
     }
 
     public function update(AuthUser $authUser, Site $site): bool
     {
-        return evaluate_permission($authUser, 'Update:Site');
+        return evaluate_permission($authUser, 'Manage:Project');
     }
 
     public function delete(AuthUser $authUser, Site $site): bool
     {
-        return evaluate_permission($authUser, 'Delete:Site');
+        return evaluate_permission($authUser, 'Delete:Project');
     }
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Site');
+        return evaluate_permission($authUser, 'Delete:Project');
     }
 }

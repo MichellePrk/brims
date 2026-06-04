@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Enums\SystemRoles;
-use App\Enums\TeamRoles;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\AssayDefinition;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -16,14 +14,12 @@ class AssayDefinitionPolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return true;
-        // return $authUser->can('ViewAny:AssayDefinition');
+        return evaluate_permission($authUser, 'View:AssayDefinition');
     }
 
     public function view(AuthUser $authUser, AssayDefinition $assayDefinition): bool
     {
-        return true;
-        // return $authUser->can('View:AssayDefinition');
+        return evaluate_permission($authUser, 'View:AssayDefinition');
     }
 
     public function create(AuthUser $authUser): bool
@@ -33,7 +29,7 @@ class AssayDefinitionPolicy
 
     public function update(AuthUser $authUser, AssayDefinition $assayDefinition): bool
     {
-        return evaluate_permission($authUser, 'Update:AssayDefinition');
+        return evaluate_permission($authUser, 'Manage:AssayDefinition');
     }
 
     public function delete(AuthUser $authUser, AssayDefinition $assayDefinition): bool
