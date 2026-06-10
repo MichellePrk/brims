@@ -3,6 +3,7 @@
 namespace App\Filament\App\Resources\Teams\RelationManagers;
 
 use App\Enums\TeamRoles;
+use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -14,6 +15,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
@@ -52,7 +54,7 @@ class MembersRelationManager extends RelationManager
                     ->required()
                     ->maxLength(50),
                 Select::make('team_role')
-                    ->options(fn (): array|string => $this->ownerRecord->members->count() === 0 ? TeamRoles::admin() : TeamRoles::class)
+                    ->options(fn(): array|string => $this->ownerRecord->members->count() === 0 ? TeamRoles::admin() : TeamRoles::class)
                     ->required(),
                 TextInput::make('telephone')
                     ->prefix('+')
@@ -73,6 +75,11 @@ class MembersRelationManager extends RelationManager
         // return UsersTable::configure($table);
         return $table
             ->columns([
+                ImageColumn::make('avatar_url')
+                    ->label('')
+                    ->circular()
+                    ->imageSize(40)
+                    ->state(fn(User $record) => $record->avatar_url ? asset('storage/' . $record->avatar_url) : null),
                 TextColumn::make('username')
                     ->searchable(),
                 TextColumn::make('fullname')
@@ -100,11 +107,11 @@ class MembersRelationManager extends RelationManager
             ])
             ->filters([
                 Filter::make('active')
-                    ->query(fn ($query) => $query->where('active', true))
+                    ->query(fn($query) => $query->where('active', true))
                     ->label('Active')
                     ->toggle(),
                 SelectFilter::make('homesite')
-                    ->options(fn () => \App\Models\User::distinct('homesite')->pluck('homesite', 'homesite'))
+                    ->options(fn() => \App\Models\User::distinct('homesite')->pluck('homesite', 'homesite'))
                     ->multiple()
                     ->searchable()
                     ->preload()

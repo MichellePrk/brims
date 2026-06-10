@@ -23,7 +23,7 @@
         "laravel/tinker": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.30",
         "livewire/livewire": "^4.0",
-        "robertboes/filament-passkeys": "^0.1.0",
+        "marcelweidum/filament-passkeys": "4.x",
         "spatie/laravel-permission": "^6.20",
         "stechstudio/filament-impersonate": "^5.0"
     },

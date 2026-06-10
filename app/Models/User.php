@@ -7,9 +7,12 @@ namespace App\Models;
 use App\Enums\SystemRoles;
 use App\Enums\TeamRoles;
 use Database\Factories\UserFactory;
+use Filament\Auth\MultiFactor\App\Concerns\InteractsWithAppAuthentication;
+use Filament\Auth\MultiFactor\App\Concerns\InteractsWithAppAuthenticationRecovery;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
@@ -27,10 +30,10 @@ use Laravel\Passkeys\Contracts\PasskeyUser;
 use Laravel\Passkeys\PasskeyAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, PasskeyUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasName, HasTenants
+class User extends Authenticatable implements FilamentUser, PasskeyUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasName, HasTenants, HasAvatar
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, HasRoles, Notifiable, PasskeyAuthenticatable;
+    use HasFactory, HasRoles, Notifiable, PasskeyAuthenticatable, InteractsWithAppAuthentication, InteractsWithAppAuthenticationRecovery;
 
     /**
      * The attributes that are mass assignable.
@@ -129,6 +132,11 @@ class User extends Authenticatable implements FilamentUser, PasskeyUser, HasAppA
 
         $this->app_authentication_recovery_codes = $codes;
         $this->save();
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return 'storage/' . $this->avatar_url;
     }
 
     public function getTenants(Panel $panel): Collection

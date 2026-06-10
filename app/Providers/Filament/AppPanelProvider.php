@@ -25,7 +25,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use RobertBoes\FilamentPasskeys\FilamentPasskeysPlugin;
+use MarcelWeidum\Passkeys\PasskeysPlugin;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -63,7 +63,7 @@ class AppPanelProvider extends PanelProvider
             ->path('')
             ->login(Login::class)
             ->plugins([
-                FilamentPasskeysPlugin::make()
+                PasskeysPlugin::make()
             ])
             ->multiFactorAuthentication([
                 AppAuthentication::make()
