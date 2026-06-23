@@ -23,9 +23,8 @@ class ProtocolsTable
                 TextColumn::make('type')
                     ->searchable(),
                 TextColumn::make('description')
-                    ->searchable(),
-                TextColumn::make('uri')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(50),
                 TextColumn::make('version')
                     ->searchable(),
                 TextColumn::make('parameters_names')
