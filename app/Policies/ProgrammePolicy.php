@@ -4,63 +4,51 @@ namespace App\Policies;
 
 use App\Models\Programme;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class ProgrammePolicy
 {
+
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Programme $programme): bool
+    public function view(User $authUser, Programme $programme): bool
     {
-        return false;
+        return evaluate_permission($authUser, 'View:Programme');
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $authUser): bool
     {
-        return false;
+        return evaluate_permission($authUser, 'Manage:Programme');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Programme $programme): bool
+    public function update(User $authUser, Programme $programme): bool
     {
-        return false;
+        return evaluate_permission($authUser, 'Manage:Programme');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Programme $programme): bool
+    public function delete(User $authUser, Programme $programme): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Programme $programme): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Programme $programme): bool
-    {
-        return false;
+        return evaluate_permission($authUser, 'Delete:Programme');
     }
 }

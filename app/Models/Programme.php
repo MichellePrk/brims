@@ -20,4 +20,10 @@ class Programme extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)
+            ->withTimestamps();
+    }
 }
