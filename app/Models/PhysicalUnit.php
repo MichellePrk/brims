@@ -11,11 +11,8 @@ class PhysicalUnit extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $guarded = ['id'];
-
-    protected $casts = [
-        'available' => 'boolean',
-    ];
 
     /**
      * @return BelongsTo <UnitDefinition, PhysicalUnit>
@@ -39,5 +36,12 @@ class PhysicalUnit extends Model
     public function virtualUnits(): HasMany
     {
         return $this->hasMany(VirtualUnit::class);
+    }
+    #[\Override]
+    protected function casts(): array
+    {
+        return [
+            'available' => 'boolean',
+        ];
     }
 }

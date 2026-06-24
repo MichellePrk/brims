@@ -17,10 +17,13 @@ use Filament\Tables\Table;
 
 class SubjectResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Subject::class;
 
+    #[\Override]
     public static ?int $navigationSort = 2;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
     #[\Override]
@@ -50,6 +53,7 @@ class SubjectResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

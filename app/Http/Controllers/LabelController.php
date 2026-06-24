@@ -51,7 +51,7 @@ class LabelController extends Controller
             ])
             ->get();
         // $this->fpdf = new PDF_Label('L7651_mod');
-        $this->fpdf = $pdfLabel ?? (app()->bound(PDF_Label::class) ? app(PDF_Label::class) : new PDF_Label('L7651_mod'));
+        $this->fpdf = $pdfLabel ?? (app()->bound(PDF_Label::class) ? resolve(PDF_Label::class) : new PDF_Label('L7651_mod'));
 
         $this->fpdf->AddPage();
         $this->fpdf->AddFont('Calibri', '', 'calibri.php');

@@ -30,13 +30,16 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectsRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'projects';
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -255,7 +258,7 @@ class ProjectsRelationManager extends RelationManager
                                 DatePicker::make('submission_date'),
                             ]),
                     ])
-                    ->action(function (array $data) {
+                    ->action(function (array $data): void {
                         DB::beginTransaction();
                         try {
                             $data['team_id'] = Auth::user()->team_id;
@@ -276,7 +279,7 @@ class ProjectsRelationManager extends RelationManager
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()
-                    ->after(function (Project $record) {
+                    ->after(function (Project $record): void {
                         $projectAdminRole = $record->roles()->where('name', 'Admin')->first();
                         if ($record->members()->where('user_id', $record->leader_id)->count() == 0) {
                             $record->members()->attach($record->leader_id, ['role_id' => $projectAdminRole->id]);
@@ -285,7 +288,7 @@ class ProjectsRelationManager extends RelationManager
                         }
                     }),
                 DeleteAction::make()
-                    ->modalHeading(fn(Project $record) => Markdown::inline("Delete Project<br><br>*$record->title*<br><br>"))
+                    ->modalHeading(fn(Project $record): \Filament\Support\Markdown => Markdown::inline("Delete Project<br><br>*$record->title*<br><br>"))
                     ->modalDescription(Markdown::inline('**All data pertaining to this project will be deleted.<br><br>Are you sure you want to proceed?**'))
                     ->after(fn(Project $record) => Role::where('project_id', $record->id)->delete()),
             ])

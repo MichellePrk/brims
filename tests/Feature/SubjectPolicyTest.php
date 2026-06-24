@@ -48,7 +48,7 @@ function grantSubjectPermission(User $user, string $permissionName, Project $pro
     setPermissionsTeamId($project->id);
     $permission = Permission::firstOrCreate(['name' => $permissionName]);
     $user->givePermissionTo($permission);
-    app(PermissionRegistrar::class)->forgetCachedPermissions();
+    resolve(PermissionRegistrar::class)->forgetCachedPermissions();
 }
 
 // ---------------------------------------------------------------------------

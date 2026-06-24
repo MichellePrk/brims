@@ -13,6 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class SubjectImporter extends Importer
 {
+    #[\Override]
     protected static ?string $model = Subject::class;
 
     protected static array $staticOptions = [];
@@ -24,7 +25,7 @@ class SubjectImporter extends Importer
             ImportColumn::make('subjectID')
                 ->label('Subject ID')
                 ->requiredMapping()
-                ->rules(fn($options) => [
+                ->rules(fn($options): array => [
                     'required',
                     'unique:subjects,subjectID',
                     'regex:/^' . $options['project']->subjectID_prefix . '\d{' . $options['project']->subjectID_digits . '}$/'
@@ -32,7 +33,7 @@ class SubjectImporter extends Importer
             ImportColumn::make('site')
                 ->requiredMapping()
                 ->relationship(resolveUsing: 'name')
-                ->rules(fn($options) => [
+                ->rules(fn($options): array => [
                     'required',
                     Rule::exists('sites', 'name')->where('project_id',  $options['project']->id)
                 ]),
@@ -61,8 +62,8 @@ class SubjectImporter extends Importer
                     Rule::enum(SubjectStatus::class)
                 ])->castStateUsing(function ($state) {
                     try {
-                        return constant(SubjectStatus::class . '::' . $state)->value;
-                    } catch (\Throwable $th) {
+                        return SubjectStatus::{$state}->value;
+                    } catch (\Throwable) {
                         throw ValidationException::withMessages([
                             'status' => "The status '{$state}' is not valid. Valid values are: " . implode(', ', array_column(SubjectStatus::cases(), 'name')) . '.',
                         ]);
@@ -71,6 +72,7 @@ class SubjectImporter extends Importer
         ];
     }
 
+    #[\Override]
     public function resolveRecord(): ?Subject
     {
         $subject = new Subject();

@@ -12,8 +12,10 @@ use Illuminate\Support\Facades\Cache;
 
 class StatsOverview extends StatsOverviewWidget
 {
+    #[\Override]
     protected static ?int $sort = 1;
 
+    #[\Override]
     protected function getStats(): array
     {
         return [
@@ -26,6 +28,7 @@ class StatsOverview extends StatsOverviewWidget
         ];
     }
 
+    #[\Override]
     protected function getColumns(): int | array
     {
         return [

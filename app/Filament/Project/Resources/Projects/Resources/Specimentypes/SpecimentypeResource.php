@@ -17,10 +17,13 @@ use Filament\Tables\Table;
 
 class SpecimentypeResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Specimentype::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    #[\Override]
     protected static ?string $parentResource = ProjectResource::class;
 
     #[\Override]
@@ -43,6 +46,7 @@ class SpecimentypeResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

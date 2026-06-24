@@ -3,8 +3,6 @@
 namespace App\Filament\Project\Resources\Projects\Resources\Arms;
 
 use App\Filament\Project\Resources\Projects\ProjectResource;
-use App\Filament\Project\Resources\Projects\Resources\Arms\Pages\CreateArm;
-use App\Filament\Project\Resources\Projects\Resources\Arms\Pages\EditArm;
 use App\Filament\Project\Resources\Projects\Resources\Arms\Pages\ViewArm;
 use App\Filament\Project\Resources\Projects\Resources\Arms\Schemas\ArmForm;
 use App\Filament\Project\Resources\Projects\Resources\Arms\Schemas\ArmInfolist;
@@ -18,10 +16,13 @@ use Filament\Tables\Table;
 
 class ArmResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Arm::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    #[\Override]
     protected static ?string $parentResource = ProjectResource::class;
 
     #[\Override]
@@ -50,6 +51,7 @@ class ArmResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

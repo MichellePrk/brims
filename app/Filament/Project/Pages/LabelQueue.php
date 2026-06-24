@@ -20,13 +20,16 @@ class LabelQueue extends Page implements HasTable
 {
     use Tables\Concerns\InteractsWithTable;
 
+    #[\Override]
     protected static ?int $navigationSort = 3;
 
     /**
      * Match parent signature which accepts a BackedEnum as well as string|null.
      */
+    #[\Override]
     protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-queue-list';
 
+    #[\Override]
     protected string $view = 'filament.project.pages.label-queue';
 
     protected function getTableQuery(): Builder
@@ -93,7 +96,7 @@ class LabelQueue extends Page implements HasTable
             Action::make('printAll')
                 ->label('Print all')
                 ->icon('heroicon-o-printer')
-                ->url(fn() => route('labels.print'))
+                ->url(fn(): string => route('labels.print'))
                 ->openUrlInNewTab(),
             Action::make('clearAll')
                 ->label('Clear all')
@@ -121,7 +124,7 @@ class LabelQueue extends Page implements HasTable
             Action::make('print')
                 ->label('Print')
                 ->icon('heroicon-o-printer')
-                ->url(fn(SubjectEvent $record) => route('labels.print', ['ids' => [$record->id]]))
+                ->url(fn(SubjectEvent $record): string => route('labels.print', ['ids' => [$record->id]]))
                 ->openUrlInNewTab(),
         ];
     }
@@ -136,7 +139,7 @@ class LabelQueue extends Page implements HasTable
 
             BulkAction::make('printSelected')
                 ->label('Print selected')
-                ->action(fn(Collection $records) => redirect()->route('labels.print', ['ids' => $records->pluck('id')->all()])),
+                ->action(fn(Collection $records) => to_route('labels.print', ['ids' => $records->pluck('id')->all()])),
 
         ];
     }

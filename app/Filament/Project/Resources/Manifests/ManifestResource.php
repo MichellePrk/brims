@@ -18,29 +18,37 @@ use Filament\Tables\Table;
 
 class ManifestResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Manifest::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNumberedList;
 
+    #[\Override]
     protected static ?string $recordTitleAttribute = 'created_at';
 
+    #[\Override]
     public static ?int $navigationSort = 8;
 
+    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return ManifestForm::configure($schema);
     }
 
+    #[\Override]
     public static function infolist(Schema $schema): Schema
     {
         return ManifestInfolist::configure($schema);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return ManifestsTable::configure($table);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [
@@ -48,6 +56,7 @@ class ManifestResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

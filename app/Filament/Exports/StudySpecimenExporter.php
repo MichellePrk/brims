@@ -11,13 +11,16 @@ use Illuminate\Support\Number;
 
 class StudySpecimenExporter extends Exporter
 {
+    #[\Override]
     protected static ?string $model = StudySpecimen::class;
 
+    #[\Override]
     public function getFileDisk(): string
     {
         return 'exports';
     }
 
+    #[\Override]
     public function getFormats(): array
     {
         return [

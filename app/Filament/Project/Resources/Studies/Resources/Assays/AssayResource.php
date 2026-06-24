@@ -14,14 +14,19 @@ use Filament\Tables\Table;
 
 class AssayResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Assay::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    #[\Override]
     protected static ?string $parentResource = StudyResource::class;
 
+    #[\Override]
     protected static bool $isScopedToTenant = false;
 
+    #[\Override]
     public static function shouldRegisterNavigation(): bool
     {
         return false;

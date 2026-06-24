@@ -9,6 +9,7 @@ class Programme extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $guarded = ['id'];
 
     public function team()

@@ -10,10 +10,13 @@ use Filament\Tables\Table;
 
 class ProtocolsRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'protocols';
 
+    #[\Override]
     protected static ?string $relatedResource = ProtocolResource::class;
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;

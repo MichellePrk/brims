@@ -27,13 +27,16 @@ use Illuminate\Support\Str;
 
 class MembersRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'members';
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema

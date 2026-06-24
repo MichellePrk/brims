@@ -17,6 +17,7 @@ class ProjectEventsDue extends TableWidget
 {
     use HasWidgetShield;
 
+    #[\Override]
     public function table(Table $table): Table
     {
         $substitutees = Auth::user()->substitutees()

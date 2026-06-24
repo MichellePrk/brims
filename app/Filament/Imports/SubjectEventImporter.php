@@ -15,6 +15,7 @@ use Illuminate\Validation\ValidationException;
 
 class SubjectEventImporter extends Importer
 {
+    #[\Override]
     protected static ?string $model = SubjectEvent::class;
 
     public static function getColumns(): array
@@ -24,9 +25,9 @@ class SubjectEventImporter extends Importer
                 ->label('Subject ID')
                 ->requiredMapping()
                 ->relationship(name: 'subject', resolveUsing: 'subjectID')
-                ->rules(fn($options) => [
+                ->rules(fn($options): array => [
                     'required',
-                    function (string $attribute, $value, Closure $fail) use ($options) {
+                    function (string $attribute, $value, Closure $fail) use ($options): void {
                         if (! \App\Models\Subject::where('subjectID', $value)
                             ->where('project_id', $options['project']->id)
                             ->exists()) {
@@ -37,9 +38,9 @@ class SubjectEventImporter extends Importer
             ImportColumn::make('event')
                 ->requiredMapping()
                 ->relationship(resolveUsing: 'name')
-                ->rules(fn($options) => [
+                ->rules(fn($options): array => [
                     'required',
-                    function ($value, Closure $fail) use ($options) {
+                    function ($value, Closure $fail) use ($options): void {
                         $exists = \App\Models\Event::where('name', $value)
                             ->whereHas('arm', fn($query) => $query->where('project_id', $options['project']->id))
                             ->exists();
@@ -61,8 +62,8 @@ class SubjectEventImporter extends Importer
                 ])
                 ->castStateUsing(function ($state) {
                     try {
-                        return constant(EventStatus::class . '::' . $state)->value;
-                    } catch (\Throwable $th) {
+                        return EventStatus::{$state}->value;
+                    } catch (\Throwable) {
                         throw ValidationException::withMessages([
                             'status' => "The event status '{$state}' is not valid. Valid values are: " . implode(', ', array_column(EventStatus::cases(), 'name')) . '.',
                         ]);
@@ -76,8 +77,8 @@ class SubjectEventImporter extends Importer
                 ])
                 ->castStateUsing(function ($state) {
                     try {
-                        return constant(LabelStatus::class . '::' . $state)->value;
-                    } catch (\Throwable $th) {
+                        return LabelStatus::{$state}->value;
+                    } catch (\Throwable) {
                         throw ValidationException::withMessages([
                             'labelstatus' => "The label status '{$state}' is not valid. Valid values are: " . implode(', ', array_column(LabelStatus::cases(), 'name')) . '.',
                         ]);
@@ -115,6 +116,7 @@ class SubjectEventImporter extends Importer
         }
     }
 
+    #[\Override]
     public function resolveRecord(): SubjectEvent
     {
         return new SubjectEvent();

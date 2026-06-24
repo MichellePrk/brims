@@ -24,6 +24,7 @@ class Subject extends Model
     /** @use HasFactory<SubjectFactory> */
     use HasFactory;
 
+    #[\Override]
     protected $guarded = ['id'];
 
     protected function fullname(): Attribute
@@ -114,7 +115,6 @@ class Subject extends Model
                 'minDate' => $armBaselineDate?->addDays($event->offset - $event->offset_ante_window) ?? null,
                 'maxDate' => $armBaselineDate?->addDays($event->offset + $event->offset_post_window) ?? null,
                 'iteration' => 1,
-                'status' => EventStatus::Pending,
 
                 'status' => $this->status === SubjectStatus::Generated ?
                     EventStatus::Pending :
@@ -205,6 +205,7 @@ class Subject extends Model
         }
     }
 
+    #[\Override]
     protected function casts(): array
     {
         return [

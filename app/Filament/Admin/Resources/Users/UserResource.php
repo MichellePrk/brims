@@ -17,14 +17,19 @@ use UnitEnum;
 
 class UserResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = User::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
+    #[\Override]
     protected static string | UnitEnum | null $navigationGroup = 'User Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 3;
 
+    #[\Override]
     protected static ?string $recordTitleAttribute = 'fullname';
 
     #[\Override]

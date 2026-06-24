@@ -8,8 +8,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditAssay extends EditRecord
 {
+    #[\Override]
     protected static string $resource = AssayResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

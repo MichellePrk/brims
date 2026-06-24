@@ -12,8 +12,10 @@ use Illuminate\Support\Number;
 
 class SpecimenExporter extends Exporter
 {
+    #[\Override]
     protected static ?string $model = Specimen::class;
 
+    #[\Override]
     public function getFormats(): array
     {
         return [
@@ -21,6 +23,7 @@ class SpecimenExporter extends Exporter
         ];
     }
 
+    #[\Override]
     public function getFileDisk(): string
     {
         return 'exports';

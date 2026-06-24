@@ -14,8 +14,10 @@ use Filament\Support\Icons\Heroicon;
 
 class ProjectResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Project::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     #[\Override]
@@ -43,6 +45,7 @@ class ProjectResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

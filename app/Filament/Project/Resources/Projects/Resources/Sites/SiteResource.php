@@ -16,10 +16,13 @@ use Filament\Tables\Table;
 
 class SiteResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Site::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    #[\Override]
     protected static ?string $parentResource = ProjectResource::class;
 
     #[\Override]
@@ -42,6 +45,7 @@ class SiteResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

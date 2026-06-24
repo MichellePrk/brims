@@ -8,8 +8,10 @@ use Filament\Resources\Pages\ManageRecords;
 
 class ManageStorageAllocations extends ManageRecords
 {
+    #[\Override]
     protected static string $resource = StorageAllocationResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

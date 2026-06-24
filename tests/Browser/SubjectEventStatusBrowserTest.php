@@ -64,7 +64,7 @@ beforeEach(function (): void {
 
 it('shows status as read-only for users without the update.event permission (browser)', function (): void {
     // allow viewing the record without depending on project pivot data
-    \Illuminate\Support\Facades\Gate::before(fn ($user, $ability) => $ability === 'view' ? true : null);
+    \Illuminate\Support\Facades\Gate::before(fn ($user, $ability): ?true => $ability === 'view' ? true : null);
 
     $page = visit(route('filament.project.resources.subjects.view', ['tenant' => $this->project->id, 'record' => $this->subject->id]))
         ->assertSee('Status')
@@ -78,8 +78,8 @@ it('shows status as read-only for users without the update.event permission (bro
 
 it('shows status as editable for users with the update.event permission (browser)', function (): void {
     // allow viewing the record and stub update.event for editability
-    \Illuminate\Support\Facades\Gate::before(fn ($user, $ability) => $ability === 'view' ? true : null);
-    \Illuminate\Support\Facades\Gate::define('update.event', fn ($actor) => $actor->id === $this->user->id);
+    \Illuminate\Support\Facades\Gate::before(fn ($user, $ability): ?true => $ability === 'view' ? true : null);
+    \Illuminate\Support\Facades\Gate::define('update.event', fn ($actor): bool => $actor->id === $this->user->id);
 
     $page = visit(route('filament.project.resources.subjects.view', ['tenant' => $this->project->id, 'record' => $this->subject->id]))
         ->assertSee('Status');

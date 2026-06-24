@@ -31,10 +31,13 @@ class LogDerivativeSpecimens extends Page implements HasForms
 {
     use InteractsWithForms;
 
+    #[\Override]
     protected static ?int $navigationSort = 6;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBeaker;
 
+    #[\Override]
     protected string $view = 'filament.project.pages.log-derivative-specimens';
 
     public ?User $user = null;
@@ -61,6 +64,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
 
     public Collection $potentialParentSpecimens;
 
+    #[\Override]
     protected $listeners = ['updateform' => '$refresh'];
 
     public function mount(): void
@@ -112,7 +116,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
                             ->label('Parent Specimen Barcode')
                             ->helperText('Scan the parent specimen barcode')
                             ->statePath('parent_barcode')
-                            ->visible(fn($get) => $get('selection_route') === 'parent_barcode')
+                            ->visible(fn($get): bool => $get('selection_route') === 'parent_barcode')
                             ->scopedExists(Specimen::class, 'barcode')
                             ->extraAttributes([
                                 'class' => 'w-full md:w-80',
@@ -122,7 +126,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
                             ->label('Project Subject Event Barcode')
                             ->helperText('Scan the PSE barcode')
                             ->statePath('pse_barcode')
-                            ->visible(fn($get) => $get('selection_route') === 'pse_barcode')
+                            ->visible(fn($get): bool => $get('selection_route') === 'pse_barcode')
                             ->extraAttributes([
                                 'class' => 'w-full md:w-80',
                                 'x-on:keydown.enter.prevent' => '$wire.loadSubjectEventSpecimens()',
@@ -138,7 +142,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
                         foreach ($potentialParentSpecimens as $potentialParentSpecimen) {
                             $barcode = $potentialParentSpecimen['barcode'];
                             $potentialParents[] = TextEntry::make('barcode_' . $barcode)
-                                ->getStateUsing(fn() => $barcode)
+                                ->getStateUsing(fn(): mixed => $barcode)
                                 ->hiddenLabel()
                                 ->grow(false)
                                 ->action(Action::make('select_parent_' . $barcode)->action(fn() => $this->selectParentSpecimen($barcode)));
@@ -416,6 +420,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
         $this->dispatch('updateform');
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         $actions = [];

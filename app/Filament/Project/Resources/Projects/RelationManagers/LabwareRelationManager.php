@@ -10,6 +10,7 @@ use Filament\Tables\Table;
 
 class LabwareRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'labware';
 
     #[\Override]
@@ -19,6 +20,7 @@ class LabwareRelationManager extends RelationManager
     }
 
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return LabwareForm::configure($schema);

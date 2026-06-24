@@ -9,12 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StorageAllocation extends Model
 {
+    #[\Override]
     protected $guarded = [
         'id',
-    ];
-
-    protected $casts = [
-        'storageDestination' => StorageDestinations::class,
     ];
 
     public function project(): BelongsTo
@@ -30,5 +27,12 @@ class StorageAllocation extends Model
     public function storageLogs(): HasMany
     {
         return $this->hasMany(StorageLog::class);
+    }
+    #[\Override]
+    protected function casts(): array
+    {
+        return [
+            'storageDestination' => StorageDestinations::class,
+        ];
     }
 }

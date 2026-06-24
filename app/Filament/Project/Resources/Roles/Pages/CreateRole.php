@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 
 class CreateRole extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = RoleResource::class;
 
     public Collection $permissions;

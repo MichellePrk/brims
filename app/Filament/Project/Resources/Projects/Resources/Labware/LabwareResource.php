@@ -16,10 +16,13 @@ use Filament\Tables\Table;
 
 class LabwareResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Labware::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    #[\Override]
     protected static ?string $parentResource = ProjectResource::class;
 
 
@@ -43,6 +46,7 @@ class LabwareResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

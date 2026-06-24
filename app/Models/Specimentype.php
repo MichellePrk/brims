@@ -13,6 +13,7 @@ class Specimentype extends Model
     /** @use HasFactory<SpecimentypeFactory> */
     use HasFactory;
 
+    #[\Override]
     protected $guarded = ['id'];
 
     public function project(): BelongsTo
@@ -35,6 +36,7 @@ class Specimentype extends Model
         return $this->belongsTo(Specimentype::class, 'parentSpecimenType_id', 'id');
     }
 
+    #[\Override]
     protected function casts(): array
     {
         return [

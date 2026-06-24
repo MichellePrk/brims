@@ -3,17 +3,21 @@
 namespace App\Filament\Admin\Widgets;
 
 use App\Models\User;
-use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Facades\Date;
 
 class ActiveUsersChart extends ChartWidget
 {
+    #[\Override]
     protected ?string $heading = 'Active Users Chart';
 
+    #[\Override]
     protected static ?int $sort = 2;
 
+    #[\Override]
     protected ?string $maxHeight = '500px';
 
+    #[\Override]
     protected function getData(): array
     {
         $monthly = User::where('active', true)
@@ -37,8 +41,8 @@ class ActiveUsersChart extends ChartWidget
         }
 
         $months = array_keys($monthly);
-        $start = Carbon::createFromFormat('Y-m', $months[0])->startOfMonth();
-        $end = Carbon::createFromFormat('Y-m', end($months))->startOfMonth();
+        $start = Date::createFromFormat('Y-m', $months[0])->startOfMonth();
+        $end = Date::createFromFormat('Y-m', end($months))->startOfMonth();
 
         $labels = [];
         $cumulative = [];
@@ -62,6 +66,7 @@ class ActiveUsersChart extends ChartWidget
         ];
     }
 
+    #[\Override]
     protected function getOptions(): array
     {
         return [

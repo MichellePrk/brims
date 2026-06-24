@@ -8,8 +8,10 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewSubject extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = SubjectResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -17,5 +19,6 @@ class ViewSubject extends ViewRecord
         ];
     }
 
+    #[\Override]
     protected $listeners = ['refreshSubjectViewData' => '$refresh'];
 }

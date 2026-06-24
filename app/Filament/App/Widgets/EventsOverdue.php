@@ -17,6 +17,7 @@ class EventsOverdue extends TableWidget
 
     // protected static ?string $heading = 'Overdue Events';
 
+    #[\Override]
     public function table(Table $table): Table
     {
         $substitutees = Auth::user()->substitutees()

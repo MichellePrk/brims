@@ -96,7 +96,7 @@ class UserForm
                         Select::make('system_role')
                             ->label('System Role')
                             ->options(function (): array {
-                                $roles = collect(SystemRoles::cases())->mapWithKeys(fn($role) => [$role->value => $role->getLabel()]);
+                                $roles = collect(SystemRoles::cases())->mapWithKeys(fn($role): array => [$role->value => $role->getLabel()]);
                                 $roles = Auth::user()->system_role !== SystemRoles::SuperAdmin ? $roles->except(SystemRoles::SuperAdmin->value) : $roles;
                                 return $roles->all();
                             })

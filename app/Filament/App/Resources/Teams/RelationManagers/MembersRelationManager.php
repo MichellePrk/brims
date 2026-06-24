@@ -24,13 +24,16 @@ use Illuminate\Support\Str;
 
 class MembersRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'members';
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -78,7 +81,7 @@ class MembersRelationManager extends RelationManager
                     ->label('')
                     ->circular()
                     ->imageSize(40)
-                    ->state(fn(User $record) => $record->avatar_url ? asset('storage/' . $record->avatar_url) : null),
+                    ->state(fn(User $record): ?string => $record->avatar_url ? asset('storage/' . $record->avatar_url) : null),
                 TextColumn::make('username')
                     ->searchable(),
                 TextColumn::make('fullname')

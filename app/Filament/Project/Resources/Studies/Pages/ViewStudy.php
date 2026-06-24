@@ -10,8 +10,10 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewStudy extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = StudyResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

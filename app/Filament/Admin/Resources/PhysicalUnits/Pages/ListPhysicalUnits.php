@@ -8,8 +8,10 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListPhysicalUnits extends ListRecords
 {
+    #[\Override]
     protected static string $resource = PhysicalUnitResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

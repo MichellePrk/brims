@@ -10,8 +10,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditSubject extends EditRecord
 {
+    #[\Override]
     protected static string $resource = SubjectResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -21,6 +23,7 @@ class EditSubject extends EditRecord
         ];
     }
 
+    #[\Override]
     public function getRelationManagers(): array
     {
         return [];

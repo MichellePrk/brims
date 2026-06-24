@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StorageLog extends Model
 {
+    #[\Override]
     protected $guarded = [
         'id',
     ];

@@ -24,6 +24,7 @@ use Illuminate\Support\HtmlString;
 
 class MembersRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'members';
 
     #[\Override]
@@ -78,7 +79,7 @@ class MembersRelationManager extends RelationManager
                     ->label('Substitute')
                     ->icon('heroicon-o-pencil')
                     ->badge()
-                    ->placeholder(fn() => new HtmlString(Blade::render('<x-heroicon-o-pencil class="w-4 h-4 inline mr-1" />' . 'None')))
+                    ->placeholder(fn(): HtmlString => new HtmlString(Blade::render('<x-heroicon-o-pencil class="w-4 h-4 inline mr-1" />' . 'None')))
                     ->action(
                         Action::make('selectSubstitute')
                             ->label('Select Substitute')

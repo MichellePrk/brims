@@ -14,8 +14,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class SectionsRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'sections';
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -87,8 +89,8 @@ class SectionsRelationManager extends RelationManager
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()
-                    ->after(function (Model $record) {
-                        $this->getOwnerRecord()->sections()->get()->each(function (Model $section) use ($record) {
+                    ->after(function (Model $record): void {
+                        $this->getOwnerRecord()->sections()->get()->each(function (Model $section) use ($record): void {
                             if ($section->section_number > $record->section_number) {
                                 $section->decrement('section_number');
                             }

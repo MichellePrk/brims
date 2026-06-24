@@ -11,7 +11,6 @@ use App\Models\Subject;
 use App\Models\SubjectEvent;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Support\Carbon;
 
 it('marks the first event as logged during subject enrolment', function (): void {
     $team = Team::factory()->create();
@@ -50,7 +49,7 @@ it('marks the first event as logged during subject enrolment', function (): void
         'labelstatus' => LabelStatus::Pending->value,
     ]);
 
-    $enrolDate = Carbon::today()->toDateString();
+    $enrolDate = \Illuminate\Support\Facades\Date::today()->toDateString();
 
     $subject->enrol(['enrolDate' => $enrolDate]);
 

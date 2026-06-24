@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 
 class SitesRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'sites';
 
     #[\Override]
@@ -23,6 +24,7 @@ class SitesRelationManager extends RelationManager
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema

@@ -11,8 +11,10 @@ class UnitDefinition extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $guarded = ['id'];
 
+    #[\Override]
     protected function casts(): array
     {
         return [

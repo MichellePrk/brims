@@ -16,10 +16,13 @@ use Illuminate\Support\Facades\Auth;
 
 class TeamResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Team::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    #[\Override]
     protected static bool $shouldRegisterNavigation = false;
 
     #[\Override]
@@ -58,6 +61,7 @@ class TeamResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

@@ -8,8 +8,10 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewProgramme extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = ProgrammeResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class SubjectEvent extends Pivot
 {
 
+    #[\Override]
     protected $guarded = ['id'];
 
     /**
@@ -23,6 +24,7 @@ class SubjectEvent extends Pivot
      *
      * @var bool
      */
+    #[\Override]
     public $incrementing = true;
 
     public function event(): BelongsTo
@@ -67,6 +69,7 @@ class SubjectEvent extends Pivot
             'logDate' => $data['logDate'],
         ]);
     }
+    #[\Override]
     protected function casts(): array
     {
         return [

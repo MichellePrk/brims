@@ -17,7 +17,7 @@ class ProjectsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(function (Builder $query) {
+            ->modifyQueryUsing(function (Builder $query): void {
                 if (Auth::user()->team_role !== TeamRoles::Admin) {
                     $query->whereRelation('members', 'users.id', '=', Auth::id());
                 }

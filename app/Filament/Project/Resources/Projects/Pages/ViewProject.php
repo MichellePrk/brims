@@ -22,10 +22,13 @@ use Illuminate\Support\Facades\Gate;
 
 class ViewProject extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = ProjectResource::class;
 
+    #[\Override]
     protected static ?string $title = 'Project Configuration';
 
+    #[\Override]
     public function mount(int|string $record): void
     {
         parent::mount($record);
@@ -34,6 +37,7 @@ class ViewProject extends ViewRecord
         // setPermissionsTeamId($this->record->id);
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

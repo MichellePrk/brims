@@ -25,7 +25,7 @@ class UsersTable
                 ImageColumn::make('avatar_url')
                     ->circular()
                     ->imageSize(40)
-                    ->state(fn(User $record) => $record->avatar_url ? asset('storage/' . $record->avatar_url) : null),
+                    ->state(fn(User $record): ?string => $record->avatar_url ? asset('storage/' . $record->avatar_url) : null),
                 TextColumn::make('username')
                     ->searchable(isIndividual: true, isGlobal: false),
                 TextColumn::make('fullname')
@@ -88,7 +88,7 @@ class UsersTable
                 EditAction::make(),
                 // ->hidden(fn(User $record) => $record->system_role === SystemRoles::SuperAdmin && Auth::user()->system_role !== SystemRoles::SuperAdmin),
                 Impersonate::make()
-                    ->hidden(fn(User $record) => $record->system_role === SystemRoles::SuperAdmin),
+                    ->hidden(fn(User $record): bool => $record->system_role === SystemRoles::SuperAdmin),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

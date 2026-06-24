@@ -7,13 +7,16 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewPhysicalUnit extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = PhysicalUnitResource::class;
 
+    #[\Override]
     public function getTitle(): string
     {
         return 'Physical Unit: '.$this->record->name;
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

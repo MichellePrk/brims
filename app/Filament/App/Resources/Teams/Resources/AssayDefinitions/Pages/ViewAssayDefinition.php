@@ -9,8 +9,10 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewAssayDefinition extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = AssayDefinitionResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

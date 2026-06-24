@@ -8,8 +8,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditStudydesign extends EditRecord
 {
+    #[\Override]
     protected static string $resource = StudydesignResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

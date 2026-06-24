@@ -12,15 +12,11 @@ class ManifestItem extends Pivot
     /** @use HasFactory<\Database\Factories\ManifestItemFactory> */
     use HasFactory;
 
+    #[\Override]
     protected $table = 'manifest_items';
 
+    #[\Override]
     protected $guarded = ['id'];
-
-    protected $casts = [
-        'received' => 'boolean',
-        'receivedTime' => 'datetime',
-        'priorSpecimenStatus' => SpecimenStatus::class,
-    ];
 
     public function manifest(): BelongsTo
     {
@@ -30,5 +26,14 @@ class ManifestItem extends Pivot
     public function specimen(): BelongsTo
     {
         return $this->belongsTo(Specimen::class);
+    }
+    #[\Override]
+    protected function casts(): array
+    {
+        return [
+            'received' => 'boolean',
+            'receivedTime' => 'datetime',
+            'priorSpecimenStatus' => SpecimenStatus::class,
+        ];
     }
 }

@@ -11,16 +11,19 @@ use Illuminate\Support\Facades\Auth;
 
 class ListManifests extends ListRecords
 {
+    #[\Override]
     protected static string $resource = ManifestResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
             CreateAction::make()
-                ->visible(fn($livewire) => $livewire->activeTab === 'sent'),
+                ->visible(fn($livewire): bool => $livewire->activeTab === 'sent'),
         ];
     }
 
+    #[\Override]
     public function getTabs(): array
     {
         return [

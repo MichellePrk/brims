@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class EditProject extends EditRecord
 {
+    #[\Override]
     protected static string $resource = ProjectResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -18,6 +20,7 @@ class EditProject extends EditRecord
         ];
     }
 
+    #[\Override]
     public function getRelationManagers(): array
     {
         return [];

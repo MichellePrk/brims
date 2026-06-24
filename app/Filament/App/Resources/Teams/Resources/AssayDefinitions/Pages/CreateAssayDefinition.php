@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CreateAssayDefinition extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = AssayDefinitionResource::class;
 
     /**

@@ -12,13 +12,16 @@ use Illuminate\Support\Number;
 
 class SubjectExporter extends Exporter
 {
+    #[\Override]
     protected static ?string $model = Subject::class;
 
+    #[\Override]
     public function getFileDisk(): string
     {
         return 'exports';
     }
 
+    #[\Override]
     public function getFormats(): array
     {
         return [

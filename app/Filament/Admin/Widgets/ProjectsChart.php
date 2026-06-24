@@ -3,17 +3,21 @@
 namespace App\Filament\Admin\Widgets;
 
 use App\Models\Project;
-use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Facades\Date;
 
 class ProjectsChart extends ChartWidget
 {
+    #[\Override]
     protected ?string $heading = 'Projects Chart';
 
+    #[\Override]
     protected static ?int $sort = 2;
 
+    #[\Override]
     protected ?string $maxHeight = '500px';
 
+    #[\Override]
     protected function getData(): array
     {
         $monthly = Project::selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, count(*) as count")
@@ -36,8 +40,8 @@ class ProjectsChart extends ChartWidget
         }
 
         $months = array_keys($monthly);
-        $start = Carbon::createFromFormat('Y-m', $months[0])->startOfMonth();
-        $end = Carbon::createFromFormat('Y-m', end($months))->startOfMonth();
+        $start = Date::createFromFormat('Y-m', $months[0])->startOfMonth();
+        $end = Date::createFromFormat('Y-m', end($months))->startOfMonth();
 
         $labels = [];
         $cumulative = [];
@@ -61,6 +65,7 @@ class ProjectsChart extends ChartWidget
         ];
     }
 
+    #[\Override]
     protected function getOptions(): array
     {
         return [

@@ -12,6 +12,7 @@ class Arm extends Model
     /** @use HasFactory<\Database\Factories\ArmFactory> */
     use HasFactory;
 
+    #[\Override]
     protected $guarded = ['id'];
 
     public function project(): BelongsTo
@@ -28,6 +29,7 @@ class Arm extends Model
     // {
     //     return $this->hasMany(Arm::class, 'switcharms', 'id');
     // }
+    #[\Override]
     protected function casts(): array
     {
         return [

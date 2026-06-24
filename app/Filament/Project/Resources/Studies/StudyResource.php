@@ -18,10 +18,13 @@ use Filament\Tables\Table;
 
 class StudyResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Study::class;
 
+    #[\Override]
     public static ?int $navigationSort = 9;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     #[\Override]
@@ -51,6 +54,7 @@ class StudyResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

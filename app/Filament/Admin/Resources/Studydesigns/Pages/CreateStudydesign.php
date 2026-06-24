@@ -7,5 +7,6 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateStudydesign extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = StudydesignResource::class;
 }

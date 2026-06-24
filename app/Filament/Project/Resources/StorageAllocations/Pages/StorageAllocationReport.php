@@ -10,8 +10,10 @@ class StorageAllocationReport extends Page
 {
     use InteractsWithRecord;
 
+    #[\Override]
     protected static string $resource = StorageAllocationResource::class;
 
+    #[\Override]
     protected string $view = 'filament.project.resources.storage-allocations.pages.storage-allocation-report';
 
     public function mount(int|string $record): void

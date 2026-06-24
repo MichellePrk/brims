@@ -13,10 +13,12 @@ use Illuminate\Support\Collection;
 
 class EditRole extends EditRecord
 {
+    #[\Override]
     protected static string $resource = RoleResource::class;
 
     public Collection $permissions;
 
+    #[\Override]
     protected function getActions(): array
     {
         return [

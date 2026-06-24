@@ -18,8 +18,10 @@ class Specimen extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $table = 'specimens';
 
+    #[\Override]
     protected $guarded = ['id'];
 
     public function subjectEvent(): BelongsTo
@@ -66,8 +68,7 @@ class Specimen extends Model
 
     public function auditLogs(): HasMany
     {
-        return $this->hasMany(SpecimenLog::class, 'specimen_id')
-            ->orderBy('created_at');
+        return $this->hasMany(SpecimenLog::class, 'specimen_id')->oldest();
     }
 
     public function logStored(): void
@@ -123,6 +124,7 @@ class Specimen extends Model
         $this->update(['site_id' => $destinationSiteId]);
     }
 
+    #[\Override]
     protected function casts(): array
     {
         return [

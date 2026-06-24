@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 
 class AssaysRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'assays';
 
     // protected static ?string $relatedResource = AssayResource::class;
@@ -138,7 +139,7 @@ class AssaysRelationManager extends RelationManager
 
         if ($assay) {
             $assayFiles = is_array($assay->assayfiles) ? $assay->assayfiles : [];
-            $assayFiles = array_values(array_filter($assayFiles, fn ($f) => $f !== $storedFilename));
+            $assayFiles = array_values(array_filter($assayFiles, fn ($f): bool => $f !== $storedFilename));
             $assay->assayfiles = $assayFiles;
             $assay->save();
 
@@ -165,7 +166,7 @@ class AssaysRelationManager extends RelationManager
 
         if ($assayId && $uploadUrl) {
             // Extract stored filename from upload URL
-            $urlParts = parse_url($uploadUrl);
+            $urlParts = parse_url((string) $uploadUrl);
             $pathParts = explode('/', trim($urlParts['path'] ?? '', '/'));
             $fileKey = end($pathParts);
             $storedFilename = Str::of($fileKey)->explode('+')->first();

@@ -15,12 +15,16 @@ use Filament\Tables\Table;
 
 class SpecimenResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Specimen::class;
 
+    #[\Override]
     public static ?int $navigationSort = 4;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    #[\Override]
     protected static ?string $recordTitleAttribute = 'barcode';
 
     #[\Override]
@@ -49,6 +53,7 @@ class SpecimenResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

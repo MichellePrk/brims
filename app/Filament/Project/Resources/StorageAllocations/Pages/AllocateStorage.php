@@ -25,10 +25,13 @@ class AllocateStorage extends Page implements HasForms
 {
     use InteractsWithForms;
 
+    #[\Override]
     protected static string $resource = StorageAllocationResource::class;
 
+    #[\Override]
     protected static ?string $title = 'Allocate Specimen Storage';
 
+    #[\Override]
     protected string $view = 'filament.project.resources.storage-allocations.pages.allocate-storage';
 
     public ?array $data = [];
@@ -143,7 +146,7 @@ class AllocateStorage extends Page implements HasForms
                 $locations = Location::query()
                     ->whereRelation('virtualUnit', 'project_id', $this->project->id)
                     ->whereRelation('virtualUnit', 'storageSpecimenType', $specimenType->storageSpecimenType)
-                    ->when(! $reuse_locations, function ($query) {
+                    ->unless($reuse_locations, function ($query): void {
                         $query->where('used', false);
                     })
                     ->limit($specimens->count())

@@ -17,10 +17,13 @@ use Filament\Tables\Table;
 
 class AssayDefinitionResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = AssayDefinition::class;
 
+    #[\Override]
     protected static ?string $parentResource = TeamResource::class;
 
+    #[\Override]
     protected static ?string $recordTitleAttribute = 'name';
 
     // protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -51,6 +54,7 @@ class AssayDefinitionResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

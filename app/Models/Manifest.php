@@ -12,14 +12,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Manifest extends Model
 {
+    #[\Override]
     protected $guarded = ['id'];
-
-    protected $casts = [
-        'shippedDate' => 'date',
-        'receivedDate' => 'date',
-        'status' => ManifestStatus::class,
-        'specimenTypes' => 'array',
-    ];
 
     public function project(): BelongsTo
     {
@@ -100,10 +94,10 @@ class Manifest extends Model
 
         $filename = "manifest-{$this->id}.csv";
 
-        return response()->streamDownload(function () use ($items) {
+        return response()->streamDownload(function () use ($items): void {
             $handle = fopen('php://output', 'w');
 
-            fputcsv($handle, ['Subject', 'Barcode', 'Arm', 'Event', 'Sample Type', 'Aliquot', 'Volume']);
+            fputcsv($handle, ['Subject', 'Barcode', 'Arm', 'Event', 'Sample Type', 'Aliquot', 'Volume'], escape: '\\');
 
             foreach ($items as $item) {
                 fputcsv($handle, [
@@ -114,10 +108,21 @@ class Manifest extends Model
                     $item->specimenType->name,
                     $item->aliquot,
                     $item->volume.$item->specimenType->volumeUnit,
-                ]);
+                ],
+                escape: '\\');
             }
 
             fclose($handle);
         }, $filename, ['Content-Type' => 'text/csv']);
+    }
+    #[\Override]
+    protected function casts(): array
+    {
+        return [
+            'shippedDate' => 'date',
+            'receivedDate' => 'date',
+            'status' => ManifestStatus::class,
+            'specimenTypes' => 'array',
+        ];
     }
 }

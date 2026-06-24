@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewTeam extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = TeamResource::class;
 
     #[\Override]

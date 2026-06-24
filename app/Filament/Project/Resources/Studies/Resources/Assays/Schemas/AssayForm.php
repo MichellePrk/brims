@@ -88,7 +88,7 @@ class AssayForm
                         ->inline()
                         // ->extraInputAttributes(['class' => 'text-sm bg-emerald-600'])
                         ->extraAttributes(
-                            fn (string $operation) => $operation === 'view' ?
+                            fn (string $operation): array => $operation === 'view' ?
                                 ['class' => 'border border-stone-200 dark:border-zinc-700 bg-stone-50 dark:bg-zinc-900 shadow-xs rounded-lg p-2'] :
                                 ['class' => 'border border-stone-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 p-2']
                         )
@@ -100,7 +100,7 @@ class AssayForm
                         ->options(fn () => collect($field['field_options'] ?? [])
                             ->mapWithKeys(fn ($option): array => [$option['option_value'] => $option['option_label']]))
                         ->extraAttributes(
-                            fn (string $operation) => $operation === 'view' ?
+                            fn (string $operation): array => $operation === 'view' ?
                                 ['class' => 'mt-1 border border-stone-200 dark:border-zinc-700 rounded-lg bg-stone-50 dark:bg-zinc-900 shadow-xs px-3 pb-2'] :
                                 ['class' => 'mt-1 border border-stone-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 px-3 pb-2']
                         )
@@ -111,7 +111,7 @@ class AssayForm
                     $fields[] = Checkbox::make($fieldname)
                         ->label($field['label'] ?? null)
                         ->extraAttributes(
-                            fn (string $operation) => $operation === 'view' ?
+                            fn (string $operation): array => $operation === 'view' ?
                                 ['class' => 'border border-stone-200 dark:border-zinc-700 bg-stone-50 dark:bg-zinc-900 shadow-xs rounded-lg p-2'] :
                                 ['class' => 'border border-stone-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 p-2']
                         )

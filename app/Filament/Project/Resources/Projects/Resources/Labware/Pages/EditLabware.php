@@ -8,8 +8,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditLabware extends EditRecord
 {
+    #[\Override]
     protected static string $resource = LabwareResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

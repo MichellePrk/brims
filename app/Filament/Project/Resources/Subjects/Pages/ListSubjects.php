@@ -20,8 +20,10 @@ class ListSubjects extends ListRecords
 {
     use WithFileUploads;
 
+    #[\Override]
     protected static string $resource = SubjectResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -42,7 +44,7 @@ class ListSubjects extends ListRecords
                         ->maxValue(20)
                         ->required(),
                 ])
-                ->action(function (array $data) {
+                ->action(function (array $data): void {
                     try {
                         DB::beginTransaction();
                         $currentProject = Project::lockForUpdate()

@@ -9,8 +9,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditStudy extends EditRecord
 {
+    #[\Override]
     protected static string $resource = StudyResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -19,11 +21,13 @@ class EditStudy extends EditRecord
         ];
     }
 
+    #[\Override]
     public function getRelationManagers(): array
     {
         return [];
     }
 
+    #[\Override]
     protected function getRedirectUrl(): ?string
     {
         return $this->getResource()::getUrl('view', ['project' => $this->record->project, 'record' => $this->getRecord()]);

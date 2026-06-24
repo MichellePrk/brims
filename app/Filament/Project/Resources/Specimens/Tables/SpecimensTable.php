@@ -83,7 +83,7 @@ class SpecimensTable
                     BulkAction::make('logUsed')
                         ->label('Log as Used')
                         ->icon(Heroicon::Cog6Tooth)
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $specimen_count = (new LogSpecimenStatus())(SpecimenStatus::Used, $records->pluck('barcode')->implode(','));
                                 Notification::make()
@@ -103,7 +103,7 @@ class SpecimensTable
                         ->requiresConfirmation(),
                     BulkAction::make('logOut')
                         ->icon(Heroicon::ArrowUpTray)
-                        ->action(function (Collection $records) {
+                        ->action(function (Collection $records): void {
                             try {
                                 $specimen_count = (new LogSpecimenStatus())(SpecimenStatus::LoggedOut, $records->pluck('barcode')->implode(','));
                                 Notification::make()
@@ -130,7 +130,7 @@ class SpecimensTable
                                 ->onColor('success')
                                 ->required(),
                         ])
-                        ->action(function (Collection $records, array $data) {
+                        ->action(function (Collection $records, array $data): void {
                             $thawed = $data['thawed'] ?? false;
                             try {
                                 $specimen_count = (new LogSpecimenStatus())(SpecimenStatus::InStorage, $records->pluck('barcode')->implode(','), $thawed);

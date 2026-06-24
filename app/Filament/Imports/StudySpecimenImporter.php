@@ -13,6 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class StudySpecimenImporter extends Importer
 {
+    #[\Override]
     protected static ?string $model = StudySpecimen::class;
 
     public static function getColumns(): array
@@ -20,13 +21,13 @@ class StudySpecimenImporter extends Importer
         return [
             ImportColumn::make('barcode')
                 ->requiredMapping()
-                ->rules(fn($options) => [
+                ->rules(fn($options): array => [
                     'required',
                     'max:20',
                     Rule::exists('specimens', 'barcode')
                         ->where('project_id', $options['project']->id),
                 ])
-                ->fillRecordUsing(function ($record, $state, $options) {
+                ->fillRecordUsing(function ($record, $state, $options): void {
                     $specimen = Specimen::where('barcode', $state)
                         ->where('project_id', $options['project']->id)
                         ->first();
@@ -40,6 +41,7 @@ class StudySpecimenImporter extends Importer
         ];
     }
 
+    #[\Override]
     public function resolveRecord(): StudySpecimen
     {
         $study_specimen = new StudySpecimen;

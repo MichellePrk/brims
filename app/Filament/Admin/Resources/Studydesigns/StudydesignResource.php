@@ -17,14 +17,19 @@ use UnitEnum;
 
 class StudydesignResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = StudyDesign::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    #[\Override]
     protected static ?string $recordTitleAttribute = 'type';
 
+    #[\Override]
     protected static string | UnitEnum | null $navigationGroup = 'Utilities';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
 
@@ -48,6 +53,7 @@ class StudydesignResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SpecimenLog extends Model
 {
 
+    #[\Override]
     protected $guarded = ['id'];
 
     public function specimen()
@@ -20,6 +21,7 @@ class SpecimenLog extends Model
         return $this->belongsTo(User::class, 'changed_by');
     }
 
+    #[\Override]
     protected function casts(): array
     {
         return [

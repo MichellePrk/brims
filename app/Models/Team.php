@@ -15,6 +15,7 @@ class Team extends Model
     /** @use HasFactory<\Database\Factories\TeamFactory> */
     use HasFactory;
 
+    #[\Override]
     protected $guarded = ['id'];
 
     public function projects(): HasMany

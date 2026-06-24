@@ -37,8 +37,8 @@ class AssaysTable
                 TextColumn::make('assayfiles')
                     ->label('Files')
                     ->badge()
-                    ->getStateUsing(fn($record) => is_array($record->assayfiles) ? count($record->assayfiles) : 0)
-                    ->color(fn($state) => $state > 0 ? 'success' : 'gray'),
+                    ->getStateUsing(fn($record): int => is_array($record->assayfiles) ? count($record->assayfiles) : 0)
+                    ->color(fn($state): string => $state > 0 ? 'success' : 'gray'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -66,12 +66,10 @@ class AssaysTable
             ])
             ->recordActions([
                 ViewAction::make()
-                    ->modalContentFooter(function ($record) use ($relationManager) {
-                        return view('filament.resources.assays.pages.partials.tus-uploader', [
-                            'assay' => $record,
-                            'infos' => $relationManager->infos,
-                        ]);
-                    })
+                    ->modalContentFooter(fn($record) => view('filament.resources.assays.pages.partials.tus-uploader', [
+                        'assay' => $record,
+                        'infos' => $relationManager->infos,
+                    ]))
                     ->modalWidth('w-full md:w-4/5 lg:w-3/5 xl:w-1/2 2xl:w-2/5'),
                 EditAction::make()
                     ->hidden(fn(): bool => $relationManager->getOwnerRecord()->locked)
@@ -128,7 +126,7 @@ class AssaysTable
 
                         $filename = 'download_links_' . str($record->name)->slug() . '_' . now()->format('Ymd_His') . '.txt';
 
-                        return response()->streamDownload(function () use ($content) {
+                        return response()->streamDownload(function () use ($content): void {
                             echo $content;
                         }, $filename, [
                             'Content-Type' => 'text/plain',
@@ -157,7 +155,7 @@ class AssaysTable
                         $record->delete();
                     })
                     ->hidden(fn(): bool => $relationManager->getOwnerRecord()->locked)
-                    ->modalHeading(fn($record) => new HtmlString('Delete Assay<br/>' . $record->name))
+                    ->modalHeading(fn($record): \Illuminate\Support\HtmlString => new HtmlString('Delete Assay<br/>' . $record->name))
                     ->modalDescription(new HtmlString('This will delete all associated data files.<br/>Are you sure you want to delete this assay?')),
             ]);
     }

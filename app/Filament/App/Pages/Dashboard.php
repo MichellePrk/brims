@@ -8,6 +8,7 @@ use Filament\Support\Icons\Heroicon;
 
 class Dashboard extends BaseDashboard
 {
+    #[\Override]
     public static string|BackedEnum|null $navigationIcon = Heroicon::ComputerDesktop;
 
     #[\Override]

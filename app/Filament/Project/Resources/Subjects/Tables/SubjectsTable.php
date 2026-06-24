@@ -30,7 +30,7 @@ class SubjectsTable
             ->pluck('users.id');
 
         return $table
-            ->modifyQueryUsing(function ($query) use ($substitutees) {
+            ->modifyQueryUsing(function ($query) use ($substitutees): void {
                 if (Auth::user()->team_role !== TeamRoles::Admin && ! in_array(Auth::user()->system_role, [SystemRoles::SysAdmin, SystemRoles::SuperAdmin])) {
                     $query->where('user_id', Auth::id())
                         ->orWhereIn('user_id', $substitutees);
@@ -92,14 +92,14 @@ class SubjectsTable
                     ->preload(),
             ])
             ->deferFilters(false)
-            ->recordUrl(fn($record) => $record->status !== SubjectStatus::Generated ? route('filament.project.resources.subjects.view', ['tenant' => session('currentProject'), 'record' => $record]) : null)
+            ->recordUrl(fn($record): ?string => $record->status !== SubjectStatus::Generated ? route('filament.project.resources.subjects.view', ['tenant' => session('currentProject'), 'record' => $record]) : null)
             ->recordActions([
                 ViewAction::make()
                     ->visible(fn($record): bool => $record->status !== SubjectStatus::Generated),
                 Action::make('enrol')
                     ->visible(fn($record): bool => $record->status === SubjectStatus::Generated)
                     ->schema(SubjectForm::configure(new Schema)->columns(2)->getComponents())
-                    ->action(function (array $data, Subject $record) {
+                    ->action(function (array $data, Subject $record): void {
                         DB::beginTransaction();
                         try {
                             $record->enrol($data);

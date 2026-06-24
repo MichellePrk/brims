@@ -19,6 +19,7 @@ use Filament\Tables\Table;
 
 class EventsRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'events';
 
     #[\Override]
@@ -27,6 +28,7 @@ class EventsRelationManager extends RelationManager
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema

@@ -18,12 +18,16 @@ use Filament\Tables\Table;
 
 class ProtocolResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Protocol::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    #[\Override]
     protected static ?string $parentResource = TeamResource::class;
 
+    #[\Override]
     protected static ?string $recordTitleAttribute = 'name';
 
     #[\Override]
@@ -52,6 +56,7 @@ class ProtocolResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

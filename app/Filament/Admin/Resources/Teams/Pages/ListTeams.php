@@ -8,8 +8,10 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListTeams extends ListRecords
 {
+    #[\Override]
     protected static string $resource = TeamResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

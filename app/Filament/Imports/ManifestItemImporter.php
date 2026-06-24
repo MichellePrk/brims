@@ -12,6 +12,7 @@ use Illuminate\Support\Number;
 
 class ManifestItemImporter extends Importer
 {
+    #[\Override]
     protected static ?string $model = ManifestItem::class;
 
     public static function getColumns(): array
@@ -19,16 +20,16 @@ class ManifestItemImporter extends Importer
         return [
             ImportColumn::make('specimen_id')
                 ->label('Barcode')
-                ->fillRecordUsing(function (ManifestItem $record, string $state, array $options) {
+                ->fillRecordUsing(function (ManifestItem $record, string $state, array $options): void {
                     $specimen = Specimen::where('barcode', $state)
                         ->where('project_id', $options['project_id'])
                         ->first();
                     $record->specimen_id = $specimen?->id;
                     $record->priorSpecimenStatus = $specimen?->status;
                 })
-                ->rules(fn(array $options) => [
+                ->rules(fn(array $options): array => [
                     'required',
-                    function (string $attribute, mixed $value, \Closure $fail) use ($options) {
+                    function (string $attribute, mixed $value, \Closure $fail) use ($options): void {
                         $specimen = Specimen::where('barcode', $value)
                             ->where('project_id', $options['project_id'])
                             ->first();
@@ -49,6 +50,7 @@ class ManifestItemImporter extends Importer
         ];
     }
 
+    #[\Override]
     public function resolveRecord(): ManifestItem
     {
         return new ManifestItem();

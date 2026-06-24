@@ -27,15 +27,19 @@ use Illuminate\Support\Facades\Auth;
 
 class SpecimensRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'specimens';
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;
     }
 
+    #[\Override]
     protected $listeners = ['refreshSpecimensRelation' => '$refresh'];
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -46,6 +50,7 @@ class SpecimensRelationManager extends RelationManager
             ]);
     }
 
+    #[\Override]
     public function infolist(Schema $schema): Schema
     {
         return $schema
@@ -159,7 +164,7 @@ class SpecimensRelationManager extends RelationManager
                             /** @var BelongsToMany $relationship */
                             $relationship = $table->getRelationship();
 
-                            $priorStatuses = $records->mapWithKeys(fn (Specimen $record) => [
+                            $priorStatuses = $records->mapWithKeys(fn (Specimen $record): array => [
                                 $record->id => $record->pivot->priorSpecimenStatus,
                             ]);
 

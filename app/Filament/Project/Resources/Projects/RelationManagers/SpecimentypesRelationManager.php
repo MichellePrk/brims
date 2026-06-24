@@ -10,8 +10,10 @@ use Filament\Tables\Table;
 
 class SpecimentypesRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'specimentypes';
 
+    #[\Override]
     protected static ?string $title = 'Specimen Types';
 
     #[\Override]
@@ -20,6 +22,7 @@ class SpecimentypesRelationManager extends RelationManager
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return SpecimentypeForm::configure($schema);

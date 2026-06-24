@@ -12,6 +12,7 @@ class Assay extends Model
     /** @use HasFactory<\Database\Factories\AssayFactory> */
     use HasFactory;
 
+    #[\Override]
     protected $guarded = ['id'];
 
     public function study(): BelongsTo
@@ -40,6 +41,7 @@ class Assay extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    #[\Override]
     protected function casts(): array
     {
         return [

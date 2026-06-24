@@ -10,8 +10,10 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewArm extends ViewRecord
 {
+    #[\Override]
     protected static string $resource = ArmResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

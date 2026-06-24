@@ -9,8 +9,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditSpecimentype extends EditRecord
 {
+    #[\Override]
     protected static string $resource = SpecimentypeResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

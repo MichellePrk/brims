@@ -13,13 +13,16 @@ use Illuminate\Support\Number;
 
 class SubjectEventExporter extends Exporter
 {
+    #[\Override]
     protected static ?string $model = SubjectEvent::class;
 
+    #[\Override]
     public function getFileDisk(): string
     {
         return 'exports';
     }
 
+    #[\Override]
     public function getFormats(): array
     {
         return [

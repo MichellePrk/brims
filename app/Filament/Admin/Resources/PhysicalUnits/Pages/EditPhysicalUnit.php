@@ -9,8 +9,10 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditPhysicalUnit extends EditRecord
 {
+    #[\Override]
     protected static string $resource = PhysicalUnitResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
