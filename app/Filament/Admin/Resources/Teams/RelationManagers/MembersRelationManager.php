@@ -3,6 +3,10 @@
 namespace App\Filament\Admin\Resources\Teams\RelationManagers;
 
 use App\Enums\TeamRoles;
+use App\Models\Role;
+use App\Models\Site;
+use App\Models\User;
+use Filament\Actions\AssociateAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -18,6 +22,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class MembersRelationManager extends RelationManager
@@ -26,7 +31,7 @@ class MembersRelationManager extends RelationManager
 
     public function isReadOnly(): bool
     {
-        return false; // This allows editing actions
+        return false;
     }
 
     public function form(Schema $schema): Schema
@@ -70,7 +75,6 @@ class MembersRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        // return UsersTable::configure($table);
         return $table
             ->columns([
                 TextColumn::make('username')
@@ -104,7 +108,7 @@ class MembersRelationManager extends RelationManager
                     ->label('Active')
                     ->toggle(),
                 SelectFilter::make('homesite')
-                    ->options(fn() => \App\Models\User::distinct('homesite')->pluck('homesite', 'homesite'))
+                    ->options(fn() => User::distinct('homesite')->pluck('homesite', 'homesite'))
                     ->multiple()
                     ->searchable()
                     ->preload()
@@ -113,17 +117,37 @@ class MembersRelationManager extends RelationManager
                     ->default(null),
             ])
             ->deferFilters(false)
+            ->headerActions([
+                AssociateAction::make()
+                    ->recordTitle(fn(User $record): string => $record->fullname)
+                    ->recordSelectOptionsQuery(fn(Builder $query) => $query->where('active', true))
+                    ->preloadRecordSelect()
+                    ->recordSelectSearchColumns(['firstname', 'lastname'])
+                    ->schema(fn(AssociateAction $action): array => [
+                        $action->getRecordSelect(),
+                        Select::make('role_id')
+                            ->label('Role')
+                            ->options(fn() => Role::where('project_id', $this->ownerRecord->id)->pluck('name', 'id'))
+                            ->required(),
+                        Select::make('site_id')
+                            ->label('Site')
+                            ->options(
+                                Site::where('project_id', $this->ownerRecord->id)->pluck('name', 'id')
+                            ),
+                    ]),
+                CreateAction::make()
+                    ->mutateDataUsing(function (array $data): array {
+                        $data['team_id'] = $this->ownerRecord->id;
+                        $data['password'] = bcrypt(Str::password(32));
+
+                        return $data;
+                    }),
+            ])
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
             ])
             ->toolbarActions([
-                CreateAction::make()
-                    ->mutateDataUsing(function (array $data): array {
-                        $data['team_id'] = $this->ownerRecord->id;
-                        $data['password'] = bcrypt(Str::password(32));
-                        return $data;
-                    }),
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

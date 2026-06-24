@@ -72,7 +72,6 @@ class MembersRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        // return UsersTable::configure($table);
         return $table
             ->columns([
                 ImageColumn::make('avatar_url')
@@ -132,6 +131,7 @@ class MembersRelationManager extends RelationManager
 
                         return $data;
                     }),
+                // AttachAction::make(),
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

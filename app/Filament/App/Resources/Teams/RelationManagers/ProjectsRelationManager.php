@@ -156,6 +156,7 @@ class ProjectsRelationManager extends RelationManager
             )
             ->headerActions([
                 CreateAction::make()
+                    ->createAnother(false)
                     ->after(function (Project $record): void {
                         try {
                             DB::beginTransaction();
@@ -202,14 +203,7 @@ class ProjectsRelationManager extends RelationManager
                             ->preload()
                             ->searchDebounce(500)
                             ->options(function () {
-                                // return [
-                                //     '1' => 'Test Project',
-                                //     '2' => 'Demo Project',
-                                //     '3' => 'Sample Project',
-                                //     '4' => 'Example Project',
-                                // ];
                                 $query = "SELECT app_title, redcap_projects.project_id FROM redcap_projects INNER JOIN redcap_user_rights ON redcap_projects.project_id = redcap_user_rights.project_id WHERE username = '" . Auth::user()->username . "' AND design=1 AND api_token IS NOT null";
-                                // $query = "select app_title, project_id from redcap_projects";
                                 $linked_redcap_projects = Project::whereNot('redcapProject_id', 'null')->pluck('redcapProject_id')->toArray();
                                 if (count($linked_redcap_projects) > 0) {
                                     $query .= ' AND redcap_projects.project_id NOT IN (' . implode(',', $linked_redcap_projects) . ')';
