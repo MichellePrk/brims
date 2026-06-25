@@ -30,7 +30,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'telephone' => fake()->randomDigitNot(0) . fake()->numerify('# (##) ###-####'),
-            'homesite' => fake()->randomElement(['SU_ZA', 'UCT_ZA', 'MRC_GM', 'MAK_UG']),
+            'institution' => fake()->randomElement(['SU_ZA', 'UCT_ZA', 'MRC_GM', 'MAK_UG']),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(60),
         ];

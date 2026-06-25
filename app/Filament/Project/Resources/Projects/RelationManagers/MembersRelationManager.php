@@ -48,7 +48,7 @@ class MembersRelationManager extends RelationManager
     //             TextInput::make('telephone')
     //                 ->tel()
     //                 ->default(null),
-    //             TextInput::make('homesite')
+    //             TextInput::make('institution')
     //                 ->default(null),
     //             ComponentsToggle::make('active')
     //                 ->required(),

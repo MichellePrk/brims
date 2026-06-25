@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\UnitDefinitions\RelationManagers;
 
 use App\Filament\Admin\Resources\UnitDefinitions\UnitDefinitionResource;
+use App\Models\User;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -10,6 +11,8 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -38,6 +41,9 @@ class PhysicalunitsRelationManager extends RelationManager
                     ->searchable(),
                 TextColumn::make('serial')
                     ->searchable(),
+                TextColumn::make('institution.name')
+                    ->label('Institution')
+                    ->searchable(),
                 TextColumn::make('administrator.fullname')
                     ->label('Administrator')
                     ->searchable(),
@@ -56,8 +62,23 @@ class PhysicalunitsRelationManager extends RelationManager
                             ->unique(ignoreRecord: true),
                         TextInput::make('serial')
                             ->maxLength(30),
+                        Select::make('institution_id')
+                            ->relationship('institution', 'name')
+                            ->required()
+                            ->reactive()
+                            ->afterStateUpdated(function (?string $state, Set $set): void {
+                                $set('user_id', null);
+                            }),
                         Select::make('user_id')
-                            ->relationship('administrator', 'username')
+                            ->label('Administrator')
+                            ->options(fn(Get $get): array => $get('institution_id')
+                                ? User::query()
+                                ->where('institution_id', $get('institution_id'))
+                                ->get()
+                                ->pluck('fullname', 'id')
+                                ->toArray()
+                                : [])
+                            ->searchable()
                             ->required(),
                         Toggle::make('available')
                             ->default(true),
@@ -82,7 +103,7 @@ class PhysicalunitsRelationManager extends RelationManager
                         TextInput::make('serial')
                             ->maxLength(30),
                         Select::make('user_id')
-                            ->relationship('administrator', 'username')
+                            ->relationship('administrator', 'fullname')
                             ->required(),
                         Toggle::make('available'),
                     ]),

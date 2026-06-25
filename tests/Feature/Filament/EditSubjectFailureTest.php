@@ -16,7 +16,7 @@ it('does not show saved notification or persist changes when handleRecordUpdate 
 
     $site = \App\Models\Site::factory()->create([
         'project_id' => $project->id,
-        'name' => $this->adminuser->homesite,
+        'name' => $this->adminuser->institution,
     ]);
 
     // Subject in Generated status triggers the branch that builds events

@@ -66,8 +66,8 @@ class MembersRelationManager extends RelationManager
                     ->mask('99 (99) 999-9999')
                     ->maxLength(20)
                     ->default(null),
-                TextInput::make('homesite')
-                    ->label('Home Site')
+                TextInput::make('institution')
+                    ->label('Institution')
                     ->maxLength(10)
                     ->default(null),
                 Toggle::make('active')
@@ -89,8 +89,8 @@ class MembersRelationManager extends RelationManager
                 TextColumn::make('telephone')
                     ->prefix('+')
                     ->searchable(),
-                TextColumn::make('homesite')
-                    ->label('Home Site'),
+                TextColumn::make('institution')
+                    ->label('Institution'),
                 TextColumn::make('team_role')
                     ->label('Role'),
                 IconColumn::make('active')
@@ -109,13 +109,13 @@ class MembersRelationManager extends RelationManager
                     ->query(fn($query) => $query->where('active', true))
                     ->label('Active')
                     ->toggle(),
-                SelectFilter::make('homesite')
-                    ->options(fn() => User::distinct('homesite')->pluck('homesite', 'homesite'))
+                SelectFilter::make('institution')
+                    ->options(fn() => User::distinct('institution')->pluck('institution', 'institution'))
                     ->multiple()
                     ->searchable()
                     ->preload()
-                    ->label('Home Site')
-                    ->placeholder('All Home Sites')
+                    ->label('Institution')
+                    ->placeholder('All Institutions')
                     ->default(null),
             ])
             ->deferFilters(false)

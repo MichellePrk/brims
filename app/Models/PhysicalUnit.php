@@ -36,6 +36,12 @@ class PhysicalUnit extends Model
     {
         return $this->hasMany(VirtualUnit::class);
     }
+
+    public function institution(): BelongsTo
+    {
+        return $this->belongsTo(Institution::class);
+    }
+
     #[\Override]
     protected function casts(): array
     {

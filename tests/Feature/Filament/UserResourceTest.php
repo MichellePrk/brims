@@ -110,7 +110,7 @@ describe('UserResource Create Page', function (): void {
             'lastname' => 'User',
             'email' => 'test@example.com',
             'telephone' => '1234567890',
-            'homesite' => 'Test Site',
+            'institution' => 'Test Site',
             'active' => true,
             'system_role' => SystemRoles::User,
         ];
@@ -141,7 +141,7 @@ describe('UserResource Create Page', function (): void {
                 'email' => '',
                 'firstname' => '',
                 'lastname' => '',
-                'homesite' => '',
+                'institution' => '',
             ])
             ->call('create')
             ->assertHasFormErrors([
@@ -149,7 +149,7 @@ describe('UserResource Create Page', function (): void {
                 'email' => 'required',
                 'firstname' => 'required',
                 'lastname' => 'required',
-                'homesite' => 'required',
+                'institution' => 'required',
             ]);
     });
 
@@ -194,7 +194,7 @@ describe('UserResource Create Page', function (): void {
                 'firstname' => 'New',
                 'lastname' => 'User',
                 'email' => 'existing@example.com',
-                'homesite' => 'Test Site',
+                'institution' => 'Test Site',
                 'roles' => 4,
             ])
             ->call('create')
@@ -219,7 +219,7 @@ describe('UserResource Create Page', function (): void {
             'firstname' => 'Test',
             'lastname' => 'User',
             'email' => 'test2@example.com',
-            'homesite' => 'Test Site',
+            'institution' => 'Test Site',
             'active' => true,
             'system_role' => SystemRoles::User,
         ];

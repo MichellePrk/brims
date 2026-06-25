@@ -175,7 +175,7 @@ class ProjectsRelationManager extends RelationManager
                             DB::beginTransaction();
                             $site = Site::create([
                                 'project_id' => $record->id,
-                                'name' => Auth::user()->homesite,
+                                'name' => Auth::user()->institution,
                                 'description' => 'Project Creator\'s site',
                             ]);
                             $role = Role::create([
@@ -185,10 +185,10 @@ class ProjectsRelationManager extends RelationManager
                             ]);
                             $record->members()->attach(Auth::user(), ['role_id' => $role->id, 'site_id' => $site->id]);
                             if ($record->leader_id !== Auth::user()->id) {
-                                if ($record->leader->homesite !== $site->name) {
+                                if ($record->leader->institution !== $site->name) {
                                     $site = Site::create([
                                         'project_id' => $record->id,
-                                        'name' => $record->leader->homesite,
+                                        'name' => $record->leader->institution,
                                         'description' => 'Project Leader\'s site',
                                     ]);
                                 }

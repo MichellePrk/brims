@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                     'lastname' => 'van der Spuy',
                     'email' => 'gvds@sun.ac.za',
                     'telephone' => '27 (21) 938-9949',
-                    'homesite' => 'SU_ZA',
+                    'institution' => 'SU_ZA',
                     'password' => Hash::make('password'),
                     'system_role' => SystemRoles::SuperAdmin,
                     'created_at' => now(),

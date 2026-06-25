@@ -97,15 +97,15 @@ it('can filter by active status', function (): void {
         ->assertCanNotSeeTableRecords([$inactiveUser]);
 });
 
-it('can filter by homesite', function (): void {
+it('can filter by institution', function (): void {
     $team = Team::factory()->create();
     $user1 = User::factory()->create([
         'team_id' => $team->id,
-        'homesite' => 'Main',
+        'institution' => 'Main',
     ]);
     $user2 = User::factory()->create([
         'team_id' => $team->id,
-        'homesite' => 'Branch',
+        'institution' => 'Branch',
     ]);
 
     $this->actingAs($user1);
@@ -115,7 +115,7 @@ it('can filter by homesite', function (): void {
         'pageClass' => EditTeam::class,
     ]);
 
-    $component->filterTable('homesite', 'Main')
+    $component->filterTable('institution', 'Main')
         ->assertCanSeeTableRecords([$user1])
         ->assertCanNotSeeTableRecords([$user2]);
 });

@@ -62,9 +62,9 @@ class UserForm
                             ->mask('99 (99) 999-9999')
                             ->maxLength(20)
                             ->default(null),
-                        TextInput::make('homesite')
-                            ->label('Home Site')
-                            ->maxLength(10)
+                        Select::make('institution_id')
+                            ->label('Institution')
+                            ->relationship('institution', 'name')
                             ->required()
                             ->default(null),
                     ]),
