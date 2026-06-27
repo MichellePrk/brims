@@ -17,8 +17,8 @@ Major revision — 1 June 2026
 - [Chapter 5 — Logging Specimens](#chapter-5-logging-specimens)
 - [Chapter 6 — Managing Specimen Storage](#chapter-6-managing-specimen-storage)
 - [Chapter 7 — Preparing and Receiving Shipments](#chapter-7-preparing-and-receiving-shipments)
-- [Chapter 8 — Studies and Assay Data](#chapter-8-studies-and-assay-data)
-- [Chapter 9 — Searching, Reviewing, and Exporting Data](#chapter-9-searching-reviewing-and-exporting-data)
+- [Chapter 8 — Studies, Assay Data, and Publications](#chapter-8-studies-assay-data-and-publications)
+- [Chapter 9 — Searching, Reviewing, Exporting, and Importing Data](#chapter-9-searching-reviewing-exporting-and-importing-data)
 - [Chapter 10 — Troubleshooting Common Problems](#chapter-10-troubleshooting-common-problems)
 - [Chapter 11 — REDCap Integration](#chapter-11-redcap-integration)
 - [Chapter 12 — Administration Guide](#chapter-12-administration-guide)
@@ -77,8 +77,8 @@ This includes project leaders, study administrators, and data managers responsib
 
 Relevant chapters are:
 - Chapter 2 — Setting Up a Project
-- Chapter 8 — Studies and Assay Data
-- Chapter 9 — Searching, Reviewing, and Exporting Data
+- Chapter 8 — Studies, Assay Data, and Publications
+- Chapter 9 — Searching, Reviewing, Exporting, and Importing Data
 - Chapter 11 — REDCap Integration
 - Chapter 12 — Administration Guide
 
@@ -148,11 +148,13 @@ BRIMS is a web-based application. You access it through a browser using the URL 
 To sign in, you need:
 
 - An active BRIMS account
-- Your account credentials (username and password)
+- Your account credentials (email address and password), or a registered passkey
+
+BRIMS supports passkey authentication (such as a device biometric or hardware security key) as an alternative to password sign-in. To use a passkey, it must first be registered on your account. Contact your system administrator if you are unsure which method applies to you.
 
 When your account is first created, you may receive an invitation to set your password. Complete this step before trying to sign in for the first time. If the invitation link has expired, ask your system administrator to issue a new one.
 
-![The BRIMS sign-in screen showing the username and password fields.]()
+![The BRIMS sign-in screen showing the email and password fields and a passkey sign-in option.]()
 
 Once signed in, you will land on the main BRIMS interface. The area you see first will depend on your role and what you have access to.
 
@@ -196,19 +198,21 @@ These records are connected. A subject belongs to a site and an arm; events are 
 
 The main navigation menu gives you access to the areas of BRIMS relevant to your role and project. [Note: assumes a project has been created previously and can be accessed by user]
 
-![The main BRIMS navigation menu with a project selected, showing Subjects, Specimens, Specimen Storage, Manifests, Studies, and Configure Project Details.]()
+![The main BRIMS navigation menu with a project selected, showing Subjects, Specimens, Specimen Storage, Manifests, Studies, and Project Configuration.]()
 
 Common navigation areas include:
 
 - **Team** — Your team's overview page, showing members, projects, protocols, and assay definitions
 - **Project Configuration** — Project-level settings, sites, arms, specimen types, labware, and imports or exports
 - **Subjects** — Participant enrolment, subject records, and linked events
+- **Label Queue** — Queued barcode labels for upcoming events, ready to print
 - **Specimens** — Reviewing, searching, and exporting the full specimen list
 - **Log Primary Specimens** — Barcode-driven logging of primary specimens
 - **Log Derivative Specimens** — Logging of derivative (child) specimens from a parent
 - **Specimen Storage** — Storage allocation and storage reports
 - **Manifests** — Shipment and transfer records
 - **Studies** — Study records, linked specimens, and assay data
+- **Publications** — Bibliographic records for research outputs associated with the project
 
 Not all of these areas will be visible to every user. What you see depends on your project role.
 
@@ -322,7 +326,7 @@ Each step is covered in its own section below. A [setup checklist](#setup-checkl
 
 Navigate to your team's **Projects** section and select **New Project**. 
 
-![The project creation form showing required fields: title, identifier, study design, project leader, storage designation, and subject ID settings.]()
+![The project creation form showing required fields: title, identifier, project leader, storage designation, and subject ID settings.]()
 
 ### 2.1.1 Required fields
 
@@ -330,11 +334,12 @@ Navigate to your team's **Projects** section and select **New Project**.
 |---|---|
 | **Title** | The full name of the project. This must be unique across the system. |
 | **Identifier** | A short alphanumeric code used to reference the project (e.g. `BRIM-001`). This must also be unique across the system. |
-| **Study Design** | Select the study design type from the pre-configured list (e.g. Randomised, Observational, Longitudinal). |
 | **Project Leader** | The user assigned as project lead. They are automatically added as a project administrator on creation. |
 | **Storage Designation** | An identifier for the storage location associated with this project (e.g. a freezer block code or site abbreviation). |
 | **Subject ID Prefix** | Two to ten uppercase letters that will be prepended to all participant identifiers (e.g. `BRI`). |
 | **Subject ID Digits** | The number of digits in the numeric part of the participant ID (between two and eight). |
+
+> **Note — Study Design:** A study design label is shown on the project details page but is not set during project creation. It is assigned at the system level by an administrator. If your project requires a specific study design label, contact your system administrator.
 
 ### 2.1.2 Optional fields
 
@@ -413,10 +418,12 @@ Events represent the visit schedule or follow-up milestones for participants in 
 | **Repeatable** | If enabled, additional iterations of this event can be added after the first one is recorded. |
 | **Name Labels** | The number of full-name barcode labels to print per event. Each label shows the participant's name, the project–subject–event ID, event name, iteration, and arm name. Enter `0` if not required. |
 | **Subject Event Labels** | The number of PSE (Project–Subject–Event) barcode labels to print per event. Each label shows the subject ID, PSE ID, event name, iteration, and arm name. Enter `0` if not required. |
-| **Study ID Labels** [check field name] | The number of subject ID-only barcode labels to print per event. Each label shows the subject ID alone. Enter `0` if not required. |
+| **Study ID Labels** | The number of subject ID-only barcode labels to print per event. Each label shows the subject ID alone. Enter `0` if not required. |
 | **Active** | Controls whether this event definition is currently in use for new subjects. |
 
 > **Tip:** The offset, ante window, and post window together define the acceptable timing range for each visit. Setting these correctly helps follow-up review reports distinguish between events that were on time, those recorded within an acceptable window, and those that were genuinely missed or late. Discuss these values with your study statistician or clinical operations lead before entering them.
+
+> **Tip — Reordering events:** Events within an arm can be reordered by dragging and dropping rows in the events table. The order determines which event is treated as first (event order 1), which affects enrolment: the first event with an offset of zero is automatically given a Scheduled status when a participant is enrolled. Reorder events before enrolment begins if the default order does not match your intended schedule.
 
 ---
 
@@ -546,12 +553,37 @@ The **Locked** toggle prevents specimens from being added to or removed from a s
 
 ---
 
+## 2.7 Import Value Mappings
+
+If you intend to bulk-import participant, event, or specimen records from an external system, you can configure import value mappings to translate the field values used in your source files into the names used in BRIMS. This step is optional if your source data already uses exactly the same names as your project configuration.
+
+Navigate to the **Project Configuration** view (open the project via **Access**, then open **Project Configuration**) and open the **Import Value Mappings** tab. Select **Create** to add a new mapping.
+
+### 2.7.1 How mappings work
+
+1. Choose the **Model** — the data type this mapping applies to: **Subject**, **SubjectEvent**, or **Specimen**.
+2. For each field shown, the left column (Key) displays the BRIMS database value (for example, a site name, arm name, or status value). Enter the corresponding value from your import file in the right column (Value). Leave the value blank if the import file already uses the same name as BRIMS.
+3. Enter a descriptive name for the mapping record and save.
+
+Mappings are applied automatically when the matching import type is run for the project.
+
+### 2.7.2 Available mapping fields
+
+| Model | Fields |
+|---|---|
+| **Subject** | Site (by name), Arm (by name) |
+| **SubjectEvent** | Event (by name), Status (by status name) |
+| **Specimen** | Specimen Type (by name), Status (by status name) |
+
+> **Tip:** Create mapping records before running any imports. An unmapped value that does not exactly match a BRIMS name will cause all rows containing that value to fail validation. See Chapter 9 — Searching, Reviewing, Exporting, and Importing Data, section 9.7 for full details of the import process.
+
+---
+
 ## Setup Checklist
 
 Use this checklist to confirm that the project is ready before research and laboratory staff begin work.
 
 - [ ] Project created with a unique title and identifier
-- [ ] Study design selected
 - [ ] Subject ID prefix and digit count confirmed by the study team
 - [ ] Storage designation entered
 - [ ] Default site reviewed; additional sites created as needed
@@ -563,6 +595,7 @@ Use this checklist to confirm that the project is ready before research and labo
 - [ ] All project members added with appropriate roles and site assignments
 - [ ] Substitute assignments configured where needed
 - [ ] At least one study created
+- [ ] Import value mappings configured if bulk data import from an external system is planned
 
 ---
 
@@ -601,7 +634,9 @@ Subject records are created manually using the **Generate Subjects** action on t
 
 To generate subjects, navigate to the **Subjects** list and select **Generate Subjects**. You will be asked to choose an arm and specify how many subject records to create (between 1 and 20 at a time). BRIMS will create the requested number of records, each with a subject ID pre-assigned using the project's configured prefix and digit format.
 
-These records appear in the **Subjects** list with a status of **Generated**. A Generated subject has a subject ID already assigned, but no participant details have yet been confirmed. The record acts as a placeholder until a real participant is enrolled into it.
+The **site** and **manager** for each generated subject are assigned automatically from your project membership record — the site you are assigned to and your user account become the default site and manager for all subjects you generate. These values can be updated later by editing the enrolled subject record if needed.
+
+These records appear in the **Subjects** list with a status of **Generated**. A Generated subject has a subject ID already assigned and event records have been created for all of the arm's event definitions. No participant details have yet been confirmed — the record acts as a placeholder until a real participant is enrolled into it.
 
 > **Important:** Do not generate more subject records than you need. Generated records with unallocated IDs create gaps if they are never used. Generate a small batch at a time and add more as needed. Always use the **Enrol** action on an existing Generated record rather than creating a new one from scratch — doing so would cause identifier conflicts and gaps in the numbering sequence.
 
@@ -613,7 +648,7 @@ These records appear in the **Subjects** list with a status of **Generated**. A 
 
 1. Navigate to the **Subjects** list in the project navigation.
 2. Locate a record with status **Generated**. Use the search or filter tools if the list is long.
-3. Select the record to open it, then use the **Enrol** action.
+3. Use the **Enrol** action button on the row. You do not need to open the record first — the enrolment form is accessible directly from the Subjects list.
 4. The enrolment form will open. Complete all required fields carefully.
 5. Review the automatically generated subject ID to confirm it matches the expected project format.
 6. Save the record.
@@ -627,15 +662,13 @@ These records appear in the **Subjects** list with a status of **Generated**. A 
 | **First Name** | The participant's first name. |
 | **Last Name** | The participant's last name. |
 | **Enrolment Date** | The date the participant was formally enrolled. This date is used to calculate event schedules. |
-| **Site** | The project site where the participant is based. |
-| **Manager** | The staff member responsible for this participant's follow-up. |
-| **Arm** | The study arm the participant is being enrolled into. |
+| **Address** | Optional. Enter one address component per line (for example, street address, town, postcode). |
+
+The participant's arm, site, and manager are pre-set from the **Generate Subjects** step and are displayed on the record. They are not editable through the enrolment form. If the arm, site, or manager is incorrect, do not proceed with enrolment — contact your project administrator to resolve the discrepancy first, as the arm determines which events will be scheduled.
 
 > **Tip — Enrolment date and event scheduling:** The enrolment date is used as the baseline from which all scheduled events are calculated. For example, if a follow-up event has an offset of 30 days, it will be scheduled 30 days from the enrolment date. Enter the true enrolment date rather than today's date unless these are the same. A wrong enrolment date will cause all follow-up windows to shift incorrectly, which is difficult to resolve later.
 
-> **Tip — Arm assignment:** If your project uses manual arm allocation, make sure the arm is confirmed with the study team before saving. If the wrong arm is selected, events from that arm will be scheduled for the participant. Changing the arm later (via **Switch Arm**) cancels the existing pending events and creates a new schedule from the new arm, but this cannot recover events that have already been recorded.
-
-Once enrolled, the participant's status changes to **Enrolled** and BRIMS creates all subject events from the arm's event definitions.
+Once enrolled, the participant's status changes to **Enrolled**. BRIMS uses the enrolment date to calculate the scheduled date window for each subject event. If the arm's first event has an offset of zero days, it is automatically marked as logged at this point.
 
 ---
 
@@ -678,6 +711,8 @@ The arm switch date is used as the new baseline for calculating the events in th
 
 > **Caution:** Arm switching is a significant action. Events that have already been logged in the previous arm are not affected, but all pending events are cancelled and cannot be recovered. Confirm that the switch is correct and approved before proceeding.
 
+After a switch, the participant's previous arm name and baseline date remain visible on the subject record in the **Previous Arm** section, and the **Previous Arm** and **Previous Arm Baseline Date** columns appear in the Subjects list. This provides a quick audit reference without needing to open the individual record.
+
 If an arm switch was made in error, use **Revert Arm Switch** to return the participant to their previous arm. This action is available on the subject record while the switch can still be undone.
 
 ---
@@ -715,12 +750,42 @@ Open a subject record to review the full history of a participant's involvement 
 From a subject record you can review:
 
 - Enrolment details and the subject ID
-- Current site and arm assignment
+- Current site, arm, and arm baseline date
+- Previous arm and baseline date — displayed in a **Previous Arm** fieldset when the participant has previously switched arms
 - The full list of scheduled and completed events (in the **Subject Events** section)
 - Specimens linked to this participant
-- Arm switching history if the participant has moved between arms
 
 This history is useful when following up on overdue events, resolving data queries, or preparing for a participant's next visit.
+
+---
+
+## 3.10 The Label Queue
+
+When a participant is enrolled, BRIMS automatically queues barcode labels for events that are due or upcoming. These labels are managed from the **Label Queue**, which appears in the project navigation and shows all subject events with a queued label status for the participants you manage directly or cover as a substitute.
+
+The Label Queue table includes columns for subject ID, participant name, manager, arm, event, iteration, and scheduled event date. An arm filter is available to narrow the queue.
+
+### 3.10.1 Printing labels
+
+| Action | How to access | What it does |
+|---|---|---|
+| **Print All** | Header button | Opens all queued labels for printing in a new browser tab |
+| **Print** | Row action | Opens labels for a single event in a new browser tab |
+| **Print Selected** | Bulk action (checkboxes) | Opens labels for the selected rows in a new browser tab |
+
+After printing, labels remain in the queue until they are cleared.
+
+### 3.10.2 Clearing labels from the queue
+
+Clearing a label marks it as **Generated** and removes it from the queue. Do this after labels have been printed and applied.
+
+| Action | How to access | What it does |
+|---|---|---|
+| **Clear All** | Header button | Marks all queued labels as Generated |
+| **Clear from queue** | Row action | Marks a single event's labels as Generated |
+| **Clear Selected** | Bulk action (checkboxes) | Marks selected events' labels as Generated |
+
+> **Tip:** Print and clear in the same step to keep the queue accurate. Labels that are printed but not cleared will remain visible and may be printed again unnecessarily.
 
 ---
 
@@ -734,6 +799,7 @@ This history is useful when following up on overdue events, resolving data queri
 | Drop a participant | Subject record → **Drop Subject** |
 | Re-instate a participant | Subject record → **Re-Instate Subject** |
 | View scheduled events | Subject record → **Subject Events** section |
+| Print queued barcode labels | **Label Queue** in project navigation |
 
 ---
 
@@ -796,6 +862,8 @@ The Subject Events table shows:
 | **Log Date** | The date the event was actually recorded, if logged |
 | **Repeatable** | Whether additional iterations can be added |
 | **Iteration** | The iteration number (for repeatable events) |
+| **Event Order** | The sequence position of this event within the arm |
+| **Label Status** | The current label printing status for this event. Can be updated directly by users with the appropriate permission (see section 4.6). |
 
 Events where the scheduled date has passed and the status is still unlogged are highlighted in red. These require prompt attention.
 
@@ -871,6 +939,8 @@ For users with the appropriate permissions, event status can be updated directly
 
 Select the status dropdown in the row you want to update and choose the new status.
 
+The **Label Status** column can be updated in the same way. Label status tracks whether a label for the event has been queued, printed, or generated. If a label status needs correcting outside the normal Label Queue workflow, an authorised user can update it directly here.
+
 > **Caution:** Direct status updates bypass the log date confirmation step. Only use this approach when instructed by your data manager, and always record the reason for the change in your study records. Changes made directly to the status column are still recorded in the system audit trail.
 
 ---
@@ -885,7 +955,7 @@ Use the **Subject Events** section on individual subject records to check:
 - Events that are approaching their post-window date
 - Participants with a high number of missed events
 
-For a broader view across all participants, use filters and search tools in the **Subjects** list to identify active participants and review their events. See Chapter 9 — Searching, Reviewing, and Exporting Data for filter and export options.
+For a broader view across all participants, use filters and search tools in the **Subjects** list to identify active participants and review their events. See Chapter 9 — Searching, Reviewing, Exporting, and Importing Data for filter and export options.
 
 ---
 
@@ -1046,11 +1116,9 @@ The edit form allows updates to:
 
 - Specimen type and site
 - Status
-- Aliquot number and volume
+- Aliquot number, volume, and volume unit
 - Thaw count
 - Logged-by user and log date
-- Logged-out-by user
-- Used-by user and used date
 - Parent specimen
 
 > **Caution:** Editing specimen status directly should be done carefully and only when there is a clear operational reason. Where possible, use the logging workflows and bulk actions described above rather than manually editing the status field, as these workflows maintain the correct audit trail and apply the associated business rules automatically.
@@ -1270,7 +1338,7 @@ With the manifest open, navigate to the **Specimens** section at the bottom of t
 1. Select **Select Specimens to Add**.
 2. Find and select the specimens you want to include. The search only shows specimens that:
    - Are of a type included in the manifest
-   - Have a status of **Logged** or **In Storage**
+   - Have a status of **Logged**, **In Storage**, or **Received**
    - Belong to your current site
 
 3. Confirm the selection.
@@ -1342,6 +1410,14 @@ The manifest record can be accessed from the Manifests list at any time. Use the
 
 ---
 
+## 7.8 Exporting a Manifest
+
+Once a manifest has been **Shipped** or **Received**, an **Export** action becomes available on the manifest detail page. This downloads a file containing the manifest's specimen records, which is useful for reconciliation at the receiving site or for archiving shipment records.
+
+The Export action is not available on manifests with an **Open** status.
+
+---
+
 ## Summary
 
 | Task | Where to go |
@@ -1350,13 +1426,14 @@ The manifest record can be accessed from the Manifests list at any time. Use the
 | Add specimens to a manifest | **Manifests** → open the record → **Specimens** section → **Select Specimens to Add** |
 | Ship (dispatch) a manifest | **Manifests** → open the record → **Ship the Manifest** |
 | Receive an incoming shipment | **Manifests** → open the Shipped record → **Receive the Manifest** |
+| Export a shipped or received manifest | **Manifests** → open the record → **Export** |
 | Review all manifests for the project | **Manifests** list |
 
 ---
 
 ---
 
-## Chapter 8 — Studies and Assay Data
+## Chapter 8 — Studies, Assay Data, and Publications
 
 ---
 
@@ -1475,6 +1552,46 @@ Click on a study to open its full record, including the linked specimens and ass
 
 ---
 
+## 8.7 Publications
+
+Publications are project-level records that capture bibliographic information about research outputs from the project — such as journal articles, preprints, or conference proceedings that report findings from the study.
+
+Publications are accessed from **Publications** in the project navigation.
+
+### 8.7.1 Creating a publication record
+
+1. Navigate to **Publications** and select **New Publication**.
+2. Complete the publication form:
+
+| Field | Required | Notes |
+|---|---|---|
+| **Title** | Yes | The full publication title. Supports markdown formatting. |
+| **Authors** | Yes | Enter one author name per line in the Authors list. |
+| **Publication Status** | Yes | Select the current status: Draft, Submitted, or Published. |
+| **PubMed ID** | Required if Published | The PubMed identifier (PMID) for the article (7–8 digits). |
+| **DOI** | Required if Published | The digital object identifier for the article. |
+| **Publication Date** | Required if Published | The date the article was published. |
+
+3. Save the record.
+
+> **Tip:** Create a publication record in **Draft** status as soon as a manuscript is in preparation. Update the status and add the PubMed ID and DOI once the article is accepted and published. This keeps the project's output record current without requiring fields that are not yet available.
+
+### 8.7.2 Publication statuses
+
+| Status | Meaning |
+|---|---|
+| **Draft** | The manuscript is in preparation and has not yet been submitted for publication |
+| **Submitted** | The manuscript has been submitted to a journal or repository |
+| **Published** | The article has been published |
+
+Publication status does not restrict editing of the record. Unlike the **Locked** toggle on a study, changing the publication status does not prevent further updates to the publication record.
+
+### 8.7.3 Reviewing publications
+
+The **Publications** list shows all publications for the current project, with columns for title, authors, PubMed ID, DOI, publication date, and status.
+
+---
+
 ## Summary
 
 | Task | Where to go |
@@ -1485,18 +1602,20 @@ Click on a study to open its full record, including the linked specimens and ass
 | Download an assay file | **Studies** → open the record → **Assays** section → **Download** |
 | Lock a study | **Studies** → open the record → **Edit** → enable **Locked** |
 | Review all project studies | **Studies** list |
+| Create a publication record | **Publications** → **New Publication** |
+| Review project publications | **Publications** list |
 
 ---
 
 ---
 
-## Chapter 9 — Searching, Reviewing, and Exporting Data
+## Chapter 9 — Searching, Reviewing, Exporting, and Importing Data
 
 ---
 
 ## Overview
 
-This chapter is for research coordinators, data managers, and project managers who need to find records, review operational progress, or export data for offline use.
+This chapter is for research coordinators, data managers, and project managers who need to find records, review operational progress, export data for offline use, or bulk-import records from an external system.
 
 BRIMS does not have a single global search across all record types. Instead, each list view offers column-level search fields and, where applicable, filters to narrow results by category. Understanding where to search for different types of records will allow you to find what you need quickly.
 
@@ -1626,6 +1745,88 @@ Refer to Chapter 6 — Managing Specimen Storage for details.
 
 ---
 
+## 9.7 Importing Data
+
+BRIMS supports bulk import of subject, subject event, and specimen records from a CSV file. This is intended for migrating data from another system, not for day-to-day data entry. Imports are accessed from the project detail page — open the project via **Access**, which takes you to the **Configure Project Details** page, then select the **Data Import** button group.
+
+> **Important — data preparation:** Before running any import, prepare your source file carefully and review the Import Value Mappings configuration for your project (see Chapter 2 — Setting Up a Project, section 2.7). The import process validates each row and will reject rows that contain unrecognised values or fail business rule checks. Failed rows do not prevent other rows in the same file from being processed — only the valid rows are committed.
+
+> **Important — data sensitivity:** Import files may contain participant identifiers, specimen barcodes, and other sensitive research data. Handle import files according to your organisation's data governance procedures and delete them securely after use.
+
+### 9.7.1 Import types
+
+#### Import Subjects
+
+Creates new subject records in the project. Each row must contain a Subject ID that matches the project's configured prefix and digit format.
+
+> **Note:** This import creates subject records directly without triggering the enrolment workflow. Subjects imported with an Enrolled status will not automatically have events created. Use this import route only when migrating existing data where events and specimens are being imported separately in the same batch.
+
+| Column | Required | Notes |
+|---|---|---|
+| **Subject ID** | Yes | Must match the project prefix and digit format |
+| **Site** | Yes | Site name as it appears in BRIMS (or mapped via Import Value Mappings) |
+| **User** | Yes | Username of the staff member to assign as Manager |
+| **Enrolment Date** | Yes | Date in YYYY-MM-DD format |
+| **Arm** | Yes | Arm name as it appears in BRIMS |
+| **Status** | Yes | One of: Generated, Enrolled, Dropped |
+| **First Name** | No | |
+| **Last Name** | No | |
+| **Address** | No | |
+| **Arm Baseline Date** | No | Date in YYYY-MM-DD format |
+
+#### Import Subject Events
+
+Creates new subject event records for existing subjects. Use this import to bulk-load event history when migrating data.
+
+| Column | Required | Notes |
+|---|---|---|
+| **Subject ID** | Yes | Must already exist in the project |
+| **Event** | Yes | Event name as it appears in BRIMS |
+| **Iteration** | Yes | Integer, minimum 1 |
+| **Status** | Yes | A valid event status name (e.g. Logged, Missed, Pending) |
+| **Label Status** | Yes | A valid label status name |
+| **Event Date** | No | Date in YYYY-MM-DD format |
+| **Min Date** | No | Must be on or before Event Date |
+| **Max Date** | No | Must be on or after Event Date |
+| **Log Date** | No | Must be on or after Event Date |
+
+> **Note:** The combination of Subject ID, Event, and Iteration must be unique. Importing a row that matches an existing subject event will fail validation for that row.
+
+#### Import Specimens
+
+Creates new specimen records linked to existing subject events. Use this import when migrating specimen history from another system.
+
+| Column | Required | Notes |
+|---|---|---|
+| **Barcode** | Yes | Must be unique within the project; max 20 characters |
+| **Subject ID** | Yes | Must already exist in the project |
+| **Event** | Yes | Event name as it appears in BRIMS |
+| **Iteration** | Yes | Integer, minimum 1 |
+| **Specimen Type** | Yes | Specimen type name as it appears in BRIMS |
+| **Site** | Yes | Site name as it appears in BRIMS |
+| **Status** | Yes | A valid specimen status name (e.g. Logged, InStorage, Used) |
+| **Aliquot** | Yes | Integer |
+| **Thaw Count** | Yes | Integer |
+| **Logged By** | Yes | Username of the user who logged the specimen |
+| **Logged At** | Yes | Date in YYYY-MM-DD format |
+| **Parent Specimen** | No | Barcode of the parent specimen (for derivatives) |
+| **Volume** | No | Numeric |
+| **Volume Unit** | No | Max 5 characters (e.g. mL, µL) |
+| **Used By** | No | Username; required if Used At is provided |
+| **Used At** | No | Datetime; required if Used By is provided; must be on or after Logged At |
+
+### 9.7.2 Running an import
+
+1. Navigate to the project detail page (**Configure Project Details**).
+2. Select **Data Import** and choose the import type.
+3. Upload your prepared CSV file.
+4. BRIMS processes the file asynchronously. You will receive a notification when the import is complete, showing the number of rows successfully imported and the number of rows that failed.
+5. Review any failed rows. The notification describes the reason for each failure. Correct the source data and re-import the affected rows.
+
+> **Tip:** Test with a small file (10–20 rows) before importing a full dataset. This confirms that your column mapping and value mappings are correct before committing a large import.
+
+---
+
 ## Summary
 
 | Task | Where to go |
@@ -1634,11 +1835,14 @@ Refer to Chapter 6 — Managing Specimen Storage for details.
 | Find a specimen by barcode | **Specimens** list → search by barcode |
 | Find shipped manifests awaiting receipt | **Manifests** list → filter by status Shipped |
 | Find specimens waiting to be stored | **Specimens** list → filter or sort by status (Logged) |
-| Export participant data | **Project** detail page → **Export Subjects** |
-| Export event data | **Project** detail page → **Export Subject Events** |
-| Export specimen data (full project) | **Project** detail page → **Export Specimens** |
+| Export participant data | **Project** detail page → **Data Export** → **Export Subjects** |
+| Export event data | **Project** detail page → **Data Export** → **Export Subject Events** |
+| Export specimen data (full project) | **Project** detail page → **Data Export** → **Export Specimens** |
 | Export specimen data (selected records) | **Specimens** list → select rows → **Export** |
 | Export study specimens | **Studies** → open the study → **Specimens** section → **Export** |
+| Import subjects | **Project** detail page → **Data Import** → **Import Subjects** |
+| Import subject events | **Project** detail page → **Data Import** → **Import Subject Events** |
+| Import specimens | **Project** detail page → **Data Import** → **Import Specimens** |
 
 ---
 
@@ -1877,7 +2081,7 @@ Some REDCap functions depend on a user-specific API token stored on the project 
 
 To add or update a REDCap token for a project member:
 
-1. Open the project's member list from **Configure Project Details** → **Members**.
+1. Open the project's member list from **Project Configuration** → **Members**.
 2. Find the relevant member and select **Edit**.
 3. In the **REDCap Token** field, enter or update the token value.
 4. Save the member record.
@@ -1925,7 +2129,7 @@ When a REDCap integration issue is reported:
 |---|---|
 | Create a REDCap-linked project | Team **Projects** → **Create New REDCap-Linked Project** |
 | Verify the REDCap link is active | Team **Projects** list — check for the **REDCap Linked** indicator |
-| Add or update a member's REDCap token | **Configure Project Details** → **Members** → edit the member record |
+| Add or update a member's REDCap token | **Project Configuration** → **Members** → edit the member record |
 | Troubleshoot integration issues | See section 11.5 above |
 
 ---
@@ -1967,8 +2171,8 @@ When a user's role changes — for example, if they move to a different project 
 |---|---|
 | Create a new user account | **Admin** → **Users** → **New User** |
 | Update a user's system role | **Admin** → **Users** → edit the user record |
-| Add a user to a project | **Configure Project Details** → **Members** → add member |
-| Change a user's project role | **Configure Project Details** → **Members** → edit the member record |
+| Add a user to a project | **Project Configuration** → **Members** → add member |
+| Change a user's project role | **Project Configuration** → **Members** → edit the member record |
 | Deactivate an account | **Admin** → **Users** → edit the user record → disable access |
 
 > **Caution:** Deactivating an account does not remove the user's historical records or audit trail. It prevents further sign-in only. Do not delete user records unless directed by your organisation's data governance policy.
@@ -1979,7 +2183,7 @@ When a user's role changes — for example, if they move to a different project 
 
 System roles should be kept limited to users who genuinely need wider administrative access. Project roles should be scoped to support day-to-day work without granting unnecessary permissions.
 
-- Use the project **Roles** area (within **Configure Project Details**) for project-specific permissions.
+- Use the project **Roles** area (within **Project Configuration**) for project-specific permissions.
 - Use the **Admin** panel only for system-level administrative access.
 
 When assigning roles, apply the principle of least privilege: give each user the minimum access needed to perform their work.
@@ -2057,7 +2261,7 @@ Signs that a configuration review may be due:
 |---|---|
 | Create a user account | **Admin** → **Users** → **New User** |
 | Deactivate a user account | **Admin** → **Users** → edit the user record |
-| Add a project member | **Configure Project Details** → **Members** |
+| Add a project member | **Project Configuration** → **Members** |
 | Manage system reference data | **Admin** panel → relevant configuration area |
 | Manage assay definitions | Team-level **Assay Definitions** area |
 | Prepare a new project for go-live | Checklist in section 12.4 |
@@ -2123,6 +2327,10 @@ The configuration of a recurring event within an arm, specifying its name, expec
 
 A type of container (tube, vial, plate etc.) associated with a specimen type, including its barcode format. Labware configuration determines which barcodes will be accepted when specimens of that type are logged.
 
+### Import Value Mapping
+
+A project-level configuration record that translates field values used in an import file into the corresponding names used in BRIMS. Import value mappings can be defined for Sites, Arms, Events, Specimen Types, and Status fields. They are applied automatically when bulk import actions are run for the project.
+
 ### Liquid Nitrogen
 
 One of the three supported storage types in BRIMS. Refers to cryogenic vapour or liquid nitrogen storage. See also: **Storage Type**.
@@ -2163,9 +2371,13 @@ Abbreviation for **Project Subject Event**. See **Project Subject Event Barcode 
 
 A scannable barcode that identifies a specific combination of project, participant, and event. The PSE barcode is used as the entry point for the primary specimen logging workflow to identify which participant and event the specimens belong to.
 
+### Publication
+
+A project-level record that captures bibliographic information about a research output from the project — such as a journal article, preprint, or conference proceedings. Publication records store the title, authors, PubMed ID, DOI, publication date, and publication status. See also: **Publication Status**.
+
 ### Publication Status
 
-A metadata field on a study record indicating its publication stage. Possible values are: Draft, Submitted, and Published.
+A field on a publication record indicating its current stage in the publication pipeline. Possible values are: Draft, Submitted, and Published.
 
 ### REDCap Integration
 
