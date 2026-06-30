@@ -13,16 +13,19 @@ class AssayDefinitionsRelationManager extends RelationManager
 
     protected static ?string $relatedResource = AssayDefinitionResource::class;
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return AssayDefinitionResource::form($schema);
     }
 
+    #[\Override]
     public function infolist(Schema $schema): Schema
     {
         return AssayDefinitionResource::infolist($schema);

@@ -12,6 +12,7 @@ class ViewArm extends ViewRecord
 {
     protected static string $resource = ArmResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

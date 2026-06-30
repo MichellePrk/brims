@@ -7,9 +7,12 @@ namespace App\Models;
 use App\Enums\SystemRoles;
 use App\Enums\TeamRoles;
 use Database\Factories\UserFactory;
+use Filament\Auth\MultiFactor\App\Concerns\InteractsWithAppAuthentication;
+use Filament\Auth\MultiFactor\App\Concerns\InteractsWithAppAuthenticationRecovery;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
@@ -23,12 +26,14 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use Laravel\Passkeys\Contracts\PasskeyUser;
+use Laravel\Passkeys\PasskeyAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasName, HasTenants
+class User extends Authenticatable implements FilamentUser, PasskeyUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasName, HasTenants, HasAvatar
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, HasRoles, Notifiable;
+    use HasFactory, HasRoles, Notifiable, PasskeyAuthenticatable, InteractsWithAppAuthentication, InteractsWithAppAuthenticationRecovery;
 
     /**
      * The attributes that are mass assignable.
@@ -56,6 +61,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
@@ -105,7 +111,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         // If the user has multiple accounts in your app, it might be a good idea to use
         // their email address as then they are still uniquely identifiable.
 
-        return $this->email;
+        return $this->username;
     }
 
     /**
@@ -129,6 +135,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         $this->save();
     }
 
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return 'storage/' . $this->avatar_url;
+    }
+
     public function getTenants(Panel $panel): Collection
     {
         return $this->projects;
@@ -142,7 +153,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     protected function fullname(): Attribute
     {
         return new Attribute(
-            get: fn (): string => $this->firstname.' '.$this->lastname,
+            get: fn(): string => $this->firstname . ' ' . $this->lastname,
         );
     }
 
@@ -159,14 +170,14 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     protected function isTeamLeader(): Attribute
     {
         return new Attribute(
-            get: fn (): bool => $this->team && $this->id === $this->team->leader_id,
+            get: fn(): bool => $this->team && $this->id === $this->team->leader_id,
         );
     }
 
     protected function isTeamAdmin(): Attribute
     {
         return new Attribute(
-            get: fn (): bool => $this->team && $this->team_role === TeamRoles::Admin->value,
+            get: fn(): bool => $this->team && $this->team_role === TeamRoles::Admin->value,
         );
     }
 

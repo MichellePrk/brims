@@ -12,6 +12,7 @@ class ViewPublication extends ViewRecord
 
     protected static ?string $title = 'Publication Details';
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

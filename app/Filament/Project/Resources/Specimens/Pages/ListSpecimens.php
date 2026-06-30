@@ -19,6 +19,7 @@ class ListSpecimens extends ListRecords
 {
     protected static string $resource = SpecimenResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -32,7 +33,7 @@ class ListSpecimens extends ListRecords
                             ->required()
                             ->rows(10),
                     ])
-                    ->action(function (array $data) {
+                    ->action(function (array $data): void {
                         try {
                             $specimen_count = (new LogSpecimenStatus())(SpecimenStatus::Used, $data['barcodes']);
 
@@ -59,7 +60,7 @@ class ListSpecimens extends ListRecords
                             ->required()
                             ->rows(10),
                     ])
-                    ->action(function (array $data) {
+                    ->action(function (array $data): void {
                         try {
                             $specimen_count = (new LogSpecimenStatus())(SpecimenStatus::LoggedOut, $data['barcodes']);
 
@@ -91,7 +92,7 @@ class ListSpecimens extends ListRecords
                             ->required()
                             ->rows(10),
                     ])
-                    ->action(function (array $data) {
+                    ->action(function (array $data): void {
                         try {
                             $specimen_count = (new LogSpecimenStatus())(SpecimenStatus::InStorage, $data['barcodes'], $data['thawed'] ?? false);
 

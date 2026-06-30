@@ -12,9 +12,10 @@ class ViewUnitDefinition extends ViewRecord
 {
     protected static string $resource = UnitDefinitionResource::class;
 
+    #[\Override]
     public function getTitle(): string
     {
-        return 'Unit Definition: '.$this->record->name;
+        return 'Unit Definition: ' . $this->record->name;
     }
 
     #[\Override]
@@ -25,11 +26,12 @@ class ViewUnitDefinition extends ViewRecord
         ];
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
             EditAction::make()
-                ->visible(fn (UnitDefinition $record) => $record->physicalunits()->count() === 0),
+                ->visible(fn(UnitDefinition $record): bool => $record->physicalunits()->count() === 0),
         ];
     }
 }

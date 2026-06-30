@@ -18,12 +18,6 @@ class Study extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'submission_date' => 'date',
-        'public_release_date' => 'date',
-        'locked' => 'boolean',
-    ];
-
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
@@ -39,5 +33,14 @@ class Study extends Model
     public function assays(): HasMany
     {
         return $this->hasMany(Assay::class);
+    }
+    #[\Override]
+    protected function casts(): array
+    {
+        return [
+            'submission_date' => 'date',
+            'public_release_date' => 'date',
+            'locked' => 'boolean',
+        ];
     }
 }

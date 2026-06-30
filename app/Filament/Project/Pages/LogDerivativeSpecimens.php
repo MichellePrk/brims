@@ -112,7 +112,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
                             ->label('Parent Specimen Barcode')
                             ->helperText('Scan the parent specimen barcode')
                             ->statePath('parent_barcode')
-                            ->visible(fn($get) => $get('selection_route') === 'parent_barcode')
+                            ->visible(fn($get): bool => $get('selection_route') === 'parent_barcode')
                             ->scopedExists(Specimen::class, 'barcode')
                             ->extraAttributes([
                                 'class' => 'w-full md:w-80',
@@ -122,7 +122,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
                             ->label('Project Subject Event Barcode')
                             ->helperText('Scan the PSE barcode')
                             ->statePath('pse_barcode')
-                            ->visible(fn($get) => $get('selection_route') === 'pse_barcode')
+                            ->visible(fn($get): bool => $get('selection_route') === 'pse_barcode')
                             ->extraAttributes([
                                 'class' => 'w-full md:w-80',
                                 'x-on:keydown.enter.prevent' => '$wire.loadSubjectEventSpecimens()',
@@ -138,7 +138,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
                         foreach ($potentialParentSpecimens as $potentialParentSpecimen) {
                             $barcode = $potentialParentSpecimen['barcode'];
                             $potentialParents[] = TextEntry::make('barcode_' . $barcode)
-                                ->getStateUsing(fn() => $barcode)
+                                ->getStateUsing(fn(): mixed => $barcode)
                                 ->hiddenLabel()
                                 ->grow(false)
                                 ->action(Action::make('select_parent_' . $barcode)->action(fn() => $this->selectParentSpecimen($barcode)));
@@ -167,18 +167,18 @@ class LogDerivativeSpecimens extends Page implements HasForms
                             ->schema([
                                 TextInput::make("specimens.{$type->id}.{$i}.barcode")
                                     ->label('Aliquot ' . ($i + 1))
-                                    ->regex('/' . $type->Labware->barcodeFormat . '/')
-                                    ->disabled(isset($this->specimens[$type->id][$i]['barcode']))
+                                    ->regex(($this->specimens[$type->id][$i]['logged'] ?? false) ? '/.*/' : '/' . $type->Labware->barcodeFormat . '/')
+                                    ->disabled($this->specimens[$type->id][$i]['logged'] ?? false)
                                     ->extraAttributes(['style' => 'height: 30px']),
                                 TextInput::make("specimens.{$type->id}.{$i}.volume")
                                     ->hiddenLabel()
                                     ->numeric()
                                     ->inputMode('decimal')
-                                    ->requiredWith("specimens.{$type->id}.{$i}.barcode")
-                                    ->minValue(0)
+                                    ->requiredWith(($this->specimens[$type->id][$i]['logged'] ?? false) ? '' : "specimens.{$type->id}.{$i}.barcode")
+                                    ->minValue(($this->specimens[$type->id][$i]['logged'] ?? false) ? null : 0)
                                     ->default($type->defaultVolume)
                                     ->suffix($type->volumeUnit)
-                                    ->disabled(isset($this->specimens[$type->id][$i]['barcode']))
+                                    ->disabled($this->specimens[$type->id][$i]['logged'] ?? false)
                                     ->extraAttributes(['style' => 'height: 30px']),
                             ])
                             ->columns(1)
@@ -353,6 +353,8 @@ class LogDerivativeSpecimens extends Page implements HasForms
         //     return;
         // }
 
+        $this->form->validate();
+
         $loggedCount = 0;
         try {
             DB::beginTransaction();
@@ -372,6 +374,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
                             'specimenType_id' => $specimenType_id,
                             'subject_event_id' => $this->subjectEvent->id,
                             'site_id' => $this->userSiteId,
+                            'origin_site_id' => $this->userSiteId,
                             'project_id' => session('currentProject')->id,
                             'status' => SpecimenStatus::Logged,
                             'loggedBy_id' => $this->user->id,
@@ -414,6 +417,7 @@ class LogDerivativeSpecimens extends Page implements HasForms
         $this->dispatch('updateform');
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         $actions = [];

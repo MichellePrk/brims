@@ -17,6 +17,7 @@ class EditRole extends EditRecord
 
     public Collection $permissions;
 
+    #[\Override]
     protected function getActions(): array
     {
         return [
@@ -28,7 +29,7 @@ class EditRole extends EditRecord
     protected function mutateFormDataBeforeSave(array $data): array
     {
         $this->permissions = collect($data)
-            ->reject(fn (mixed $permission, string $key): bool => in_array($key, ['name', 'guard_name', 'select_all', Utils::getTenantModelForeignKey()]))
+            ->reject(fn(mixed $permission, string $key): bool => in_array($key, ['name', 'guard_name', 'select_all', Utils::getTenantModelForeignKey()]))
             ->values()
             ->flatten()
             ->unique();

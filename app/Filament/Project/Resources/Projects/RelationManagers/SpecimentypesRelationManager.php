@@ -20,6 +20,7 @@ class SpecimentypesRelationManager extends RelationManager
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return SpecimentypeForm::configure($schema);

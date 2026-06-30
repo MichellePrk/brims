@@ -10,6 +10,7 @@ class ListPublications extends ListRecords
 {
     protected static string $resource = PublicationResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

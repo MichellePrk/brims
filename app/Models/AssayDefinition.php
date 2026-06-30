@@ -25,6 +25,7 @@ class AssayDefinition extends Model
         return $this->belongsTo(Team::class);
     }
 
+    #[\Override]
     protected function casts(): array
     {
         return [

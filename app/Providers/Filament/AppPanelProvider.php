@@ -25,6 +25,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use MarcelWeidum\Passkeys\PasskeysPlugin;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -61,7 +62,9 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('')
             ->login(Login::class)
-            ->plugins([])
+            ->plugins([
+                PasskeysPlugin::make()
+            ])
             ->multiFactorAuthentication([
                 AppAuthentication::make()
                     ->recoverable(),

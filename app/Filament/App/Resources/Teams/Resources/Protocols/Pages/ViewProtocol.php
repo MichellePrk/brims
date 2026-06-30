@@ -10,6 +10,7 @@ class ViewProtocol extends ViewRecord
 {
     protected static string $resource = ProtocolResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

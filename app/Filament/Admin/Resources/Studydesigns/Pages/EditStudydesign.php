@@ -10,6 +10,7 @@ class EditStudydesign extends EditRecord
 {
     protected static string $resource = StudydesignResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

@@ -14,7 +14,7 @@ class EventPolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'ViewAny:Event');
+        return evaluate_permission($authUser, 'View:Event');
     }
 
     public function view(AuthUser $authUser, Event $event): bool
@@ -24,12 +24,12 @@ class EventPolicy
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Event');
+        return evaluate_permission($authUser, 'Manage:Event');
     }
 
     public function update(AuthUser $authUser, Event $event): bool
     {
-        return evaluate_permission($authUser, 'Update:Event');
+        return evaluate_permission($authUser, 'Manage:Event');
     }
 
     public function delete(AuthUser $authUser, Event $event): bool
@@ -39,6 +39,6 @@ class EventPolicy
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Event');
+        return evaluate_permission($authUser, 'Delete:Event');
     }
 }

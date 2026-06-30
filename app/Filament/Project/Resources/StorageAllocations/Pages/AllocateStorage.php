@@ -143,7 +143,7 @@ class AllocateStorage extends Page implements HasForms
                 $locations = Location::query()
                     ->whereRelation('virtualUnit', 'project_id', $this->project->id)
                     ->whereRelation('virtualUnit', 'storageSpecimenType', $specimenType->storageSpecimenType)
-                    ->when(! $reuse_locations, function ($query) {
+                    ->unless($reuse_locations, function ($query): void {
                         $query->where('used', false);
                     })
                     ->limit($specimens->count())

@@ -67,6 +67,7 @@ class SubjectEvent extends Pivot
             'logDate' => $data['logDate'],
         ]);
     }
+    #[\Override]
     protected function casts(): array
     {
         return [

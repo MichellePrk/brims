@@ -10,6 +10,7 @@ class EditManifest extends EditRecord
 {
     protected static string $resource = ManifestResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -17,11 +18,13 @@ class EditManifest extends EditRecord
         ];
     }
 
+    #[\Override]
     public function getRelationManagers(): array
     {
         return [];
     }
 
+    #[\Override]
     protected function getRedirectUrl(): ?string
     {
         return $this->getResource()::getUrl('view', [

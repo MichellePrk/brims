@@ -3,7 +3,7 @@
 use App\Enums\SystemRoles;
 use App\Models\User;
 
-it('redirects to the app panel login page when logging out from the admin panel', function () {
+it('redirects to the app panel login page when logging out from the admin panel', function (): void {
     $user = User::factory()->create(['system_role' => SystemRoles::SuperAdmin]);
 
     $response = $this->actingAs($user)
@@ -12,7 +12,7 @@ it('redirects to the app panel login page when logging out from the admin panel'
     $response->assertRedirect(route('filament.app.auth.login'));
 });
 
-it('redirects to the app panel login page when logging out from the project panel', function () {
+it('redirects to the app panel login page when logging out from the project panel', function (): void {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)
@@ -22,7 +22,7 @@ it('redirects to the app panel login page when logging out from the project pane
     $response->assertRedirect(route('filament.app.auth.login'));
 });
 
-it('redirects to the app panel login page when logging out from the app panel', function () {
+it('redirects to the app panel login page when logging out from the app panel', function (): void {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)

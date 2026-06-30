@@ -14,7 +14,7 @@ class RolePolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'ViewAny:Role');
+        return evaluate_permission($authUser, 'View:Role');
     }
 
     public function view(AuthUser $authUser, Role $role): bool
@@ -24,12 +24,12 @@ class RolePolicy
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Role');
+        return evaluate_permission($authUser, 'Manage:Role');
     }
 
     public function update(AuthUser $authUser, Role $role): bool
     {
-        return evaluate_permission($authUser, 'Update:Role');
+        return evaluate_permission($authUser, 'Manage:Role');
     }
 
     public function delete(AuthUser $authUser, Role $role): bool

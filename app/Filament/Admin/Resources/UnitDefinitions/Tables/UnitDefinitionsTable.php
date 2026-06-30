@@ -29,7 +29,7 @@ class UnitDefinitionsTable
                 TextColumn::make('physicalunits_count')
                     ->counts('physicalunits')
                     ->badge()
-                    ->color(fn ($state) => $state > 0 ? 'info' : 'gray')
+                    ->color(fn ($state): string => $state > 0 ? 'info' : 'gray')
                     ->label('Instances'),
                 TextColumn::make('created_at')
                     ->dateTime('d M Y - H:i')
@@ -46,7 +46,7 @@ class UnitDefinitionsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()
-                    ->visible(fn ($record) => $record->physicalunits()->count() === 0),
+                    ->visible(fn ($record): bool => $record->physicalunits()->count() === 0),
             ])
             ->toolbarActions([
                 //

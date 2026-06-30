@@ -10,6 +10,7 @@ class ListUnitDefinitions extends ListRecords
 {
     protected static string $resource = UnitDefinitionResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

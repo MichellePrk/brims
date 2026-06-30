@@ -2,9 +2,9 @@
 
 use App\Enums\ManifestStatus;
 
-it('provides Filament-compatible options from the ManifestStatus enum', function () {
+it('provides Filament-compatible options from the ManifestStatus enum', function (): void {
     $options = collect(ManifestStatus::cases())
-        ->mapWithKeys(fn (ManifestStatus $s) => [$s->value => $s->getLabel()])
+        ->mapWithKeys(fn (ManifestStatus $s): array => [$s->value => $s->getLabel()])
         ->all();
 
     expect($options)->toBeArray()->not->toBeEmpty();

@@ -11,6 +11,7 @@ class EditSpecimentype extends EditRecord
 {
     protected static string $resource = SpecimentypeResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

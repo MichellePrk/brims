@@ -14,13 +14,6 @@ class Manifest extends Model
 {
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'shippedDate' => 'date',
-        'receivedDate' => 'date',
-        'status' => ManifestStatus::class,
-        'specimenTypes' => 'array',
-    ];
-
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
@@ -100,24 +93,38 @@ class Manifest extends Model
 
         $filename = "manifest-{$this->id}.csv";
 
-        return response()->streamDownload(function () use ($items) {
+        return response()->streamDownload(function () use ($items): void {
             $handle = fopen('php://output', 'w');
 
-            fputcsv($handle, ['Subject', 'Barcode', 'Arm', 'Event', 'Sample Type', 'Aliquot', 'Volume']);
+            fputcsv($handle, ['Subject', 'Barcode', 'Arm', 'Event', 'Sample Type', 'Aliquot', 'Volume'], escape: '\\');
 
             foreach ($items as $item) {
-                fputcsv($handle, [
-                    $item->subjectEvent->subject->subjectID,
-                    $item->barcode,
-                    $item->subjectEvent->event->arm->name,
-                    $item->subjectEvent->event->name,
-                    $item->specimenType->name,
-                    $item->aliquot,
-                    $item->volume.$item->specimenType->volumeUnit,
-                ]);
+                fputcsv(
+                    $handle,
+                    [
+                        $item->subjectEvent->subject->subjectID,
+                        $item->barcode,
+                        $item->subjectEvent->event->arm->name,
+                        $item->subjectEvent->event->name,
+                        $item->specimenType->name,
+                        $item->aliquot,
+                        $item->volume . $item->specimenType->volumeUnit,
+                    ],
+                    escape: '\\'
+                );
             }
 
             fclose($handle);
         }, $filename, ['Content-Type' => 'text/csv']);
+    }
+    #[\Override]
+    protected function casts(): array
+    {
+        return [
+            'shippedDate' => 'date',
+            'receivedDate' => 'date',
+            'status' => ManifestStatus::class,
+            'specimenTypes' => 'array',
+        ];
     }
 }

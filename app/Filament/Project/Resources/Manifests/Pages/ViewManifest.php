@@ -18,11 +18,12 @@ class ViewManifest extends ViewRecord
 {
     protected static string $resource = ManifestResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
             EditAction::make()
-                ->visible(fn() => $this->record->status === ManifestStatus::Open),
+                ->visible(fn(): bool => $this->record->status === ManifestStatus::Open),
             Action::make('ship')
                 ->label('Ship the Manifest')
                 ->button()
@@ -45,8 +46,8 @@ class ViewManifest extends ViewRecord
                         ->columns(1),
                 ])
                 ->requiresConfirmation()
-                ->visible(fn($record) => $record->status === ManifestStatus::Open && $record->specimens->count() > 0)
-                ->action(function ($record, $data) {
+                ->visible(fn($record): bool => $record->status === ManifestStatus::Open && $record->specimens->count() > 0)
+                ->action(function ($record, $data): void {
                     try {
                         DB::beginTransaction();
                         $record->ship();
@@ -76,8 +77,8 @@ class ViewManifest extends ViewRecord
                 ->button()
                 ->color('info')
                 ->requiresConfirmation()
-                ->visible(fn($record) => $record->status === ManifestStatus::Shipped && $record->destinationSite_id === session('currentProject')->members()->where('user_id', Auth::id())->first()->pivot->site_id)
-                ->action(function ($record, $livewire) {
+                ->visible(fn($record): bool => $record->status === ManifestStatus::Shipped && $record->destinationSite_id === session('currentProject')->members()->where('user_id', Auth::id())->first()->pivot->site_id)
+                ->action(function ($record, $livewire): void {
                     try {
                         DB::beginTransaction();
                         $record->receive();
@@ -97,19 +98,19 @@ class ViewManifest extends ViewRecord
                 }),
             DeleteAction::make()
                 ->modalHeading('Delete Manifest')
-                ->before(function ($record) {
+                ->before(function ($record): void {
                     if ($record->status !== ManifestStatus::Open) {
                         throw new \Exception('Only manifests with status "Open" can be deleted.');
                     }
-                    $record->specimens()->each(function ($specimen) {
+                    $record->specimens()->each(function ($specimen): void {
                         $specimen->logOutOfManifest($specimen->pivot->priorSpecimenStatus);
                     });
                 })
-                ->visible(fn() => $this->record->status === ManifestStatus::Open),
+                ->visible(fn(): bool => $this->record->status === ManifestStatus::Open),
             Action::make('export')
                 ->action(fn($record) => $record->export())
                 ->color('info')
-                ->visible(fn($record) => $record->status !== ManifestStatus::Open),
+                ->visible(fn($record): bool => $record->status !== ManifestStatus::Open),
         ];
     }
 }

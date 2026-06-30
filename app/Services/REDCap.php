@@ -24,13 +24,13 @@ class REDCap
     private static function curl(array $params, $redcap_api_token, array $data = [])
     {
 
-        $fields = array(
+        $fields = [
             'token'   => $redcap_api_token,
             'format'  => 'json',
             'type'    => 'flat',
             'returnFormat' => 'json',
             'data'    => json_encode([$data])
-        );
+        ];
 
         $fields = array_merge($fields, $params);
 
@@ -220,7 +220,7 @@ class REDCap
             // 'redcap_data_access_group' => $dag,
         ];
         $response = self::curl($params, $token, $data);
-        $returnmsg = json_decode($response, true);
+        $returnmsg = json_decode((string) $response, true);
         if (array_key_exists("error", $returnmsg)) {
             throw new Exception($returnmsg['error']);
         } elseif ($returnmsg['count'] === 0) {

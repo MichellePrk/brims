@@ -13,7 +13,7 @@ class UserPolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'ViewAny:User');
+        return evaluate_permission($authUser, 'View:User');
     }
 
     public function view(AuthUser $authUser): bool
@@ -24,12 +24,12 @@ class UserPolicy
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:User');
+        return evaluate_permission($authUser, 'Manage:User');
     }
 
     public function update(AuthUser $authUser, User $user): bool
     {
-        return evaluate_permission($authUser, 'Update:User') &&
+        return evaluate_permission($authUser, 'Manage:User') &&
             $user->system_role !== SystemRoles::SuperAdmin;
     }
 

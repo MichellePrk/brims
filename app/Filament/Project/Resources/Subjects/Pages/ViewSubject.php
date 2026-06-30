@@ -10,6 +10,7 @@ class ViewSubject extends ViewRecord
 {
     protected static string $resource = SubjectResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

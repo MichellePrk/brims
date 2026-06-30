@@ -10,6 +10,7 @@ class ListTeams extends ListRecords
 {
     protected static string $resource = TeamResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

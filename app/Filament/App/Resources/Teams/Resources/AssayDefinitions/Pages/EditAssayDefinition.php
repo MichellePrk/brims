@@ -10,6 +10,7 @@ class EditAssayDefinition extends EditRecord
 {
     protected static string $resource = AssayDefinitionResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

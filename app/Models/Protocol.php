@@ -17,4 +17,9 @@ class Protocol extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

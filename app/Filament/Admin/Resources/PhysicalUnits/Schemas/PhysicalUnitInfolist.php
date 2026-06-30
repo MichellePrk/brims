@@ -18,6 +18,8 @@ class PhysicalUnitInfolist
                     ->label('Storage Type'),
                 TextEntry::make('serial')
                     ->label('Serial Number'),
+                TextEntry::make('institution.name')
+                    ->label('Institution'),
                 TextEntry::make('administrator.fullname')
                     ->label('Administrator'),
                 IconEntry::make('available')

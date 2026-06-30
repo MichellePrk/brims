@@ -11,6 +11,7 @@ class CreateStudy extends CreateRecord
 
     protected static bool $canCreateAnother = false;
 
+    #[\Override]
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('view', ['project' => $this->record->project, 'record' => $this->getRecord()]);

@@ -51,6 +51,7 @@ class VirtualUnitsRelationManager extends RelationManager
 
     public $endRack = null;
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;
@@ -134,10 +135,10 @@ class VirtualUnitsRelationManager extends RelationManager
             case $this->selectedRacks[0] - 1:
                 array_unshift($this->selectedRacks, $rack);
                 break;
-            case $this->selectedRacks[array_key_last($this->selectedRacks)]:
+            case array_last($this->selectedRacks):
                 array_pop($this->selectedRacks);
                 break;
-            case $this->selectedRacks[array_key_last($this->selectedRacks)] + 1:
+            case array_last($this->selectedRacks) + 1:
                 $this->selectedRacks[] = $rack;
                 break;
             default:
@@ -167,6 +168,7 @@ class VirtualUnitsRelationManager extends RelationManager
      *
      * @throws BindingResolutionException
      */
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         if (! isset($this->physicalUnit)) {
@@ -184,15 +186,13 @@ class VirtualUnitsRelationManager extends RelationManager
                                     ->required()
                                     ->maxLength(255)
                                     ->required()
-                                    ->unique(modifyRuleUsing: function (Unique $rule, Get $get) {
-                                        return $rule->where('project_id', $get('project_id'));
-                                    }),
+                                    ->unique(modifyRuleUsing: fn(Unique $rule, Get $get) => $rule->where('project_id', $get('project_id'))),
                                 Select::make('project_id')
                                     ->relationship(name: 'project', titleAttribute: 'title')
                                     ->preload()
                                     ->live()
                                     ->required()
-                                    ->afterStateUpdated(function (Set $set) {
+                                    ->afterStateUpdated(function (Set $set): void {
                                         $set('storageSpecimenType', null);
                                         $set('specimentype_id', null);
                                     }),
@@ -225,19 +225,19 @@ class VirtualUnitsRelationManager extends RelationManager
                                     ->live()
                                     ->dehydrated()
                                     ->afterStateUpdated(
-                                        function (Set $set) {
+                                        function (Set $set): void {
                                             $set('startBox', null);
                                             $set('endBox', null);
                                         }
                                     ),
                                 Select::make('startBox')
-                                    ->options(fn() => $this->getBoxOptions())
+                                    ->options(fn(): array => $this->getBoxOptions())
                                     ->live()
                                     ->requiredIf('rack_extent', 'Partial')
                                     ->disabled(fn(): bool => $this->data['rack_extent'] === 'Full')
                                     ->disableOptionWhen(fn($value): bool => $this->selectionIsPartial and $this->boxIsUsed($value))
-                                    ->afterStateUpdated(function (?string $state, Get $get, Set $set) {
-                                        foreach ($this->virtualUnitsInPartialRack as $key => $virtualUnit) {
+                                    ->afterStateUpdated(function (?string $state, Get $get, Set $set): void {
+                                        foreach ($this->virtualUnitsInPartialRack as $virtualUnit) {
                                             if ($state < $virtualUnit->startBox and $get('endBox') > $virtualUnit->endBox) {
                                                 $set('endBox', $state);
                                             }
@@ -245,13 +245,13 @@ class VirtualUnitsRelationManager extends RelationManager
                                     })
                                     ->lte('endBox'),
                                 Select::make('endBox')
-                                    ->options(fn() => $this->getBoxOptions())
+                                    ->options(fn(): array => $this->getBoxOptions())
                                     ->live()
                                     ->requiredIf('rack_extent', 'Partial')
                                     ->disabled(fn(): bool => $this->data['rack_extent'] === 'Full')
                                     ->disableOptionWhen(fn($value): bool => $this->selectionIsPartial and $this->boxIsUsed($value))
-                                    ->afterStateUpdated(function (?string $state, Get $get, Set $set) {
-                                        foreach ($this->virtualUnitsInPartialRack as $key => $virtualUnit) {
+                                    ->afterStateUpdated(function (?string $state, Get $get, Set $set): void {
+                                        foreach ($this->virtualUnitsInPartialRack as $virtualUnit) {
                                             if ($state > $virtualUnit->endBox and $get('startBox') < $virtualUnit->startBox) {
                                                 $set('startBox', $state);
                                             }
@@ -262,7 +262,7 @@ class VirtualUnitsRelationManager extends RelationManager
                                     ->numeric()
                                     ->live()
                                     ->disabled(fn(): bool => $this->selectionIsPartial)
-                                    ->afterStateUpdated(function (?string $state, Get $get, Set $set) {
+                                    ->afterStateUpdated(function (?string $state, Get $get, Set $set): void {
                                         $set('startBox', null);
                                         $set('endBox', null);
                                     })
@@ -292,7 +292,7 @@ class VirtualUnitsRelationManager extends RelationManager
     private function boxIsUsed($value): bool
     {
         $partialVirtualUnits = VirtualUnit::where('physical_unit_id', $this->physicalUnit->id)->where('startRack', $this->selectedRacks[0])->get();
-        foreach ($partialVirtualUnits as $key => $virtualunit) {
+        foreach ($partialVirtualUnits as $virtualunit) {
             if ($virtualunit->startBox <= $value and $virtualunit->endBox >= $value) {
                 return true;
             }
@@ -336,7 +336,7 @@ class VirtualUnitsRelationManager extends RelationManager
                 TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('project.name')
+                TextColumn::make('project.title')
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('storageSpecimenType')
@@ -355,10 +355,10 @@ class VirtualUnitsRelationManager extends RelationManager
                 // TextColumn::make('startBox'),
                 // TextColumn::make('endBox'),
                 TextColumn::make('Racks')
-                    ->getStateUsing(fn(VirtualUnit $record) => "$record->startRack - $record->endRack")
+                    ->getStateUsing(fn(VirtualUnit $record): string => "$record->startRack - $record->endRack")
                     ->sortable(['startRack']),
                 TextColumn::make('Boxes')
-                    ->getStateUsing(fn(VirtualUnit $record) => "$record->startBox - $record->endBox"),
+                    ->getStateUsing(fn(VirtualUnit $record): string => "$record->startBox - $record->endBox"),
                 TextColumn::make('rackCapacity'),
                 TextColumn::make('boxCapacity'),
                 TextColumn::make('locations_count')
@@ -377,7 +377,7 @@ class VirtualUnitsRelationManager extends RelationManager
                     ->authorize(true)
                     ->visible(fn() => $this->getOwnerRecord()->available)
                     ->createAnother(false)
-                    ->beforeFormValidated(function (CreateAction $action) {
+                    ->beforeFormValidated(function (CreateAction $action): void {
                         if (empty($this->selectedRacks)) {
                             Notification::make()
                                 ->title('Rack Selection Error')
@@ -404,12 +404,12 @@ class VirtualUnitsRelationManager extends RelationManager
 
                         return $data;
                     })
-                    ->beforeFormFilled(function () {
+                    ->beforeFormFilled(function (): void {
                         $this->selectedRacks = [];
                         $this->selectedSection = null;
                         $this->selectionIsPartial = false;
                         $rack_count = 0;
-                        foreach ($this->unitDefinition->sections as $key => $section) {
+                        foreach ($this->unitDefinition->sections as $section) {
                             $rack_count += $section->rows * $section->columns;
                         }
                         $this->racks = $boxcount = array_fill(1, $rack_count, 0);
@@ -432,7 +432,7 @@ class VirtualUnitsRelationManager extends RelationManager
                             };
                         }
                     })
-                    ->after(function (VirtualUnit $record) {
+                    ->after(function (VirtualUnit $record): void {
                         for ($rack = $record->startRack; $record->startRack <= $record->endRack; $record->startRack++) {
                             for ($box = $record->startBox; $box <= $record->endBox; $box++) {
                                 for ($position = 1; $position <= $record->boxCapacity; $position++) {
@@ -454,7 +454,7 @@ class VirtualUnitsRelationManager extends RelationManager
                     ->button()
                     ->size('xs')
                     ->requiresConfirmation()
-                    ->action(function (VirtualUnit $record) {
+                    ->action(function (VirtualUnit $record): void {
                         try {
                             DB::beginTransaction();
                             DB::table('locations')->where('virtual_unit_id', $record->id)->lockForUpdate()->get();
@@ -479,16 +479,16 @@ class VirtualUnitsRelationManager extends RelationManager
                     ->color(Color::Yellow)
                     ->button()
                     ->size('xs')
-                    ->disabled(fn(VirtualUnit $record) => $record->free_extents() === 0)
+                    ->disabled(fn(VirtualUnit $record): bool => $record->free_extents() === 0)
                     ->requiresConfirmation()
                     ->schema([
                         Select::make('itemsToRemove')
-                            ->label(fn(VirtualUnit $record) => $record->rack_extent === 'Full' ? 'Number of racks to remove' : 'Number of boxes to remove')
+                            ->label(fn(VirtualUnit $record): string => $record->rack_extent === 'Full' ? 'Number of racks to remove' : 'Number of boxes to remove')
                             ->required()
-                            ->options(fn(VirtualUnit $record) => array_combine(range(1, $record->free_extents()), range(1, $record->free_extents())))
+                            ->options(fn(VirtualUnit $record): array => array_combine(range(1, $record->free_extents()), range(1, $record->free_extents())))
                             ->default(1),
                     ])
-                    ->action(function (VirtualUnit $record, array $data) {
+                    ->action(function (VirtualUnit $record, array $data): void {
                         try {
                             DB::beginTransaction();
                             DB::table('locations')->where('virtual_unit_id', $record->id)->lockForUpdate()->get();
@@ -517,7 +517,7 @@ class VirtualUnitsRelationManager extends RelationManager
                     ->button()
                     ->outlined()
                     ->size('xs')
-                    ->disabled(fn(VirtualUnit $record) => $record->usedLocations()->count() > 0),
+                    ->disabled(fn(VirtualUnit $record): bool => $record->usedLocations()->count() > 0),
             ])
             ->toolbarActions([
                 //

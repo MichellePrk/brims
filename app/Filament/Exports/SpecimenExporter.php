@@ -14,6 +14,7 @@ class SpecimenExporter extends Exporter
 {
     protected static ?string $model = Specimen::class;
 
+    #[\Override]
     public function getFormats(): array
     {
         return [
@@ -21,6 +22,7 @@ class SpecimenExporter extends Exporter
         ];
     }
 
+    #[\Override]
     public function getFileDisk(): string
     {
         return 'exports';
@@ -38,8 +40,10 @@ class SpecimenExporter extends Exporter
                 ->label('Event Iteration'),
             ExportColumn::make('specimenType.name'),
             ExportColumn::make('site.name'),
+            ExportColumn::make('originSite.name')
+                ->label('Origin Site'),
             ExportColumn::make('status')
-                ->formatStateUsing(fn (SpecimenStatus $state): string => $state->name),
+                ->formatStateUsing(fn(SpecimenStatus $state): string => $state->name),
             ExportColumn::make('parentSpecimen.barcode')
                 ->label('Parent Barcode')
                 ->enabledByDefault(false),
@@ -62,10 +66,10 @@ class SpecimenExporter extends Exporter
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Your specimen export has completed and '.Number::format($export->successful_rows).' '.str('row')->plural($export->successful_rows).' exported.';
+        $body = 'Your specimen export has completed and ' . Number::format($export->successful_rows) . ' ' . str('row')->plural($export->successful_rows) . ' exported.';
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' '.Number::format($failedRowsCount).' '.str('row')->plural($failedRowsCount).' failed to export.';
+            $body .= ' ' . Number::format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to export.';
         }
 
         return $body;

@@ -62,11 +62,11 @@ class UserForm
                             ->mask('99 (99) 999-9999')
                             ->maxLength(20)
                             ->default(null),
-                        TextInput::make('homesite')
-                            ->label('Home Site')
-                            ->maxLength(10)
-                            ->required()
-                            ->default(null),
+                        // Select::make('institution_id')
+                        //     ->label('Institution')
+                        //     ->relationship('institution', 'name')
+                        //     ->required()
+                        //     ->default(null),
                     ]),
                 Grid::make([
                     'default' => 1,
@@ -96,7 +96,7 @@ class UserForm
                         Select::make('system_role')
                             ->label('System Role')
                             ->options(function (): array {
-                                $roles = collect(SystemRoles::cases())->mapWithKeys(fn($role) => [$role->value => $role->getLabel()]);
+                                $roles = collect(SystemRoles::cases())->mapWithKeys(fn($role): array => [$role->value => $role->getLabel()]);
                                 $roles = Auth::user()->system_role !== SystemRoles::SuperAdmin ? $roles->except(SystemRoles::SuperAdmin->value) : $roles;
                                 return $roles->all();
                             })

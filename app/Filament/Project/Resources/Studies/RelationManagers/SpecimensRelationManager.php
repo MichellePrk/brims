@@ -93,7 +93,7 @@ class SpecimensRelationManager extends RelationManager
                     ->sortable(),
                 TextColumn::make('subjectEvent.event.name')
                     ->label(new HtmlString('Event : iteration'))
-                    ->formatStateUsing(fn($state, $record) => new HtmlString("$state : {$record->subjectEvent->iteration}"))
+                    ->formatStateUsing(fn($state, $record): \Illuminate\Support\HtmlString => new HtmlString("$state : {$record->subjectEvent->iteration}"))
                     ->searchable(),
                 TextColumn::make('specimenType.name')
                     ->searchable(),
@@ -107,7 +107,7 @@ class SpecimensRelationManager extends RelationManager
                     ->sortable(),
                 TextColumn::make('volume')
                     ->numeric()
-                    ->formatStateUsing(fn($state, $record) => $state ? "$state{$record->volumeUnit}" : ''),
+                    ->formatStateUsing(fn($state, $record): string => $state ? "$state{$record->volumeUnit}" : ''),
                 TextColumn::make('loggedBy.username')
                     ->searchable(),
                 TextColumn::make('loggedAt')
@@ -166,12 +166,10 @@ class SpecimensRelationManager extends RelationManager
                     ->attachAnother(false),
                 ImportAction::make()
                     ->importer(StudySpecimenImporter::class)
-                    ->options(function (): array {
-                        return [
-                            'study' => $this->ownerRecord,
-                            'project' => $this->ownerRecord->project,
-                        ];
-                    })
+                    ->options(fn(): array => [
+                        'study' => $this->ownerRecord,
+                        'project' => $this->ownerRecord->project,
+                    ])
                     ->hidden(fn(): bool => $this->ownerRecord->locked)
                     ->color(Color::Indigo),
                 ExportAction::make()

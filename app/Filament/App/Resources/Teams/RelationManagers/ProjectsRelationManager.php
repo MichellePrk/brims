@@ -32,11 +32,13 @@ class ProjectsRelationManager extends RelationManager
 {
     protected static string $relationship = 'projects';
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         // return ProjectForm::configure($schema)->extraAttributes(['class' => 'w-full']);
@@ -90,6 +92,17 @@ class ProjectsRelationManager extends RelationManager
                             ->minValue(2)
                             ->maxValue(8)
                             ->hint('The number of digits in a subject ID'),
+                    ]),
+                Grid::make(2)
+                    ->schema([
+                        TextInput::make('storageDesignation')
+                            ->label('Storage Designation')
+                            // ->required()
+                            ->maxLength(40),
+                        Select::make('label_format')
+                            ->label('Label Format')
+                            ->relationship('labelSpecification', 'format')
+                            ->required(),
                     ]),
                 Grid::make(2)
                     ->schema([
@@ -156,12 +169,13 @@ class ProjectsRelationManager extends RelationManager
             )
             ->headerActions([
                 CreateAction::make()
+                    ->createAnother(false)
                     ->after(function (Project $record): void {
                         try {
                             DB::beginTransaction();
                             $site = Site::create([
                                 'project_id' => $record->id,
-                                'name' => Auth::user()->homesite,
+                                'name' => Auth::user()->institution,
                                 'description' => 'Project Creator\'s site',
                             ]);
                             $role = Role::create([
@@ -171,10 +185,10 @@ class ProjectsRelationManager extends RelationManager
                             ]);
                             $record->members()->attach(Auth::user(), ['role_id' => $role->id, 'site_id' => $site->id]);
                             if ($record->leader_id !== Auth::user()->id) {
-                                if ($record->leader->homesite !== $site->name) {
+                                if ($record->leader->institution !== $site->name) {
                                     $site = Site::create([
                                         'project_id' => $record->id,
-                                        'name' => $record->leader->homesite,
+                                        'name' => $record->leader->institution,
                                         'description' => 'Project Leader\'s site',
                                     ]);
                                 }
@@ -202,14 +216,7 @@ class ProjectsRelationManager extends RelationManager
                             ->preload()
                             ->searchDebounce(500)
                             ->options(function () {
-                                // return [
-                                //     '1' => 'Test Project',
-                                //     '2' => 'Demo Project',
-                                //     '3' => 'Sample Project',
-                                //     '4' => 'Example Project',
-                                // ];
                                 $query = "SELECT app_title, redcap_projects.project_id FROM redcap_projects INNER JOIN redcap_user_rights ON redcap_projects.project_id = redcap_user_rights.project_id WHERE username = '" . Auth::user()->username . "' AND design=1 AND api_token IS NOT null";
-                                // $query = "select app_title, project_id from redcap_projects";
                                 $linked_redcap_projects = Project::whereNot('redcapProject_id', 'null')->pluck('redcapProject_id')->toArray();
                                 if (count($linked_redcap_projects) > 0) {
                                     $query .= ' AND redcap_projects.project_id NOT IN (' . implode(',', $linked_redcap_projects) . ')';
@@ -272,7 +279,7 @@ class ProjectsRelationManager extends RelationManager
                                 DatePicker::make('submission_date'),
                             ]),
                     ])
-                    ->action(function (array $data) {
+                    ->action(function (array $data): void {
                         DB::beginTransaction();
                         try {
                             $data['team_id'] = Auth::user()->team_id;
@@ -293,7 +300,7 @@ class ProjectsRelationManager extends RelationManager
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()
-                    ->after(function (Project $record) {
+                    ->after(function (Project $record): void {
                         $projectAdminRole = $record->roles()->where('name', 'Admin')->first();
                         if ($record->members()->where('user_id', $record->leader_id)->count() == 0) {
                             $record->members()->attach($record->leader_id, ['role_id' => $projectAdminRole->id]);
@@ -302,7 +309,7 @@ class ProjectsRelationManager extends RelationManager
                         }
                     }),
                 DeleteAction::make()
-                    ->modalHeading(fn(Project $record) => Markdown::inline("Delete Project<br><br>*$record->title*<br><br>"))
+                    ->modalHeading(fn(Project $record): \Filament\Support\Markdown => Markdown::inline("Delete Project<br><br>*$record->title*<br><br>"))
                     ->modalDescription(Markdown::inline('**All data pertaining to this project will be deleted.<br><br>Are you sure you want to proceed?**'))
                     ->after(fn(Project $record) => Role::where('project_id', $record->id)->delete()),
             ])

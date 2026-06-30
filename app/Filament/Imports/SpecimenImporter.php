@@ -24,11 +24,11 @@ class SpecimenImporter extends Importer
                 ->rules(['required', 'max:20']),
             ImportColumn::make('subjectID')
                 ->requiredMapping()
-                ->fillRecordUsing(fn() => null)
+                ->fillRecordUsing(fn(): null => null)
                 ->rules(
-                    fn($options) => [
+                    fn($options): array => [
                         'required',
-                        function (string $attribute, $value, Closure $fail) use ($options) {
+                        function (string $attribute, $value, Closure $fail) use ($options): void {
                             if (! \App\Models\Subject::where('subjectID', $value)
                                 ->where('project_id', $options['project']->id)
                                 ->exists()) {
@@ -39,10 +39,10 @@ class SpecimenImporter extends Importer
                 ),
             ImportColumn::make('event')
                 ->requiredMapping()
-                ->fillRecordUsing(fn() => null)
-                ->rules(fn($options) => [
+                ->fillRecordUsing(fn(): null => null)
+                ->rules(fn($options): array => [
                     'required',
-                    function (string $attribute, $value, Closure $fail) use ($options) {
+                    function (string $attribute, $value, Closure $fail) use ($options): void {
                         $exists = \App\Models\Event::where('name', $value)
                             ->whereHas('arm', fn($query) => $query->where('project_id', $options['project']->id))
                             ->exists();
@@ -54,7 +54,7 @@ class SpecimenImporter extends Importer
                 ]),
             ImportColumn::make('iteration')
                 ->requiredMapping()
-                ->fillRecordUsing(fn() => null)
+                ->fillRecordUsing(fn(): null => null)
                 ->numeric()
                 ->rules(['required', 'integer', 'min:1']),
             ImportColumn::make('specimenType')
@@ -73,8 +73,8 @@ class SpecimenImporter extends Importer
                 ])
                 ->castStateUsing(function ($state) {
                     try {
-                        return constant(SpecimenStatus::class . '::' . $state)->value;
-                    } catch (\Throwable $th) {
+                        return SpecimenStatus::{$state}->value;
+                    } catch (\Throwable) {
                         throw ValidationException::withMessages([
                             'status' => "The status '{$state}' is not valid. Valid values are: " . implode(', ', array_column(SpecimenStatus::cases(), 'name')) . '.',
                         ]);
@@ -202,6 +202,7 @@ class SpecimenImporter extends Importer
         $this->record->subject_event_id = $subjectEvent->id;
     }
 
+    #[\Override]
     public function resolveRecord(): Specimen
     {
         $specimen = new Specimen;

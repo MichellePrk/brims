@@ -23,6 +23,7 @@ class SitesRelationManager extends RelationManager
         return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema

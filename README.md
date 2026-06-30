@@ -2,15 +2,16 @@
 
 *Bio-medical Research Information Management System*
 
-BRIMS is a multi-site, research study management system that integrates a number of functions under a unified platform.
+BRIMS is a multi-site, research project management system that integrates a number of functions under a unified platform.
 
 - Participant enrolment with automatic unique identifier allocation
-- Participant study arm allocation with automatic scheduling of follow-up events
+- Participant project arm allocation & switching with automatic scheduling of follow-up events
 - Logging of events and specimens by barcode identifiers
-- Management of minus-80 and liquid N2 storage infrastructure
-- Automatic allocation and management of specimen storage/retrieval and shipment
+- Management of cryogenic (e.g. minus-80 and liquid N2) storage infrastructure
+- Automatic allocation and management of specimen storage/retrieval
+- Manifest management for shipment of specimens
 - Integration with REDCap for data capture
-- Management of study assay data storage along with its meta-data
+- Management of project assay data storage along with its meta-data
 
 BRIMS is a web-based application developed using the Laravel PHP framework with Filament UI framemwork
 

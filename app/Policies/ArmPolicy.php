@@ -15,31 +15,31 @@ class ArmPolicy
     public function viewAny(AuthUser $authUser): bool
     {
 
-        return evaluate_permission($authUser, 'ViewAny:Arm');
+        return evaluate_permission($authUser, 'View:Project');
     }
 
     public function view(AuthUser $authUser, Arm $arm): bool
     {
-        return evaluate_permission($authUser, 'View:Arm');
+        return evaluate_permission($authUser, 'View:Project');
     }
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Arm');
+        return evaluate_permission($authUser, 'Manage:Project');
     }
 
     public function update(AuthUser $authUser, Arm $arm): bool
     {
-        return evaluate_permission($authUser, 'Update:Arm');
+        return evaluate_permission($authUser, 'Manage:Project');
     }
 
     public function delete(AuthUser $authUser, Arm $arm): bool
     {
-        return evaluate_permission($authUser, 'Delete:Arm');
+        return evaluate_permission($authUser, 'Delete:Project');
     }
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Arm');
+        return evaluate_permission($authUser, 'Delete:Project');
     }
 }

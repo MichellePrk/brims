@@ -14,7 +14,7 @@ class PublicationPolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'ViewAny:Publication');
+        return evaluate_permission($authUser, 'View:Publication');
     }
 
     public function view(AuthUser $authUser, Publication $publication): bool
@@ -24,12 +24,12 @@ class PublicationPolicy
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Publication');
+        return evaluate_permission($authUser, 'Manage:Publication');
     }
 
     public function update(AuthUser $authUser, Publication $publication): bool
     {
-        return evaluate_permission($authUser, 'Update:Publication');
+        return evaluate_permission($authUser, 'Manage:Publication');
     }
 
     public function delete(AuthUser $authUser, Publication $publication): bool
@@ -39,6 +39,6 @@ class PublicationPolicy
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Publication');
+        return evaluate_permission($authUser, 'Delete:Publication');
     }
 }

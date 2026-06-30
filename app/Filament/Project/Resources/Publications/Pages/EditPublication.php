@@ -13,6 +13,7 @@ class EditPublication extends EditRecord
 
     protected static ?string $title = 'Edit Publication Details';
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

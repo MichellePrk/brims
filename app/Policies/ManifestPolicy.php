@@ -12,7 +12,7 @@ class ManifestPolicy
      */
     public function viewAny(User $authUser): bool
     {
-        return evaluate_permission($authUser, 'ViewAny:Manifest');
+        return evaluate_permission($authUser, 'View:Manifest');
     }
 
     /**
@@ -28,7 +28,7 @@ class ManifestPolicy
      */
     public function create(User $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Manifest');
+        return evaluate_permission($authUser, 'Manage:Manifest');
     }
 
     /**
@@ -36,7 +36,7 @@ class ManifestPolicy
      */
     public function update(User $authUser, Manifest $manifest): bool
     {
-        return evaluate_permission($authUser, 'Update:Manifest');
+        return evaluate_permission($authUser, 'Manage:Manifest');
     }
 
     /**

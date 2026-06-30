@@ -12,6 +12,7 @@ class EditSubject extends EditRecord
 {
     protected static string $resource = SubjectResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -21,6 +22,7 @@ class EditSubject extends EditRecord
         ];
     }
 
+    #[\Override]
     public function getRelationManagers(): array
     {
         return [];

@@ -17,6 +17,11 @@ class Team extends Model
 
     protected $guarded = ['id'];
 
+    public function institution(): BelongsTo
+    {
+        return $this->belongsTo(Institution::class);
+    }
+
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
@@ -40,5 +45,10 @@ class Team extends Model
     public function assayDefinitions(): HasMany
     {
         return $this->hasMany(AssayDefinition::class);
+    }
+
+    public function programmes(): HasMany
+    {
+        return $this->hasMany(Programme::class);
     }
 }

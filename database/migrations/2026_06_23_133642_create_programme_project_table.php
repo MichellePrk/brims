@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Programme;
 use App\Models\Project;
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('import_value_mappings', function (Blueprint $table) {
+        Schema::create('programme_project', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Programme::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Project::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(User::class, 'created_by')->constrained()->cascadeOnDelete();
-            $table->string('model', 200);
-            $table->json('mappings')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('import_value_mappings');
+        Schema::dropIfExists('programme_project');
     }
 };

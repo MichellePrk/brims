@@ -7,7 +7,6 @@ use App\Filament\App\Resources\Teams\Resources\Protocols\Tables\ProtocolsTable;
 use Filament\Actions\CreateAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Auth;
 
 class ProtocolsRelationManager extends RelationManager
 {
@@ -15,6 +14,7 @@ class ProtocolsRelationManager extends RelationManager
 
     protected static ?string $relatedResource = ProtocolResource::class;
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;

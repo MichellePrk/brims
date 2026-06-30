@@ -17,6 +17,7 @@ class Labware extends Model
     {
         return $this->belongsTo(Project::class);
     }
+    #[\Override]
     protected function casts(): array
     {
         return [

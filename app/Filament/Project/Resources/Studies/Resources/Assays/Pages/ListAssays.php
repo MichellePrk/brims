@@ -10,6 +10,7 @@ class ListAssays extends ListRecords
 {
     protected static string $resource = AssayResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

@@ -37,6 +37,11 @@ class Specimen extends Model
         return $this->belongsTo(Site::class, 'site_id');
     }
 
+    public function originSite(): BelongsTo
+    {
+        return $this->belongsTo(Site::class, 'origin_site_id');
+    }
+
     public function parentSpecimen(): BelongsTo
     {
         return $this->belongsTo(Specimen::class, 'parentSpecimen_id');
@@ -66,8 +71,7 @@ class Specimen extends Model
 
     public function auditLogs(): HasMany
     {
-        return $this->hasMany(SpecimenLog::class, 'specimen_id')
-            ->orderBy('created_at');
+        return $this->hasMany(SpecimenLog::class, 'specimen_id')->oldest();
     }
 
     public function logStored(): void
@@ -123,6 +127,7 @@ class Specimen extends Model
         $this->update(['site_id' => $destinationSiteId]);
     }
 
+    #[\Override]
     protected function casts(): array
     {
         return [

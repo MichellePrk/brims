@@ -28,19 +28,16 @@ class StudydesignResource extends Resource
     protected static ?int $navigationSort = 1;
 
 
-    #[\Override]
     public static function form(Schema $schema): Schema
     {
         return StudydesignForm::configure($schema);
     }
 
-    #[\Override]
     public static function table(Table $table): Table
     {
         return StudydesignsTable::configure($table);
     }
 
-    #[\Override]
     public static function getRelations(): array
     {
         return [

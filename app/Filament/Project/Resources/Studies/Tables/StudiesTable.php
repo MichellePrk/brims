@@ -26,13 +26,13 @@ class StudiesTable
                     ->counts('specimens')
                     ->numeric()
                     ->badge()
-                    ->color(fn($state) => $state > 0 ? 'primary' : 'gray'),
+                    ->color(fn($state): string => $state > 0 ? 'primary' : 'gray'),
                 TextColumn::make('assays_count')
                     ->label('Assays')
                     ->counts('assays')
                     ->numeric()
                     ->badge()
-                    ->color(fn($state) => $state > 0 ? 'primary' : 'gray'),
+                    ->color(fn($state): string => $state > 0 ? 'primary' : 'gray'),
                 TextColumn::make('public_release_date')
                     ->date('Y-m-d')
                     ->sortable(),

@@ -14,7 +14,7 @@ class StudyPolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'ViewAny:Study');
+        return evaluate_permission($authUser, 'View:Study');
     }
 
     public function view(AuthUser $authUser, Study $study): bool
@@ -24,12 +24,12 @@ class StudyPolicy
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Study');
+        return evaluate_permission($authUser, 'Manage:Study');
     }
 
     public function update(AuthUser $authUser, Study $study): bool
     {
-        return evaluate_permission($authUser, 'Update:Study');
+        return evaluate_permission($authUser, 'Manage:Study');
     }
 
     public function delete(AuthUser $authUser, Study $study): bool
@@ -39,6 +39,6 @@ class StudyPolicy
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Study');
+        return evaluate_permission($authUser, 'Delete:Study');
     }
 }

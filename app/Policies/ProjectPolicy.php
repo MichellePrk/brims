@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\TeamRoles;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Project;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -14,7 +15,7 @@ class ProjectPolicy
 
     public function viewAny(AuthUser $authUser): bool
     {
-        return true;
+        return evaluate_permission($authUser, 'View:Project');
         // return evaluate_permission($authUser, 'ViewAny:Project');
     }
 
@@ -26,21 +27,21 @@ class ProjectPolicy
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Project');
+        return evaluate_permission($authUser, 'Manage:Project') || $authUser->team_role === TeamRoles::Admin;
     }
 
     public function update(AuthUser $authUser, Project $project): bool
     {
-        return evaluate_permission($authUser, 'Update:Project');
+        return evaluate_permission($authUser, 'Manage:Project') || $authUser->team_role === TeamRoles::Admin;
     }
 
     public function delete(AuthUser $authUser, Project $project): bool
     {
-        return evaluate_permission($authUser, 'Delete:Project');
+        return evaluate_permission($authUser, 'Delete:Project') || $authUser->team_role === TeamRoles::Admin;
     }
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Project');
+        return evaluate_permission($authUser, 'Delete:Project') || $authUser->team_role === TeamRoles::Admin;
     }
 }

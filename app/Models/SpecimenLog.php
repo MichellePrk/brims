@@ -20,6 +20,7 @@ class SpecimenLog extends Model
         return $this->belongsTo(User::class, 'changed_by');
     }
 
+    #[\Override]
     protected function casts(): array
     {
         return [

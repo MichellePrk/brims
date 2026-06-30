@@ -13,10 +13,6 @@ class StorageAllocation extends Model
         'id',
     ];
 
-    protected $casts = [
-        'storageDestination' => StorageDestinations::class,
-    ];
-
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
@@ -30,5 +26,12 @@ class StorageAllocation extends Model
     public function storageLogs(): HasMany
     {
         return $this->hasMany(StorageLog::class);
+    }
+    #[\Override]
+    protected function casts(): array
+    {
+        return [
+            'storageDestination' => StorageDestinations::class,
+        ];
     }
 }

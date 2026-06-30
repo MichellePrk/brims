@@ -10,7 +10,7 @@ class LogSpecimenStatus
 {
     public function __invoke(SpecimenStatus $status, string $barcodesInput, bool $thawed = false): int
     {
-        $barcodes = array_map('trim', preg_split('/,|\r\n|\r|\n/', $barcodesInput));
+        $barcodes = array_map(trim(...), preg_split('/,|\r\n|\r|\n/', $barcodesInput));
         $barcodes = array_filter($barcodes); // Remove empty lines
         $barcodes = array_unique($barcodes); // Remove duplicate barcodes
 
@@ -54,23 +54,18 @@ class LogSpecimenStatus
             throw new \Exception($errorMessage);
         }
 
-        switch ($status) {
-            case SpecimenStatus::Used:
-                $specimens->each(function ($specimen) {
-                    $specimen->logUsed();
-                });
-                break;
-            case SpecimenStatus::InStorage:
-                $specimens->each(function ($specimen) use ($thawed) {
-                    $specimen->logReturn($thawed);
-                });
-                break;
-            case SpecimenStatus::LoggedOut:
-                $specimens->each(function ($specimen) {
-                    $specimen->logOut();
-                });
-                break;
-        }
+        match ($status) {
+            SpecimenStatus::Used => $specimens->each(function ($specimen): void {
+                $specimen->logUsed();
+            }),
+            SpecimenStatus::InStorage => $specimens->each(function ($specimen) use ($thawed): void {
+                $specimen->logReturn($thawed);
+            }),
+            SpecimenStatus::LoggedOut => $specimens->each(function ($specimen): void {
+                $specimen->logOut();
+            }),
+            default => $specimens->count(),
+        };
 
         return $specimens->count();
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\LabelStatus;
 use App\Enums\SubjectStatus;
 use App\Library\PDF_Label;
+use App\Models\LabelSpecification;
 use App\Models\SubjectEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -20,20 +21,32 @@ class LabelController extends Controller
      *
      * Returns an application/pdf download response.
      */
-    public function __invoke(Request $request, ?PDF_Label $pdfLabel = null)
+    public function __invoke(Request $request)
     {
+        $labelFormats = LabelSpecification::all()->pluck('format');
+        if (!$labelFormats->contains($request->labelFormat)) {
+            echo "The '" . $request->labelFormat . "' label format specified for this project is not valid.";
+            exit;
+        }
+        // $validated = $request->validate([
+        //     'id' => ['array'],
+        //     'id.*' => ['integer', 'exists:subject_event,id'],
+        //     'labelFormat' => [
+        //         'string',
+        //         Rule::in($labelFormats),
+        //     ],
+        // ]);
         $userIds = Auth::user()->substitutees->pluck('id')->push(Auth::id())->all();
 
         $subjectEvents = SubjectEvent::join('subjects', 'subject_id', 'subjects.id')
             ->join('events', 'event_id', 'events.id')
             ->join('arms', 'events.arm_id', 'arms.id')
-            ->when($request->has('ids'), fn ($query) => $query->whereIn('subject_event.id', $request->input('ids', [])))
-            ->whereHas('subject', fn (Builder $q) => $q
+            ->when($request->has('id'), fn($query) => $query->whereIn('subject_event.id', $request->input('id', [])))
+            ->whereHas('subject', fn(Builder $q) => $q
                 ->where('project_id', session('currentProject')->id)
-                ->where('status', SubjectStatus::Enrolled)
+                ->whereIn('status', [SubjectStatus::Enrolled, SubjectStatus::Generated])
                 ->whereIn('user_id', $userIds))
             ->where('labelstatus', LabelStatus::Queued)
-
             ->select([
                 'subject_event.id',
                 'subjects.project_id',
@@ -46,12 +59,13 @@ class LabelController extends Controller
                 'lastname',
                 'subject_event_labels',
                 'name_labels',
-                'study_id_labels',
+                'subject_id_labels',
                 'iteration',
             ])
             ->get();
-        // $this->fpdf = new PDF_Label('L7651_mod');
-        $this->fpdf = $pdfLabel ?? (app()->bound(PDF_Label::class) ? app(PDF_Label::class) : new PDF_Label('L7651_mod'));
+
+        $this->fpdf = new PDF_Label($request->labelFormat);
+        // $this->fpdf = $request->labelFormat ?? (app()->bound(PDF_Label::class) ? resolve(PDF_Label::class) : new PDF_Label('L7651_mod'));
 
         $this->fpdf->AddPage();
         $this->fpdf->AddFont('Calibri', '', 'calibri.php');
@@ -60,13 +74,13 @@ class LabelController extends Controller
         foreach ($subjectEvents as $event) {
             // Generate Name labels
             // $PSE = $event->project_id . '_' . $event->subjectID . '_' . $event->id;
-            $PSE = $event->project_id.'_'.$event->subject_id.'_'.$event->id;
+            $PSE = $event->project_id . '_' . $event->subject_id . '_' . $event->id;
             for ($i = 0; $i < $event->name_labels; $i++) {
                 $text = sprintf("%s %s\n%s\n%s [%s]\nArm: %s", $event->firstname, $event->lastname, $PSE, $event->eventname, $event->iteration, $event->armname);
                 $this->fpdf->Add_BarLabel($text, $PSE);
             }
             // Generate Study ID labels
-            for ($i = 0; $i < $event->study_id_labels; $i++) {
+            for ($i = 0; $i < $event->subject_id_labels; $i++) {
                 $text = sprintf('%s', $event->subjectID);
                 $this->fpdf->Add_BarLabel($text, $event->subject_id);
             }

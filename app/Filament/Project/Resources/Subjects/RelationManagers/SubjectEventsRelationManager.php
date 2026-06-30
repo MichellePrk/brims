@@ -34,12 +34,14 @@ class SubjectEventsRelationManager extends RelationManager
         $this->resetTable();
     }
 
+    #[\Override]
     public function isReadOnly(): bool
     {
         return false;
     }
 
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -89,7 +91,7 @@ class SubjectEventsRelationManager extends RelationManager
                 SelectColumn::make('status')
                     ->options(EventStatus::class)
                     ->label('Status')
-                    ->disabled(fn() => (bool) (! Auth::user()->can('Update:Subject'))),
+                    ->disabled(fn(): bool => ! Auth::user()->can('Manage:Subject')),
                 TextColumn::make('eventDate')
                     ->date('Y-m-d')
                     ->extraAttributes(fn(SubjectEvent $record): array => $record->status->value < EventStatus::Logged->value && $record->maxDate < today() ? ['class' => 'text-red-600 font-bold'] : []),
@@ -111,7 +113,7 @@ class SubjectEventsRelationManager extends RelationManager
                 SelectColumn::make('labelstatus')
                     ->options(LabelStatus::class)
                     ->label('Label Status')
-                    ->disabled(fn() => (bool) (! Auth::user()->can('Update:Subject'))),
+                    ->disabled(fn(): bool => ! Auth::user()->can('Manage:Subject')),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

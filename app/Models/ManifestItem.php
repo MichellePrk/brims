@@ -16,12 +16,6 @@ class ManifestItem extends Pivot
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'received' => 'boolean',
-        'receivedTime' => 'datetime',
-        'priorSpecimenStatus' => SpecimenStatus::class,
-    ];
-
     public function manifest(): BelongsTo
     {
         return $this->belongsTo(Manifest::class);
@@ -30,5 +24,14 @@ class ManifestItem extends Pivot
     public function specimen(): BelongsTo
     {
         return $this->belongsTo(Specimen::class);
+    }
+    #[\Override]
+    protected function casts(): array
+    {
+        return [
+            'received' => 'boolean',
+            'receivedTime' => 'datetime',
+            'priorSpecimenStatus' => SpecimenStatus::class,
+        ];
     }
 }

@@ -17,6 +17,7 @@ class EventsDue extends TableWidget
 
     // protected static ?string $heading = 'Events Due';
 
+    #[\Override]
     public function table(Table $table): Table
     {
         $substitutees = Auth::user()->substitutees()

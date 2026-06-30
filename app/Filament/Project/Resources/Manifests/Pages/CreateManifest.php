@@ -10,6 +10,7 @@ class CreateManifest extends CreateRecord
 {
     protected static string $resource = ManifestResource::class;
 
+    #[\Override]
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('view', [
@@ -17,6 +18,7 @@ class CreateManifest extends CreateRecord
         ]);
     }
 
+    #[\Override]
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = Auth::id();

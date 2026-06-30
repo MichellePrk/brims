@@ -11,6 +11,7 @@ class EditProtocol extends EditRecord
 {
     protected static string $resource = ProtocolResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

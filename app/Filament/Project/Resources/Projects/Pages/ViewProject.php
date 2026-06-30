@@ -24,8 +24,9 @@ class ViewProject extends ViewRecord
 {
     protected static string $resource = ProjectResource::class;
 
-    protected static ?string $title = 'Configure Project Details';
+    protected static ?string $title = 'Project Configuration';
 
+    #[\Override]
     public function mount(int|string $record): void
     {
         parent::mount($record);
@@ -34,6 +35,7 @@ class ViewProject extends ViewRecord
         // setPermissionsTeamId($this->record->id);
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

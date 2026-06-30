@@ -10,6 +10,7 @@ class ViewSpecimentype extends ViewRecord
 {
     protected static string $resource = SpecimentypeResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

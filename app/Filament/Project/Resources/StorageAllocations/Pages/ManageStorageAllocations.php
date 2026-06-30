@@ -10,12 +10,13 @@ class ManageStorageAllocations extends ManageRecords
 {
     protected static string $resource = StorageAllocationResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
             Action::make('allocate')
                 ->label('Allocate Storage')
-                ->url(fn (): string => static::getResource()::getUrl('allocate')),
+                ->url(fn(): string => static::getResource()::getUrl('allocate')),
         ];
     }
 }

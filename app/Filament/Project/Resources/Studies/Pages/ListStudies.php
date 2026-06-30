@@ -10,6 +10,7 @@ class ListStudies extends ListRecords
 {
     protected static string $resource = StudyResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

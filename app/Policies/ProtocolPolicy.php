@@ -25,12 +25,12 @@ class ProtocolPolicy
 
     public function create(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'Create:Protocol');
+        return evaluate_permission($authUser, 'Manage:Protocol');
     }
 
     public function update(AuthUser $authUser, Protocol $protocol): bool
     {
-        return evaluate_permission($authUser, 'Update:Protocol');
+        return evaluate_permission($authUser, 'Manage:Protocol');
     }
 
     public function delete(AuthUser $authUser, Protocol $protocol): bool
@@ -40,6 +40,6 @@ class ProtocolPolicy
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return evaluate_permission($authUser, 'DeleteAny:Protocol');
+        return evaluate_permission($authUser, 'Delete:Protocol');
     }
 }

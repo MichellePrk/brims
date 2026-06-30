@@ -11,6 +11,7 @@ class EditPhysicalUnit extends EditRecord
 {
     protected static string $resource = PhysicalUnitResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

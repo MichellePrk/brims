@@ -35,6 +35,7 @@ class Specimentype extends Model
         return $this->belongsTo(Specimentype::class, 'parentSpecimenType_id', 'id');
     }
 
+    #[\Override]
     protected function casts(): array
     {
         return [

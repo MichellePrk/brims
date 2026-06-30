@@ -18,12 +18,13 @@ class EditUnitDefinition extends EditRecord
         return ($parameters['record'] ?? null)?->physicalunits->count() === 0;
     }
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [
             ViewAction::make(),
             DeleteAction::make()
-                ->visible(fn (Model $record) => $record->physicalunits->count() === 0),
+                ->visible(fn(Model $record): bool => $record->physicalunits->count() === 0),
         ];
     }
 

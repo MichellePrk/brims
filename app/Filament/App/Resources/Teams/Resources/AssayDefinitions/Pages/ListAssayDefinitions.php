@@ -10,6 +10,7 @@ class ListAssayDefinitions extends ListRecords
 {
     protected static string $resource = AssayDefinitionResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

@@ -46,6 +46,7 @@ class Event extends Model
     //         'logDate' => $data['logDate'],
     //     ]);
     // }
+    #[\Override]
     protected function casts(): array
     {
         return [

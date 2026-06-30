@@ -10,6 +10,7 @@ class EditSpecimen extends EditRecord
 {
     protected static string $resource = SpecimenResource::class;
 
+    #[\Override]
     protected function getHeaderActions(): array
     {
         return [

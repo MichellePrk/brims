@@ -159,5 +159,5 @@ it('returns a PDF download when printing selected subject-event(s)', function ()
     $response->assertHeader('Content-Type', 'application/pdf');
 
     // basic sanity: PDF files start with "%PDF"
-    expect(substr($response->getContent(), 0, 4))->toBe('%PDF');
+    expect(substr((string) $response->getContent(), 0, 4))->toBe('%PDF');
 });

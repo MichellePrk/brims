@@ -28,6 +28,7 @@ class Arm extends Model
     // {
     //     return $this->hasMany(Arm::class, 'switcharms', 'id');
     // }
+    #[\Override]
     protected function casts(): array
     {
         return [

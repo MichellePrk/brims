@@ -3,6 +3,10 @@
 namespace App\Filament\Admin\Resources\Teams\RelationManagers;
 
 use App\Enums\TeamRoles;
+use App\Models\Role;
+use App\Models\Site;
+use App\Models\User;
+use Filament\Actions\AssociateAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -18,17 +22,20 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class MembersRelationManager extends RelationManager
 {
     protected static string $relationship = 'members';
 
+    #[\Override]
     public function isReadOnly(): bool
     {
-        return false; // This allows editing actions
+        return false;
     }
 
+    #[\Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -59,10 +66,6 @@ class MembersRelationManager extends RelationManager
                     ->mask('99 (99) 999-9999')
                     ->maxLength(20)
                     ->default(null),
-                TextInput::make('homesite')
-                    ->label('Home Site')
-                    ->maxLength(10)
-                    ->default(null),
                 Toggle::make('active')
                     ->visibleOn('edit'),
             ]);
@@ -70,7 +73,6 @@ class MembersRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        // return UsersTable::configure($table);
         return $table
             ->columns([
                 TextColumn::make('username')
@@ -83,8 +85,8 @@ class MembersRelationManager extends RelationManager
                 TextColumn::make('telephone')
                     ->prefix('+')
                     ->searchable(),
-                TextColumn::make('homesite')
-                    ->label('Home Site'),
+                TextColumn::make('institution')
+                    ->label('Institution'),
                 TextColumn::make('team_role')
                     ->label('Role'),
                 IconColumn::make('active')
@@ -103,27 +105,39 @@ class MembersRelationManager extends RelationManager
                     ->query(fn($query) => $query->where('active', true))
                     ->label('Active')
                     ->toggle(),
-                SelectFilter::make('homesite')
-                    ->options(fn() => \App\Models\User::distinct('homesite')->pluck('homesite', 'homesite'))
-                    ->multiple()
-                    ->searchable()
-                    ->preload()
-                    ->label('Home Site')
-                    ->placeholder('All Home Sites')
-                    ->default(null),
             ])
             ->deferFilters(false)
+            ->headerActions([
+                AssociateAction::make()
+                    ->recordTitle(fn(User $record): string => $record->fullname)
+                    ->recordSelectOptionsQuery(fn(Builder $query) => $query->where('active', true))
+                    ->preloadRecordSelect()
+                    ->recordSelectSearchColumns(['firstname', 'lastname'])
+                    ->schema(fn(AssociateAction $action): array => [
+                        $action->getRecordSelect(),
+                        Select::make('role_id')
+                            ->label('Role')
+                            ->options(fn() => Role::where('project_id', $this->ownerRecord->id)->pluck('name', 'id'))
+                            ->required(),
+                        Select::make('site_id')
+                            ->label('Site')
+                            ->options(
+                                Site::where('project_id', $this->ownerRecord->id)->pluck('name', 'id')
+                            ),
+                    ]),
+                CreateAction::make()
+                    ->mutateDataUsing(function (array $data): array {
+                        $data['team_id'] = $this->ownerRecord->id;
+                        $data['password'] = bcrypt(Str::password(32));
+
+                        return $data;
+                    }),
+            ])
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
             ])
             ->toolbarActions([
-                CreateAction::make()
-                    ->mutateDataUsing(function (array $data): array {
-                        $data['team_id'] = $this->ownerRecord->id;
-                        $data['password'] = bcrypt(Str::password(32));
-                        return $data;
-                    }),
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

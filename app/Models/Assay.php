@@ -40,6 +40,7 @@ class Assay extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    #[\Override]
     protected function casts(): array
     {
         return [

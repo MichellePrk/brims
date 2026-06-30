@@ -16,10 +16,6 @@ class VirtualUnit extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'active' => 'boolean',
-    ];
-
     /**
      * @return BelongsTo <Project, VirtualUnit>
      */
@@ -113,12 +109,12 @@ class VirtualUnit extends Model
         ]);
         foreach ($relocations as $location_id => $relocated) {
             if (! isset($containers[$relocated->id])) {
-                throw new Exception('Container with barcode: '.$relocated->barcode.' in rack: '.$relocated->rack.', box: '.$relocated->box.', position: '.$relocated->position.' not found for relocation');
+                throw new Exception('Container with barcode: ' . $relocated->barcode . ' in rack: ' . $relocated->rack . ', box: ' . $relocated->box . ', position: ' . $relocated->position . ' not found for relocation');
             }
             $containers[$relocated->id]->location_id = $location_id;
             $consolidation->addRelocation($relocated->barcode, $relocated->id, $location_id);
         }
-        foreach ($containers as $key => $container) {
+        foreach ($containers as $container) {
             $container->update();
         }
     }
@@ -137,7 +133,7 @@ class VirtualUnit extends Model
         $this->locations()
             ->whereIn('rack', range($this->endRack - $shrinkby + 1, $this->endRack))
             ->delete();
-        $this->endRack = $this->endRack - $shrinkby;
+        $this->endRack -= $shrinkby;
         if ($this->startRack === $this->endRack) {
             $this->rack_extent = 'Partial';
         }
@@ -150,7 +146,7 @@ class VirtualUnit extends Model
             $this->locations()
                 ->whereIn('box', range($this->endBox - $shrinkby + 1, $this->endBox))
                 ->delete();
-            $this->endBox = $this->endBox - $shrinkby;
+            $this->endBox -= $shrinkby;
         } else {
             $this->locations()
                 ->whereIn('box', range(chr(ord($this->endBox) - $shrinkby + 1), $this->endBox))
@@ -158,5 +154,12 @@ class VirtualUnit extends Model
             $this->endBox = chr(ord($this->endBox) - $shrinkby);
         }
         $this->save();
+    }
+    #[\Override]
+    protected function casts(): array
+    {
+        return [
+            'active' => 'boolean',
+        ];
     }
 }
