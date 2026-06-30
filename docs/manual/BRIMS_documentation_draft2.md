@@ -22,6 +22,14 @@ Major revision — 30 June 2026
 - [Chapter 10 — Troubleshooting Common Problems](#chapter-10-troubleshooting-common-problems)
 - [Chapter 11 — REDCap Integration](#chapter-11-redcap-integration)
 - [Chapter 12 — Administration Guide](#chapter-12-administration-guide)
+  - [12.1 User Management](#121-user-management)
+  - [12.2 Role and Permission Management](#122-role-and-permission-management)
+  - [12.3 Reference Data and Configuration](#123-reference-data-and-configuration)
+  - [12.4 Managing Institutions](#124-managing-institutions)
+  - [12.5 Managing Label Specifications](#125-managing-label-specifications)
+  - [12.6 Managing Programmes](#126-managing-programmes)
+  - [12.7 Preparing for New Projects](#127-preparing-for-new-projects)
+  - [12.8 Operational Monitoring](#128-operational-monitoring)
 - [Chapter 13 — Glossary](#chapter-13-glossary)
 
 ---
@@ -176,7 +184,8 @@ The main building blocks are:
 
 | Concept | What it represents |
 |---|---|
-| **Team** | The organisational group that owns projects, members, protocols, and assay definitions |
+| **Team** | The organisational group that owns projects, members, protocols, assay definitions, and programmes |
+| **Programme** | A funded research initiative at the team level that can span one or more projects |
 | **Project** | The primary working unit within a team, bringing together all sites, participants, and studies |
 | **Site** | A physical or organisational location where project work is carried out |
 | **Arm** | A participant grouping within the project, such as a control or treatment cohort |
@@ -196,7 +205,7 @@ These records are connected. A subject belongs to a site and an arm; events are 
 
 ### 1.3.1 Main Navigation
 
-The main navigation menu gives you access to the areas of BRIMS relevant to your role and project. [Note: assumes a project has been created previously and can be accessed by user]
+The main navigation menu gives you access to the areas of BRIMS relevant to your role and project.
 
 ![The main BRIMS navigation menu with a project selected, showing Subjects, Specimens, Specimen Storage, Manifests, Studies, and Project Configuration.]()
 
@@ -326,7 +335,7 @@ Each step is covered in its own section below. A [setup checklist](#setup-checkl
 
 Navigate to your team's **Projects** section and select **New Project**. 
 
-![The project creation form showing required fields: title, identifier, project leader, storage designation, and subject ID settings.]()
+![The project creation form showing required fields: title, identifier, project leader, label format, and subject ID settings.]()
 
 ### 2.1.1 Required fields
 
@@ -363,7 +372,7 @@ When you save a new project, BRIMS sets up the following automatically:
 
 These defaults are a starting point. Review them before proceeding with the rest of the setup, particularly the initial site name and the Admin role permissions.
 
-Sections 2.2 to 2.6 cover the remaining project configuration steps. All of these are accessed through **Project Configuration** in the main navigation panel. Select your project from the list of  projects using the **Access** button, then open **Project Configuration** to find the tabs for Members, Sites, Arms, Labware and Specimen Types.
+Sections 2.2 to 2.6 cover the core project configuration steps accessed through **Project Configuration** in the main navigation panel. Select your project from the list of projects using the **Access** button, then open **Project Configuration** to find the tabs for Members, Sites, Arms, Labware and Specimen Types. Section 2.7 covers import value mappings and section 2.8 covers linking the project to team-level programmes.
 
 ---
 
@@ -474,7 +483,7 @@ Specimen types define what kind of sample is being collected and how it should b
 
 ## 2.5 Reviewing Roles and Adding Project Members
 
-### 2.5.1 Reviewing roles [*still to check*]
+### 2.5.1 Reviewing roles
 
 Roles define what each project member is permitted to do. BRIMS creates a default Admin role when the project is set up, but most projects need at least a few distinct roles — for example, a data manager role, a clinical staff role, and a laboratory role.
 
@@ -793,7 +802,7 @@ The Label Queue table includes columns for subject ID, participant name, manager
 | **Print** | Row action | Opens labels for a single event in a new browser tab |
 | **Print Selected** | Bulk action (checkboxes) | Opens labels for the selected rows in a new browser tab |
 
-The **Print All** action now passes the project's configured label format to the print route automatically, so labels are printed in the correct format for the project.
+The **Print All** action passes the project's configured label format to the print route automatically, so labels are printed in the correct format for the project.
 
 ### 3.10.2 Clearing labels from the queue
 
@@ -1122,7 +1131,7 @@ Click **Update Specimen Status** to expand the action group and choose one of th
 | **Log Specimens Out of Storage** | Marks the entered specimens as **Logged Out**. Enter barcodes comma-separated or one per line. |
 | **Log Specimens Returned to Storage** | Marks the entered specimens back as **In Storage**. Includes a **Increment thaw count** toggle — enable this if the specimens were thawed during removal. |
 
-> **Tip:** Any barcodes that cannot be found or are in an incompatible status will be reported in an error notification. Valid barcodes in the same submission are still processed.
+> **Important:** The **Update Specimen Status** action processes barcodes as an all-or-nothing operation. If any barcode in the submission fails validation, the entire submission is rejected and no specimens are updated. Correct all errors and resubmit the full list. The error notification will identify which barcodes failed and why.
 
 ### 5.5.2 Bulk actions
 
@@ -1241,7 +1250,7 @@ Storage locations in BRIMS follow a hierarchy:
 - **Virtual units** represent the logical position assignments that link specimen types to available spaces
 - **Locations** are individual positions within a virtual unit where a single specimen is placed
 
-Administrators configure unit definitions and physical units (see Chapter 2 — Setting Up a Project and the Administration Guide). Day-to-day laboratory work involves allocating specimens into the spaces that have been configured.
+Administrators configure unit definitions and physical units from the Admin panel (see Chapter 12 — Administration Guide, section 12.3). Day-to-day laboratory work involves allocating specimens into the spaces that have been configured.
 
 > **Tip:** If the allocation step reports that there is insufficient storage for a specimen type, this means the virtual units configured for that type have no free locations remaining. Contact your project administrator or laboratory manager to arrange additional storage configuration before attempting a new allocation.
 
@@ -1739,7 +1748,7 @@ BRIMS provides CSV export functions for the main operational record types. Expor
 |---|---|---|
 | **Export Subjects** | Open the **Project** record → **Export Subjects** button | Subject ID, site, enrolled-by user, name, address, enrolment date, arm, arm baseline date, status |
 | **Export Subject Events** | Open the **Project** record → **Export Subject Events** button | Subject ID, event name, iteration, status, label status, event date, min date, max date, log date |
-| **Export Specimens** (project-wide) | Open the **Project** record → **Export Specimens** button | Barcode, subject ID, event name, event iteration, specimen type, site, status, parent barcode, aliquot, volume, volume unit, thaw count, logged-by user, log date, used-by user, used date |
+| **Export Specimens** (project-wide) | Open the **Project** record → **Export Specimens** button | Barcode, subject ID, event name, event iteration, specimen type, site, origin site, status, parent barcode, aliquot, volume, volume unit, thaw count, logged-by user, log date, used-by user, used date |
 | **Export Specimens** (from Specimens list) | **Specimens** list → select rows → **Export** | Same columns as above for the selected records |
 | **Export Specimens** (from a study) | **Studies** → open a study → **Specimens** section → **Export** | Barcode, specimen type, site, arm, event, event iteration, subject ID, log date |
 
@@ -1773,11 +1782,12 @@ Before distributing exported data, confirm that the output matches the question 
 
 ## 9.5 Reviewing Audit and History Information
 
-BRIMS does not have a dedicated audit view at the record level. Record-level history is visible through:
+BRIMS does not have a single dedicated audit view across all record types. Record-level history is visible through:
 
 - **Timestamps** on each record (created at, updated at, logged at, shipped date, received date, etc.)
 - **Status fields** that reflect the current state of the workflow
 - **Linked records** — for example, a specimen record links back to the subject event, and the subject event links back to the participant, providing a traceability chain through the system
+- **Specimen Audit Log** — the specimen detail (View) page includes a full audit log of every status change, including previous and new status, who made the change, and when (see Chapter 5, section 5.5.3)
 
 When a discrepancy needs to be investigated:
 
@@ -2033,6 +2043,16 @@ Before troubleshooting, gather the relevant reference information: project name,
 - The prior status recorded on each specimen in a manifest reflects the status at the time the specimen was attached. It cannot be edited.
 - If there is a discrepancy, review the specimen record's history and, if necessary, contact your project administrator.
 
+### 10.4.5 The Update Specimen Status action returns an error
+
+The **Update Specimen Status** action (barcode entry) rejects the entire submission if any barcode fails validation. The error notification identifies which barcodes caused the failure and why. Common causes:
+
+- **Barcode not found in this project** — the barcode does not exist in the current project. Check the barcode is correct and that you are in the right project.
+- **Wrong status for the requested action** — for example, trying to log a specimen as returned to storage when it is not currently logged out, or trying to log a specimen as used when it is not in an eligible status. Review the specimen record to check its current status before retrying.
+- **Specimen not at your site** — the specimen's site does not match your project site assignment. Only specimens at your assigned site can be updated through this action. If the specimen is at a different site, contact a user assigned to that site.
+
+Once the failing barcodes are identified and resolved, resubmit the full list.
+
 ---
 
 ## 10.7 Studies and Assays
@@ -2079,6 +2099,7 @@ Providing accurate details when you escalate will help resolve the issue faster.
 | Log Event button missing | Check event status — must be Scheduled |
 | Barcode rejected at PSE scan | Correct project selected; event exists |
 | Specimen barcode fails | Labware barcode format vs physical label |
+| Update Specimen Status error | See section 10.4.5 — check barcode, status, and site |
 | Specimen type disabled in allocation | Insufficient storage capacity configured |
 | Cannot edit manifest | Status must be Open |
 | Cannot receive manifest | Your site must match the destination site |
@@ -2195,7 +2216,7 @@ When a REDCap integration issue is reported:
 
 This chapter is for system administrators and selected project administrators who are responsible for keeping BRIMS configured, governed, and ready for project use.
 
-Administrative responsibilities in BRIMS fall into four main areas: user and access management, reference data configuration, preparing for new projects, and ongoing operational monitoring. In the current BRIMS interface, this work is split between system-level administration (the **Admin** panel) and team-level configuration (the team **Projects** and related setup areas).
+Administrative responsibilities in BRIMS span several areas: user and access management, role and permission management, reference data configuration (including institutions, label specifications, and programmes), preparing for new projects, and ongoing operational monitoring. In the current BRIMS interface, this work is split between system-level administration (the **Admin** panel) and team-level configuration (the team **Projects** and related setup areas).
 
 ---
 
@@ -2444,6 +2465,14 @@ The current stage of a subject event in the workflow. Possible statuses are: Pen
 
 The configuration of a recurring event within an arm, specifying its name, expected day offset from the arm baseline date, acceptable date window, and whether it is repeatable. Each enrolled participant gets a subject event generated from each event definition in their arm.
 
+### Import Value Mapping
+
+A project-level configuration record that translates field values used in an import file into the corresponding names used in BRIMS. Import value mappings can be defined for Sites, Arms, Events, Specimen Types, and Status fields. They are applied automatically when bulk import actions are run for the project.
+
+### Institution
+
+A named organisation associated with users in BRIMS. Institutions are managed at the system level from the Admin panel. See Chapter 12 — Administration Guide, section 12.4.
+
 ### Labware
 
 A type of container (tube, vial, plate etc.) associated with a specimen type, including its barcode format. Labware configuration determines which barcodes will be accepted when specimens of that type are logged.
@@ -2451,14 +2480,6 @@ A type of container (tube, vial, plate etc.) associated with a specimen type, in
 ### Label Specification
 
 A system-level template that defines the physical format of printed barcode labels — including paper size and metric. Each project must be assigned a label specification. Label specifications are managed by administrators from the Admin panel and are available to all projects.
-
-### Import Value Mapping
-
-A project-level configuration record that translates field values used in an import file into the corresponding names used in BRIMS. Import value mappings can be defined for Sites, Arms, Events, Specimen Types, and Status fields. They are applied automatically when bulk import actions are run for the project.
-
-### Institution
-
-A named organisation associated with users in BRIMS. Institutions are managed at the system level from the Admin panel. See also: **Admin Panel**.
 
 ### Liquid Nitrogen
 
